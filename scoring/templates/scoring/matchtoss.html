@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cricket Scoring</title>
+    <style>
+        
+        .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+      }
+      .container {
+        background-color: white;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 120px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 30vh;
+      }
+      /* .container-box {
+        border: 2px solid black;
+        border-radius: 5px;
+        padding: 20px;
+      } */
+
+      h1, p {
+        text-align: center;
+      }
+      p{
+        font-weight:bold;
+      }
+      select {
+        padding: 12px 24px;
+        margin-top: 10px;
+        margin-left: 20px;
+        width: 200px;
+        
+
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        font-weight: bold;
+      }
+
+      select:hover {
+        background-color: #3e8e41;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      select:active {
+        background-color: #3e8e41;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+      }
+       /* Navbar styles */
+       .navbar {
+        background-color: black;
+        overflow: hidden;
+      }
+      .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+      .navbar a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+      .active {
+        background-color: #4CAF50;
+        color: white;
+      }
+      h1 {
+        margin-bottom: 10px;
+        font-size: 36px;
+        font-weight: bold;
+      }
+        /* Style the buttons */
+        .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
+      
+      .button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin: 10px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      
+      .button:hover {
+        background-color: #3e8e41;
+      }
+   /* Create match styles */
+   .create-match-container {
+        margin-top: 20px;
+      }
+      .create-match-label {
+        font-size: 18px;
+        font-weight: bold;
+        display: inline-block;
+        margin-right: 20px;
+      }
+      .create-match-input {
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      
+      
+    </style>
+  </head>
+  <body>
+      <!-- Navbar -->
+	
+      <nav class="navbar">
+        <a class="active" href="#">CricScorer</a>
+        <a href="#">Live Score</a>
+        <a href="#">Matches</a>
+        <a href="#">Teams</a>
+        <a href="#">Players</a>
+        
+      </nav>
+      <div class="center">
+
+      
+      <div class="container">
+        <div class="container-box">
+          
+          <div class="create-match-container">
+            <label class="create-match-label" for="match-pin-input">Match Id:</label>
+            <input class="create-match-input" type="text" id="match-pin-input" name="match-pin-input" />
+          </div>
+          <div class="create-match-container">
+            <label class="create-match-label" for="match-pin-input">Who won the toss?</label>
+            <select>
+            <option value="t1">Home</option>
+            <option value="t2">Away</option>
+            </select>
+          </div>
+          <div class="create-match-container">
+            <label class="create-match-label" for="match-pin-input">Who is Batting         ?  </label>
+            <select>
+            <option value="t1">Home</option>
+            <option value="t2">Away</option>
+            </select>
+          </div>
+          
+          
+        
+          <div class="create-match-container">
+            <label class="create-match-label" for="match-pin-input">Number Of Overs:</label>
+            <input class="create-match-input" type="text" id="match-pin-input" name="match-pin-input" />
+          </div>
+          <div class="button-container">
+            <button class="button" onclick="location.href={% url 'make_match' %}">Back</button>
+            <button id="save-btn" class="button" onclick="location.href={% url 'scoring' %}"">Save</button>
+          </div>
+          
+            
+          
+          
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<!-- make an cricket scoring application with an 
+container placed in the centre of the web page
+the conintainer conintaining an h1 text select tournament and a brop box placed besides it
+below that have an text saying team1 vs team2 and below the team1 vs team 2 have an option with an dropbox for 
+selecting the two teams -->

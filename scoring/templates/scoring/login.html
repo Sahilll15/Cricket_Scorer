@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Scoring - Login</title>
+    <style>
+      /* Basic styles for the login form */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #F5F5F5;
+      }
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #FFFFFF;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+      }
+      .form-control {
+        display: block;
+        width: 100%;
+        height: 40px;
+        margin: 10px 0;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .btn {
+        display: block;
+        width: 100%;
+        height: 40px;
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: #FFFFFF;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #3E8E41;
+      }
+      /* Navbar styles */
+      .navbar {
+        background-color: black;
+        overflow: hidden;
+      }
+      .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+      .navbar a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+      .active {
+        background-color: #4CAF50;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+	
+    <nav class="navbar">
+      <a class="active" href="#">CricScorer</a>
+      <a href="#">Live Score</a>
+      <a href="#">Matches</a>
+      <a href="#">Teams</a>
+      <a href="#">Players</a>
+	  <!-- <a href="http://127.0.0.1:8000">Sign-Up</a> -->
+    </nav>
+    <!-- Login form -->
+    <div class="container">
+      <h1>Login</h1>
+      <form action="" method="post">
+		{% csrf_token %}
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" placeholder="Enter Username" name="username" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" placeholder="Password" name="password" class="form-control" required>
+        </div>
+		<div>
+			<a href="http://127.0.0.1:8000">Create an account</a>
+		</div>
+        <button type="submit" class="btn">Login</button>
+      </form>
+    </div>
+  </body>
+</html>
