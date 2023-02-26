@@ -1,89 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Cricket Scoring</title>
-	<style type="text/css">
+	<title>Cricket Scoring Page</title>
+	<style>
+		/* CSS for basic page layout */
 		body {
 			font-family: Arial, sans-serif;
 		}
-		.container {
-			margin: auto;
-			width: 50%;
-			border: 2px solid black;
+		header {
+			background-color: #333;
+			color: #fff;
 			padding: 10px;
 		}
-		.score {
-			text-align: center;
-			font-size: 24px;
-			font-weight: bold;
-			margin-bottom: 10px;
+		h1 {
+			margin: 0;
 		}
-		.button-row {
+		.container {
 			display: flex;
 			flex-wrap: wrap;
-			justify-content: center;
 		}
-		.button {
-			width: 80px;
-			height: 60px;
-			font-size: 24px;
+		.col {
+			flex: 1;
+			padding: 10px;
+		}
+		.table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		.table td, .table th {
+			border: 1px solid #ddd;
+			padding: 8px;
+		}
+		.table th {
+			background-color: #f2f2f2;
+			text-align: left;
 			font-weight: bold;
-			margin: 5px;
-			border: 2px solid black;
-			border-radius: 10px;
+		}
+		.timeline {
+			margin-top: 20px;
+			border: 1px solid #ddd;
+			padding: 10px;
+			font-size: 14px;
+			font-style: italic;
+		}
+		button {
+			padding: 10px;
+			margin-right: 5px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
 			cursor: pointer;
 		}
-		.button:hover {
-			background-color: lightgray;
-		}
-		.active {
-			background-color: lightblue;
-		}
-		.batsman {
-			display: inline-block;
-			margin-right: 10px;
-		}
-		.bowler {
-			display: inline-block;
-			margin-right: 10px;
-		}
-		.runs {
-			display: inline-block;
+		button:hover {
+			background-color: #3e8e41;
 		}
 	</style>
 </head>
 <body>
+	<header>
+		<h1>Cricket Scoring Page</h1>
+	</header>
 	<div class="container">
-		<div class="score">
-			Score: <span id="score">0/0</span>
-			<div class="batsman">
-				Batsman: <span id="batsman">Batsman Name</span>
-			</div>
-			<div class="bowler">
-				Bowler: <span id="bowler">Bowler Name</span>
-			</div>
-			<div class="runs">
-				Runs: <span id="runs">0</span>
-			</div>
+		<div class="col">
+			<h2>Team 1</h2>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Batsman</th>
+						<th>Runs</th>
+						<th>4s</th>
+						<th>6s</th>
+						<th>Balls</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Player 1</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<td>Player 2</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>Bowling Stats</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Bowler</th>
+						<th>Overs</th>
+						<th>Runs</th>
+						<th>Wickets</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Bowler 1</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<td>Bowler 2</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-		<div class="button-row">
-			<button class="button" id="0">0</button>
-			<button class="button" id="1">1</button>
-			<button class="button" id="2">2</button>
-			<button class="button" id="3">3</button>
-			<button class="button" id="4">4</button>
-			<button class="button" id="6">6</button>
-			<button class="button" id="wd">WD</button>
-			<button class="button" id="nb">NB</button>
-			<button class="button" id="b">B</button>
-			<button class="button" id="lb">LB</button>
-			<button class="button" id="sc">SC</button>
-			<button class="button" id="cs">CS</button>
-			<button class="button" id="cn">CN</button>
-			<button class="button" id="undo">Undo</button>
-			<button class="button" id="verify">Verify</button>
-			<button class="button" id="change-striker">Change Striker</button>
-			<button class="button" id="change-bowler">Change Bowler</button>
+		<div class="col">
+			<h2>Team 2</h2>
 		</div>
-	</div>
-	
+		</div>
+</body>
+</html>
+
