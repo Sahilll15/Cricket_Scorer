@@ -13,8 +13,5 @@ urlpatterns =[
     path('scoring/',views.scoring,name="scoring"),
 
 
-    
-
-
-
 ]
+
