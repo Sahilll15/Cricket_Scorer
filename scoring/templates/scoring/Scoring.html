@@ -118,6 +118,7 @@ h1 {
 
 #batters-container table {
   border-collapse: collapse;
+  margin-left:60px;
 }
  
 
@@ -156,8 +157,18 @@ h1 {
   color: green;
 }
 
+#batters-container h2
+{
+	margin-left: 60px;
+}
+
 #bowlers-container table {
   border-collapse: collapse;
+   margin-left:40px;
+}
+
+#bowlers-container h2{
+	margin-left: 40px;
 }
 #bowlers-container {
   width: 50%;
@@ -181,9 +192,9 @@ h1 {
 		h1 {
 			text-align: center;
 			padding: 10px;
-			background-color: #333;
+			background-color:black;
 			color: #fff;
-			margin: 0;
+			margin: 30px;
 		} 
 		 .over-container {
 			max-width: 400px;
@@ -229,6 +240,58 @@ h1 {
 		.runs-container {
 			margin-top: 20px;
 		}
+		/* score buttons */
+		#score-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  /* margin-left: 20px; */
+}
+
+#score-buttons button {
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #4CAF50;
+  color: black;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+#score-buttons button:hover {
+  background-color: black;
+  color: white;
+}
+
+/* Edting buttons */
+#editing-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 60px;
+}
+
+#editing-buttons button {
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#editing-buttons button:hover {
+  background-color: #3e8e41;
+}
+
 	</style>
   </head>
   <body>
@@ -326,7 +389,35 @@ h1 {
 				</div>
 			  </div>
 			  <div>
-				 <h1>Runs Scored Ball by Ball</h1>
+				<h1>Press Buttons below to score:</h1>
+				<div id="score-buttons">
+					<button onclick="score(1)">1</button>
+					<button onclick="score(2)">2</button>
+					<button onclick="score(3)">3</button>
+					<button onclick="score(4)">4</button>
+					<button onclick="score(6)">6</button>
+					<button onclick="Wide()">Wide</button>
+					<button onclick="NOBALL()">NO BALL</button>
+					<button onclick="LEGBYES()">LEG BYES</button>
+					<button onclick="score(4)">BYES</button>
+					<button onclick="out()">Out</button>
+				  </div>
+				  
+			  </div>
+
+			  <div id="editing-buttons">
+				<button onclick="EditScore()">EditScore</button>
+				<button onclick="Strikerchange()">Strikerchange</button>
+				<button onclick="ChangeBowler()">ChangeBowler</button>
+				<button onclick="VerifyScore()">VerifyScore</button>
+				<button onclick="Undo()">Undo</button>
+				<button onclick="EndInnings()">EndInnings</button>
+				
+			  </div>
+			  
+		  </div>
+			  <!-- <div> -->
+				 <!-- <h1>Runs Scored Ball by Ball</h1>
 				<div class="over-container">
 					<div class="over-runs">0</div>
 					<div class="label">Runs in Current Over</div>
@@ -351,7 +442,7 @@ h1 {
 						ballElem.innerText = runs;
 						runsContainer.appendChild(ballElem);
 					});
-				</script></div>
+				</script></div> -->
 			 
 
 		  
