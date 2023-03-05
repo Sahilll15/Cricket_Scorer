@@ -11,6 +11,7 @@ urlpatterns =[
     path('makematch/',views.make_match,name="make_match"),
     path('matchtoss/',views.match_toss,name="matchtoss"),
     path('scoring/',views.scoring,name="scoring"),
+    path('entermatch/',views.entermatch,name="entermatch")
 
 
 ]

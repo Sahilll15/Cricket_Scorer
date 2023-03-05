@@ -66,6 +66,8 @@ def home(request):
     return HttpResponse("You are at the home page")
 
 
-
+# start scoring button
+def entermatch(request):
+    return render(request,'scoring/entermatch.html')
 
     
