@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.views.decorators.csrf import csrf_protect
+from .models import Tournament,Team,Match
 
 # Create your views here.
 def signup(request):
@@ -48,8 +49,8 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-def make_match(request):
-    return render(request,'scoring/make_match.html') 
+
+    
 
 def match_toss(request):
     return render(request,'scoring/matchtoss.html')
@@ -70,4 +71,25 @@ def home(request):
 def entermatch(request):
     return render(request,'scoring/entermatch.html')
 
-    
+from django.shortcuts import render
+from .models import Tournament, Team, Match
+
+def make_match(request):
+    tournaments = Tournament.objects.all()
+
+    if request.method == 'POST':
+        tournament_id = request.POST.get('tournament')
+        team1_id = request.POST.get('team1')
+        team2_id = request.POST.get('team2')
+        pin = request.POST.get('pin')
+        team1 = Team.objects.get(id=team1_id)
+        team2 = Team.objects.get(id=team2_id)
+        match = Match(team1=team1, team2=team2, pin=pin)
+        match.save()
+        # redirect to a success page or show a success message
+
+    context = {
+        'tournaments': tournaments,
+        'teams': None, # will be updated via AJAX based on selected tournament
+    }
+    return render(request,'scoring/make_match.html',context) 
