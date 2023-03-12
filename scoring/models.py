@@ -12,10 +12,7 @@ class Tournament(models.Model):
         return self.name
 
 class Team(models.Model):
-    name = models.CharField(max_length=200)
-    captain_name = models.CharField(max_length=200,default='')
-    contact_number = models.CharField(max_length=20,null=True)
-    email = models.EmailField(max_length=200,null=True)
-    
-    def __str__(self):
-        return self.name
+    name=models.CharField(max_length=200)
+    captian_name=models.CharField(max_length=200,null=True)
+    captian_email=models.EmailField(null=True)
+    captian_phone=models.IntegerField(null=True)

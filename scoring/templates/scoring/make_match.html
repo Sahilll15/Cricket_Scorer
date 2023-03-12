@@ -14,30 +14,29 @@
         <div class="container-box">
           <h1>Select Tournament:</h1>
           <select>
-            <option value="t1">Tournament 1</option>
+            <!-- <option value="t1">Tournament 1</option>
             <option value="t2">Tournament 2</option>
-            <option value="t3">Tournament 3</option>
+            <option value="t3">Tournament 3</option> -->
+            {% for tournament in tournaments%}
+            <option value="{{tournament.id}}">{{tournament.name}}</option>
+            {% endfor %}
           </select>
-          <!-- <p>Team 1 vs Team 2:</p>
-          <select>
-            <option value="team1">Team 1</option>
-            <option value="team2">Team 2</option>
-          </select> -->
+          <!-- <p>Team 1 vs Team 2:</p>  -->
+         
           <p>Select two teams:</p>
           <select>
-            <option value="t1">Team 1</option>
-            <option value="t2">Team 2</option>
-            <option value="t3">Team 3</option>
+          
+            {% for team in teams%}
+            <option value="{{team.id}}">{{team.name}}</option>
+            {% endfor %}
+           
           </select>
           <select>
-            <option value="t4">Team 4</option>
-            <option value="t5">Team 5</option>
-            <option value="t6">Team 6</option>
+            {% for team in teams%}
+            <option value="{{team.id}}">{{team.name}}</option>
+            {% endfor %}
           </select>
-          <!-- <div class="create-match-container">
-            <label class="create-match-label" for="match-pin-input">Create Match PIN:</label>
-            <input class="create-match-input" type="text" id="match-pin-input" name="match-pin-input" />
-          </div> -->
+          
           <div class="button-container">
             <button class="button" onclick="location.href={% url 'score' %}">Back</button>
             <button id="save-btn" class="button" onclick="location.href={% url 'matchtoss' %}">Save</button>

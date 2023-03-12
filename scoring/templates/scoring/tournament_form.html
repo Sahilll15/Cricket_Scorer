@@ -1,28 +1,40 @@
 {% extends 'scoring/base.html' %}
+{% load static %}
+
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'scoring/tournament.css' %}">
+{% endblock %}
 
 {% block content %}
+<div class="center">
+  <div class="container">
+    <div class="container-box">
   <h1>{{ title }}</h1>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <h2>Teams:</h2>
-    <ul>
-      {% for team in teams %}
-        <li>
-          <label>
-            <input type="checkbox"
-              name="teams"
-              value="{{ team.id }}"
-              {% if selected_teams %}
-                {% if team in selected_teams %}
-                  checked
-                {% endif %}
-              {% endif %}>
-            {{ team.name }}
-          </label>
-        </li>
-      {% endfor %}
-    </ul>
-    <input type="submit" value="Save">
+   
+   
+<div class="conintainer">
+  <h4> Existing Tournaments :</h4>
+
+  <ul>{% for tournament in tournaments%}
+      <h2>{{tournament.name}}--{{tournament.location}}</h2>
+            {% endfor %}
+    </h1>
+    </h1>
+  </ul>
+</div>
+   
+<button type="submit" value="save">Save</button>
+   
+    
   </form>
+    </div>
+  </div>
+</div>
+
+
+ 
 {% endblock %}

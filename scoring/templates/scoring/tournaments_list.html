@@ -1,0 +1,22 @@
+{% extends 'scoring/base.html' %}
+
+{% block content %}
+<div class="center">
+  <div class="container">
+    <div class="container-box">
+        <div class="conintainer">
+            <h4> Existing Tournaments :</h4>
+          
+            <ul>{% for tournament in tournaments%}
+                <h2>{{tournament.name}}--{{tournament.location}}</h2>
+                      {% endfor %}
+              </h1>
+              </h1>
+            </ul>
+          </div>
+  
+  <button  type='submit' onclick=location.href="{% url 'team_create' %}">Create team</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

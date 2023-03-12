@@ -1,0 +1,23 @@
+{% extends 'scoring/base.html' %}
+
+{% block content %}
+<div class="center">
+  <div class="container">
+    <div class="container-box">
+  <h1>Teams</h1>
+  {% if teams %}
+    <ol>
+    {% for team in teams %}
+      <li>{{ team.name }} ({{ team.captian_name }})</li>
+    {% endfor %}
+    </ol>
+  {% else %}
+    <p>No teams yet.</p>
+  {% endif %}
+ 
+  
+  <button  type='submit' onclick=location.href="{% url 'team_create' %}">Create team</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -12,10 +12,13 @@ urlpatterns =[
     path('matchtoss/',views.match_toss,name="matchtoss"),
     path('scoring/',views.scoring,name="scoring"),
     path('entermatch/',views.entermatch,name="entermatch"),
-    path('tournament_create/',views.tournament_create,name="tournamet_create"),
-    path('tournament_details/<int:pk>',views.tournament_detail,name="tournament_details"),
-     path('<int:tournament_id>/create_team/', views.create_team, name='create_team'),
-    path('/edit_team/<int:team_id>/', views.edit_team, name='edit_team'),
+    path('tournament_create/',views.tournament_create,name="tournament_create"),
+    path('tournament_list/',views.tournament_list,name="tournament_list"),
+    path('tournament_details/<int:pk>',views.tournament_detail,name="tournament_detail"),
+    path('create_teams/',views.team_create,name="team_create"),
+    path('list_teams/',views.team_list,name="team_list"),
+
+     
 
 
 ]

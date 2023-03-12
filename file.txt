@@ -1,0 +1,10 @@
+#steps for making a form
+1.make a model
+2.make a form in forms.py
+3.make a view of the form
+4.then add the html file
+
+
+#steps to display
+1.example ypu want display data from a table
+2.in that specific view you need to add all those models

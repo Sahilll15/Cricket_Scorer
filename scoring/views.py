@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from .models import Tournament,Team
-from .forms import TournamentForms,TeamForms
+from .forms import TournamentForms,TeamForm
 
 # from django.views.decorators.csrf import csrf_protect
 # from .models import Tournament,Team,Match
@@ -77,6 +77,7 @@ def entermatch(request):
 
 def make_match(request):
     tournaments = Tournament.objects.all()
+    teams=Team.objects.all()
 
     if request.method == 'POST':
         tournament_id = request.POST.get('tournament')
@@ -91,15 +92,16 @@ def make_match(request):
 
     context = {
         'tournaments': tournaments,
-        'teams': None, # will be updated via AJAX based on selected tournament
+        'teams': teams, # will be updated via AJAX based on selected tournament
     }
     return render(request,'scoring/make_match.html',context) 
 
 
 def tournament_list(request):
     tournaments = Tournament.objects.all()
-    return render(request, 'scoring/tournament_list.html', {'tournaments': tournaments})
+    return render(request, ['scoring/team_list.html','scoring/make_match.html','scoring/tournaments_list.html'], {'tournaments': tournaments})
 
+# ['scoring/team_list.html',,'scoring/tournament_form.html','scoring/tournament_list.html']
 
 
 def tournament_create(request):
@@ -107,66 +109,34 @@ def tournament_create(request):
         form = TournamentForms(request.POST)
         if form.is_valid():
             tournament = form.save(commit=False)
-            selected_teams = request.POST.getlist('teams')
+            # selected_teams = request.POST.getlist('teams')
             tournament.save()
             form.save_m2m()
-            for team_id in selected_teams:
-                team = Team.objects.get(id=team_id)
-                tournament.teams.add(team)
-            return redirect('tournament_details', pk=tournament.pk)
+            return redirect('tournament_create')
     else:
         form = TournamentForms()
         teams = Team.objects.all()
-        return render(request, 'scoring/tournament_form.html', {'form': form, 'title': 'Create Tournament', 'teams': teams})
+        tournaments=Tournament.objects.all()
+        return render(request, 'scoring/tournament_form.html', {'form': form, 'title': 'Create Tournament','teams':teams,'tournaments': tournaments})
+
 
 def tournament_detail(request, pk):
     tournament = Tournament.objects.get(pk=pk)
     teams = tournament.teams.all()
     return render(request, 'scoring/tournament_details.html', {'tournament': tournament, 'teams': teams})
 
-
-def tournament_update(request, pk):
-    tournament = get_object_or_404(Tournament, pk=pk)
-    if request.method == 'POST':
-        form = TournamentForms(request.POST, instance=tournament)
-        if form.is_valid():
-            tournament = form.save(commit=False)
-            selected_teams = request.POST.getlist('teams')
-            tournament.save()
-            form.save_m2m()
-            tournament.teams.clear()
-            for team_id in selected_teams:
-                team = Team.objects.get(id=team_id)
-                tournament.teams.add(team)
-            return redirect('tournament_details', pk=tournament.pk)
-    else:
-        form = TournamentForms(instance=tournament)
-        teams = Team.objects.all()
-        selected_teams = tournament.teams.all()
-        return render(request, 'scoring/tournament_form.html', {'form': form, 'title': 'Update Tournament', 'teams': teams, 'selected_teams': selected_teams})
-
-
-def create_team(request, tournament_id):
-    tournament = get_object_or_404(Tournament, id=tournament_id)
-    if request.method == 'POST':
-        form = TeamForms(request.POST)
-        if form.is_valid():
-            team = form.save(commit=False)
-            team.tournament = tournament
-            team.save()
-            return redirect('tournament_details', pk=tournament_id)
-    else:
-        form = TeamForms()
-    return render(request, 'scoring/team_form.html', {'form': form, 'tournament': tournament})
-
-def edit_team(request, tournament_id, team_id):
-    tournament = get_object_or_404(Tournament, id=tournament_id)
-    team = get_object_or_404(Team, id=team_id)
-    if request.method == 'POST':
-        form = TeamForms(request.POST, instance=team)
+def team_create(request):
+    if request.method=='POST':
+        form=TeamForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('tournament_details', pk=tournament_id)
+            return redirect('team_list')
     else:
-        form = TeamForms(instance=team)
-    return render(request, 'scoring/team_form.html', {'form': form, 'tournament': tournament})
+        form=TeamForm()
+    return render(request,'scoring/team_form.html',{'form':form})
+    
+def team_list(request):
+    teams=Team.objects.all()
+    return render(request, ['scoring/team_list.html','scoring/make_match.html'], {'teams': teams})
+
+
