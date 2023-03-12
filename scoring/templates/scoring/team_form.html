@@ -1,0 +1,20 @@
+{% extends 'scoring/base.html' %}
+
+{% block content %}
+<div class=""></div>
+<h1>Tournament name : {{ tournament.name }}</h1>
+<div >
+    {% if team %}
+      <h2>Edit Team</h2>
+    {% else %}
+      <h2>Create Team</h2>
+    {% endif %}
+</div>
+  
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

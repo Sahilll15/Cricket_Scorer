@@ -1,0 +1,28 @@
+{% extends 'scoring/base.html' %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h2>Teams:</h2>
+    <ul>
+      {% for team in teams %}
+        <li>
+          <label>
+            <input type="checkbox"
+              name="teams"
+              value="{{ team.id }}"
+              {% if selected_teams %}
+                {% if team in selected_teams %}
+                  checked
+                {% endif %}
+              {% endif %}>
+            {{ team.name }}
+          </label>
+        </li>
+      {% endfor %}
+    </ul>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}

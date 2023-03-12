@@ -1,0 +1,16 @@
+{% extends 'scoring/base.html' %}
+
+{% block content %}
+  <h1>{{ tournament.name }}</h1>
+  
+  <p>{{ tournament.start_date|date:"F j, Y" }} - {{ tournament.end_date|date:"F j, Y" }}</p>
+  <h2>Teams:</h2>
+  <ul>
+    {% for team in Teams %}
+      <li>{{ team.name }} - {{ team.captain_name }}</li>
+    {% empty %}
+      <li>No teams yet.</li>
+    {% endfor %}
+  </ul>
+  <button class="submit" onclick="location.href='{% url  'create_team' tournament.id%}'">Add Teams</button>
+{% endblock %}
