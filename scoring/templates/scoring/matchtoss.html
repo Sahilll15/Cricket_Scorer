@@ -23,18 +23,21 @@
             <label class="create-match-label" for="match-pin-input">Match Id:</label>
             <input class="create-match-input" type="text" id="match-pin-input" name="match-pin-input" />
           </div> -->
+          <label for="match"><p>Tournament: {{ match.tournament_name }}</p>
+            <h4> {{ match.team_1 }} vs {{ match.team_2 }}</h4></label>
           <div class="create-match-container">
             <label class="create-match-label" for="match-pin-input">Who won the toss?</label>
             <select>
-            <option value="t1">Home</option>
-            <option value="t2">Away</option>
+            <option value="">{{ match.team_1 }}</option>
+            <option value="">{{ match.team_2 }}</option>
+            
             </select>
           </div>
           <div class="create-match-container">
-            <label class="create-match-label" for="match-pin-input">Who is Batting         ?  </label>
+            <label class="create-match-label" for="match-pin-input">Who is Batting? </label>
             <select>
-            <option value="t1">Home</option>
-            <option value="t2">Away</option>
+              <option value="">{{ match.team_1 }}</option>
+              <option value="">{{ match.team_2 }}</option>
             </select>
           </div>
           
@@ -46,7 +49,7 @@
           </div>
           <div class="button-container">
             <button class="button" onclick="location.href={% url 'make_match' %}">Back</button>
-            <button id="save-btn" class="button" onclick="location.href={% url 'scoring' %}"">Save</button>
+            <button id="save-btn" class="button" onclick="location.href={%  url 'scoring'  %}"">Save</button>
           </div>
           
             

@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from .models import Tournament,Team,Makematch
 from .forms import TournamentForms,TeamForm
+from django.contrib.auth.decorators import login_required
+
 
 # from django.views.decorators.csrf import csrf_protect
 # from .models import Tournament,Team,Match
@@ -55,19 +57,12 @@ def logout_view(request):
 
     
 
-def match_toss(request):
-    return render(request,'scoring/matchtoss.html')
-
+# def match_toss(request):
+#     return render(request,'scoring/matchtoss.html')
+@login_required(login_url="login")
 def score(request):
     return render(request,'scoring/score.html')
     # return HttpResponse("You are at the score page")
-
-def scoring(request):
-    return render(request,'scoring/Scoring.html')
-
-
-def home(request):
-    return HttpResponse("You are at the home page")
 
 
 # start scoring button
@@ -149,7 +144,7 @@ def make_match(request):
         team2=Team.objects.get(id=team2_id)
         match=Makematch.objects.create(tournament_name=tournament,team_1=team1,team_2=team2)
         print(tournament,team1,team2)
-        return redirect('make_match')
+        return redirect('match_detail', match_id=match.id)
     else:
         tournaments = Tournament.objects.all()
         teams = Team.objects.all()
@@ -160,8 +155,17 @@ def make_match(request):
 def match_detail(request, match_id):
     match = Makematch.objects.get(id=match_id)
     context = {'match': match}
-    return render(request, 'match_detail.html', context)
+    return render(request,'scoring/matchtoss.html',context)
 
 
+def scoring(request):
+    # match = Makematch.objects.get(id=match_id)
+    # context = {'match': match}
+    return render(request,'scoring/Scoring.html')
 
-    
+
+#try to use this tommo
+    # def scoring(request,match_id,slug):
+    #     # match = Makematch.objects.get(id=match_id)
+    # # context = {'match': match}
+    # return render(request,'scoring/Scoring.html')
