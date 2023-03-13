@@ -59,7 +59,7 @@ def logout_view(request):
 
 # def match_toss(request):
 #     return render(request,'scoring/matchtoss.html')
-@login_required(login_url="login")
+@login_required(login_url="/login/")
 def score(request):
     return render(request,'scoring/score.html')
     # return HttpResponse("You are at the score page")
