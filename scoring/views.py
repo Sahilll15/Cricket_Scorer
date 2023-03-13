@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
-from .models import Tournament,Team
+from .models import Tournament,Team,Makematch
 from .forms import TournamentForms,TeamForm
 
 # from django.views.decorators.csrf import csrf_protect
@@ -75,19 +75,19 @@ def entermatch(request):
     return render(request,'scoring/entermatch.html')
 
 
-def make_match(request):
+def list_match(request):
     tournaments = Tournament.objects.all()
     teams=Team.objects.all()
 
-    if request.method == 'POST':
-        tournament_id = request.POST.get('tournament')
-        team1_id = request.POST.get('team1')
-        team2_id = request.POST.get('team2')
-        pin = request.POST.get('pin')
-        team1 = Team.objects.get(id=team1_id)
-        team2 = Team.objects.get(id=team2_id)
-        match = Match(team1=team1, team2=team2, pin=pin)
-        match.save()
+    # if request.method == 'POST':
+    #     tournament_id = request.POST.get('tournament')
+    #     team1_id = request.POST.get('team1')
+    #     team2_id = request.POST.get('team2')
+    #     pin = request.POST.get('pin')
+    #     team1 = Team.objects.get(id=team1_id)
+    #     team2 = Team.objects.get(id=team2_id)
+    #     match = make_match(team1=team1, team2=team2, pin=pin)
+    #     match.save()
         # redirect to a success page or show a success message
 
     context = {
@@ -139,4 +139,29 @@ def team_list(request):
     teams=Team.objects.all()
     return render(request, ['scoring/team_list.html','scoring/make_match.html'], {'teams': teams})
 
+def make_match(request):
+    if request.method =='POST':
+        tournament_id=request.POST['tournament']
+        team1_id=request.POST['team1']
+        team2_id=request.POST['team2']
+        tournament=Tournament.objects.get(id=tournament_id)
+        team1=Team.objects.get(id=team1_id)
+        team2=Team.objects.get(id=team2_id)
+        match=Makematch.objects.create(tournament_name=tournament,team_1=team1,team_2=team2)
+        print(tournament,team1,team2)
+        return redirect('make_match')
+    else:
+        tournaments = Tournament.objects.all()
+        teams = Team.objects.all()
+        context = {'tournaments': tournaments, 'teams': teams}
+        return render(request, 'scoring/make_match.html', context)
+    
 
+def match_detail(request, match_id):
+    match = Makematch.objects.get(id=match_id)
+    context = {'match': match}
+    return render(request, 'match_detail.html', context)
+
+
+
+    

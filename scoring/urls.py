@@ -4,11 +4,12 @@ from . import views
 urlpatterns =[
     # path('',views.home,name="home"),
 
-    path('login/',views.login_view,name="login"),
-    path('',views.signup,name="signup"),
+    path('',views.login_view,name="login"),
+    path('signup/',views.signup,name="signup"),
     path('score/',views.score,name="score"),
     path('logout/',views.logout_view,name="logout"),
     path('makematch/',views.make_match,name="make_match"),
+    path('makematch/<int:match_id>/', views.match_detail, name='match_detail'),
     path('matchtoss/',views.match_toss,name="matchtoss"),
     path('scoring/',views.scoring,name="scoring"),
     path('entermatch/',views.entermatch,name="entermatch"),

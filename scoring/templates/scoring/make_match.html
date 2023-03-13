@@ -6,32 +6,32 @@
    
   </head>
   <body>
-      <!-- Navbar -->
-	
+     
+
       {% block content %}
+	<form method="post">
+    {% csrf_token %}
+  
       <div class="center">
       <div class="container">
         <div class="container-box">
-          <h1>Select Tournament:</h1>
-          <select>
-            <!-- <option value="t1">Tournament 1</option>
-            <option value="t2">Tournament 2</option>
-            <option value="t3">Tournament 3</option> -->
+          <label for="tournament"><h1>Select tournament:</h1></label>
+          <select id="tournament" name="tournament">
+        
             {% for tournament in tournaments%}
             <option value="{{tournament.id}}">{{tournament.name}}</option>
             {% endfor %}
           </select>
-          <!-- <p>Team 1 vs Team 2:</p>  -->
          
-          <p>Select two teams:</p>
-          <select>
+          <label ><h3>Select Teams:</h3></label>
+          <select id="team1" name="team1">
           
             {% for team in teams%}
             <option value="{{team.id}}">{{team.name}}</option>
             {% endfor %}
            
           </select>
-          <select>
+          <select id="team2" name="team2">
             {% for team in teams%}
             <option value="{{team.id}}">{{team.name}}</option>
             {% endfor %}
@@ -39,13 +39,15 @@
           
           <div class="button-container">
             <button class="button" onclick="location.href={% url 'score' %}">Back</button>
-            <button id="save-btn" class="button" onclick="location.href={% url 'matchtoss' %}">Save</button>
+            <button id="save-btn" type="submit" >Save</button>
           </div>
-          
+      
         </div>
       </div>
     </div>
-    {% endblock %}
+    
+  </form>
+  {% endblock %}
   </body>
 </html>
 <!-- make an cricket scoring application with an 
@@ -53,3 +55,5 @@ container placed in the centre of the web page
 the conintainer conintaining an h1 text select tournament and a brop box placed besides it
 below that have an text saying team1 vs team2 and below the team1 vs team 2 have an option with an dropbox for 
 selecting the two teams -->
+
+    <!-- onclick="location.href={% url 'matchtoss' %} -->
