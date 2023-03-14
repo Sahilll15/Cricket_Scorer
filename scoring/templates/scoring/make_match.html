@@ -36,6 +36,11 @@
             <option value="{{team.id}}">{{team.name}}</option>
             {% endfor %}
           </select>
+
+          <div class="form-group">
+              <label for=""><h3>Match Pin:</h3></label>
+              <input type="text" name="matchpin" id="">
+          </div>
           
           <div class="button-container">
             <button class="button" onclick="location.href={% url 'score' %}">Back</button>
@@ -50,6 +55,32 @@
   {% endblock %}
   </body>
 </html>
+
+
+<script>
+  const firstDropdown = document.getElementById('team1');
+  const secondDropdown = document.getElementById('team2');
+
+  firstDropdown.addEventListener('change', () => {
+    const selectedValue = firstDropdown.value;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/second_dropdown/?selected_value=' + selectedValue);
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const responseData = JSON.parse(xhr.responseText);
+        secondDropdown.innerHTML = '<option value="">Select an option</option>';
+        responseData.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item.value;
+          option.textContent = item.label;
+          secondDropdown.appendChild(option);
+        });
+      }
+    };
+    xhr.send();
+  });
+</script>
 <!-- make an cricket scoring application with an 
 container placed in the centre of the web page
 the conintainer conintaining an h1 text select tournament and a brop box placed besides it
