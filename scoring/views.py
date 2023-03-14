@@ -158,10 +158,10 @@ def match_detail(request, match_id):
     return render(request,'scoring/matchtoss.html',context)
 
 
-def scoring(request):
-    # match = Makematch.objects.get(id=match_id)
-    # context = {'match': match}
-    return render(request,'scoring/Scoring.html')
+def scoring(request,match_id):
+    match = Makematch.objects.get(id=match_id)
+    context = {'match': match}
+    return render(request,'scoring/Scoring.html',context)
 
 
 #try to use this tommo

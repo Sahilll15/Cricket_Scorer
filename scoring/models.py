@@ -28,6 +28,9 @@ class Makematch(models.Model):
 
     def __str__(self):
         return f"{self.team_1} vs {self.team_2} ({self.tournament_name})"
+    
+    def getUrl(self):
+        return f'/makematch/{self.id}/scoring/'
 
 
 
