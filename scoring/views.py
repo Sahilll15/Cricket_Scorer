@@ -142,8 +142,9 @@ def make_match(request):
         tournament=Tournament.objects.get(id=tournament_id)
         team1=Team.objects.get(id=team1_id)
         team2=Team.objects.get(id=team2_id)
-        match=Makematch.objects.create(tournament_name=tournament,team_1=team1,team_2=team2)
-        print(tournament,team1,team2)
+        match_pin=request.POST['matchpin']
+        match=Makematch.objects.create(tournament_name=tournament,team_1=team1,team_2=team2,match_pin=match_pin)
+        # print(tournament,team1,team2)
         return redirect('match_detail', match_id=match.id)
     else:
         tournaments = Tournament.objects.all()
