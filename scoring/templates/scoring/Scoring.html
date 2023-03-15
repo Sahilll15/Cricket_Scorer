@@ -300,15 +300,15 @@
     <div id="teams">
       <h2>Teams Playing:</h2>
       <ul>
-        <li>Team A</li>
+        <li>{{ match.team_1 }}</li>
         <li>VS</li>
-        <li>Team B</li>
+        <li>{{ match.team_2 }}</li>
       </ul>
     </div>
     <div id="teams">
       <ul>
-        <li>Team A - <span id="team-a-runs">0</span> runs</li>
-        <li>Team B - <span id="team-b-runs">0</span> runs</li>
+        <li>{{ match.team_1 }}- <span id="team-a-runs">0</span> runs</li>
+        <li>{{ match.team_2 }}- <span id="team-b-runs">0</span> runs</li>
       </ul>
     </div>
     <div id="overs">
@@ -353,7 +353,6 @@
           <tr>
             <th>Bowler</th>
             <th>Overs</th>
-            <th>Maidens</th>
             <th>Runs Conceded</th>
             <th>Wickets</th>
             <th>Economy Rate</th>
@@ -361,29 +360,30 @@
           <tr>
             <td>Bowler A</td>
             <td class="overs">0.0</td>
-            <td class="maidens">0</td>
             <td class="runs-conceded">0</td>
             <td class="wickets">0</td>
             <td class="economy-rate">0.00</td>
           </tr>
-          <tr>
+          <!-- <tr>
             <td>Bowler B</td>
             <td class="overs">0.0</td>
             <td class="maidens">0</td>
             <td class="runs-conceded">0</td>
             <td class="wickets">0</td>
             <td class="economy-rate">0.00</td>
-          </tr>
+          </tr> -->
         </table>
       </div>
     </div>
     <div>
       <h1>Press Buttons below to score:</h1>
       <div id="score-buttons">
+        <button onclick="score(0)">0</button>
         <button onclick="score(1)">1</button>
         <button onclick="score(2)">2</button>
         <button onclick="score(3)">3</button>
         <button onclick="score(4)">4</button>
+        <button onclick="score(5)">5</button>
         <button onclick="score(6)">6</button>
         <button onclick="Wide()">Wide</button>
         <button onclick="NOBALL()">NO BALL</button>

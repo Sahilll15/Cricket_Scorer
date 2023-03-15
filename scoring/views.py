@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Tournament, Team, Makematch
+# from .models import Tournament, Team, Makematch
 from .forms import TournamentForms, TeamForm
+from .models import *
 from django.contrib.auth.decorators import login_required
 
 
@@ -63,7 +64,11 @@ def score(request):
 
 # start scoring button
 def entermatch(request):
-    return render(request, 'scoring/entermatch.html')
+    tournaments = Tournament.objects.all()
+    teams = Team.objects.all()
+    context = {'tournaments': tournaments, 'teams': teams}
+
+    return render(request, 'scoring/entermatch.html', context)
 
 
 def list_match(request):
@@ -161,7 +166,9 @@ def match_detail(request, match_id):
 
 def scoring(request, match_id):
     match = Makematch.objects.get(id=match_id)
-    context = {'match': match}
+    tournaments = Tournament.objects.all()
+    teams = Team.objects.all()
+    context = {'tournaments': tournaments, 'teams': teams, 'match': match}
     return render(request, 'scoring/Scoring.html', context)
 
 
