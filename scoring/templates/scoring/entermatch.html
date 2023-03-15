@@ -146,14 +146,14 @@
       <div class="container">
         <div class="container-box">
           <select>
-            <option value="t1">Team 1</option>
-            <option value="t2">Team 2</option>
-            <option value="t3">Team 3</option>
+            {% for team in teams%}
+            <option value="{{team.id}}">{{team.name}}</option>
+            {% endfor %}
           </select>
           <select>
-            <option value="t4">Team 4</option>
-            <option value="t5">Team 5</option>
-            <option value="t6">Team 6</option>
+            {% for team in teams%}
+              <option value="{{team.id}}">{{team.name}}</option>
+              {% endfor %}
           </select>
           <div class="create-match-container">
             <label class="create-match-label" for="match-pin-input">Create Match PIN:</label>
