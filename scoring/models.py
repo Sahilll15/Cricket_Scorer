@@ -66,7 +66,6 @@ class Makematch(models.Model):
 #     is_completed = models.BooleanField(default=False)
 
 
-
 # class Player(models.Model):
 #     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 #     name = models.CharField(max_length=100)
