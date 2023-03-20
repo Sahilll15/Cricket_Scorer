@@ -16,7 +16,11 @@ class TeamForm(forms.ModelForm):
         model = Team
         fields = ['name', 'captian_name', 'captian_email', 'captian_phone']
 
+class PlayerForm(forms.ModelForm):
 
+    class Meta:
+        model = Team
+        fields = ['name']
 # from django import forms
 
 # class BattingScorecardForm(forms.ModelForm):

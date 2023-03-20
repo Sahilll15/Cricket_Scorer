@@ -22,4 +22,5 @@ urlpatterns = [
          views.tournament_detail, name="tournament_detail"),
     path('create_teams/', views.team_create, name="team_create"),
     path('list_teams/', views.team_list, name="team_list"),
+    path('team_page/', views.team_page, name="team_page"),
 ]

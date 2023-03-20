@@ -177,3 +177,5 @@ def scoring(request, match_id):
     #     # match = Makematch.objects.get(id=match_id)
     # # context = {'match': match}
     # return render(request,'scoring/Scoring.html')
+def team_page(request):
+    return render(request,'scoring/team_page.html')

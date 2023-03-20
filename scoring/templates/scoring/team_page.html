@@ -1,0 +1,39 @@
+{% extends 'scoring/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Scoring - Teams</title>
+   <style>    
+        .container {
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #FFFFFF;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+      }
+    </style>
+
+  </head>
+  <body >
+    <!-- Navbar -->
+	
+    {% block content %}
+    <!-- buttons form -->
+    <div class="center">
+        <div class="container">
+          <div class="container-box">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <button style="padding: 20px; margin: 20px 10px 20px; background-color: #4CAF50; color: black; border: red; cursor: pointer; width: 300px;" onclick="location.href='{% url 'team_create'%}'"> Teams</button>
+                    <button style="padding: 20px; margin: 10px 10px 20px; background-color: #4CAF50; color: black; border: none; cursor: pointer; width: 300px;" onclick="location.href='{% url 'team_list'%}'"> Show Teams</button>
+                    <button style="padding: 20px; margin: 10px 10px 20px; background-color: #4CAF50; color: black; border: none; cursor: pointer; width: 300px;" onclick="location.href='{% url 'team_list'%}'"> Edit Teams</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% endblock %}
+  </body>
+</html>

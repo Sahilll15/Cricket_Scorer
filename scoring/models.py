@@ -67,27 +67,27 @@ class Makematch(models.Model):
 
 
 
-class Player(models.Model):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+# class Player(models.Model):
+#     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+#     name = models.CharField(max_length=100)
 
 
-class BattingScorecard(models.Model):
-    match = models.ForeignKey(Makematch, on_delete=models.CASCADE)
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    runs = models.IntegerField()
-    balls_faced = models.IntegerField()
-    fours = models.IntegerField()
-    sixes = models.IntegerField()
-    is_out = models.BooleanField(default=False)
-    dismissal_type = models.CharField(max_length=100, blank=True)
+# class BattingScorecard(models.Model):
+#     match = models.ForeignKey(Makematch, on_delete=models.CASCADE)
+#     player = models.ForeignKey(Player, on_delete=models.CASCADE)
+#     runs = models.IntegerField()
+#     balls_faced = models.IntegerField()
+#     fours = models.IntegerField()
+#     sixes = models.IntegerField()
+#     is_out = models.BooleanField(default=False)
+#     dismissal_type = models.CharField(max_length=100, blank=True)
 
 
-class BowlingScorecard(models.Model):
-    innings = models.ForeignKey(Innings, on_delete=models.CASCADE)
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    overs_bowled = models.FloatField()
-    runs_conceded = models.IntegerField()
-    wickets_taken = models.IntegerField()
-    maiden_overs = models.IntegerField()
-    economy_rate = models.FloatField()
+# class BowlingScorecard(models.Model):
+#     innings = models.ForeignKey(Innings, on_delete=models.CASCADE)
+#     player = models.ForeignKey(Player, on_delete=models.CASCADE)
+#     overs_bowled = models.FloatField()
+#     runs_conceded = models.IntegerField()
+#     wickets_taken = models.IntegerField()
+#     maiden_overs = models.IntegerField()
+#     economy_rate = models.FloatField()
