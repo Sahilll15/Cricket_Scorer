@@ -12,7 +12,10 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Create Team</button>
+
+   
   </form>
+  <a href="{% url 'add_player' %}"><button>Add Player</button></a>
     </div>
   </div>
 </div>

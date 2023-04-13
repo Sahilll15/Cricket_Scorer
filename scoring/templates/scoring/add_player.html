@@ -1,0 +1,29 @@
+{% extends 'scoring/base.html' %}
+
+{% block content %}
+
+
+<div class="center">
+  <div class="container">
+    <div class="container-box">
+  <h1>Add Player</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Player</button>
+  </form>
+  <!-- <h2>Players:</h2>
+  <ul>
+    {% for player in team.player_set.all %}
+      <li>{{ player.name }}</li>
+    {% empty %}
+      <li>No players added yet.</li>
+    {% endfor %}
+  </div>
+    </div>
+  </div> -->
+
+
+</ul>
+{% endblock %}
+ 

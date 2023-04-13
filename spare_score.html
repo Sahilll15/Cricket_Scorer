@@ -1,0 +1,193 @@
+{% extends 'scoring/base.html' %} {% block content %}
+<h1>{{ match.name }}</h1>
+<p><strong>Venue:</strong> {{ match.venue }}</p>
+<p><strong>Date:</strong> {{ match.date }}</p>
+
+<h2>Scoreboard</h2>
+<table>
+  <tr>
+    <th>Team</th>
+    <th>Runs</th>
+    <th>Wickets</th>
+    <th>Overs</th>
+  </tr>
+  <tr>
+    <td>{{ team1.name }}</td>
+    <td id="team1-runs">0</td>
+    <td id="team1-wickets">0</td>
+    <td id="team1-overs">0</td>
+  </tr>
+  <tr>
+    <td>{{ team2.name }}</td>
+    <td id="team2-runs">0</td>
+    <td id="team2-wickets">0</td>
+    <td id="team2-overs">0.0</td>
+  </tr>
+</table>
+
+<h2>Scorecard</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Player Name</th>
+      <th>Runs</th>
+      <th>Balls Faced</th>
+      <th>Fours</th>
+      <th>Sixes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="5">{{ team_a }} Batters</td>
+    </tr>
+    {% for batter in team_a_batters %}
+    <tr>
+      <td>{{ batter.player_name }}</td>
+      <td>{{ batter.runs }}</td>
+      <td>{{ batter.balls_faced }}</td>
+      <td>{{ batter.fours }}</td>
+      <td>{{ batter.sixes }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="5">{{ team_b }} Batters</td>
+    </tr>
+    {% for batter in team_b_batters %}
+    <tr>
+      <td>{{ batter.player_name }}</td>
+      <td>{{ batter.runs }}</td>
+      <td>{{ batter.balls_faced }}</td>
+      <td>{{ batter.fours }}</td>
+      <td>{{ batter.sixes }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4>Bowling Stats</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Player Name</th>
+      <th>Overs</th>
+      <th>Maidens</th>
+      <th>Runs</th>
+      <th>Wickets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="5">{{ team_a }} Bowlers</td>
+    </tr>
+    {% for bowler in team_a_bowlers %}
+    <tr>
+      <td>{{ bowler.player_name }}</td>
+      <td>{{ bowler.overs }}</td>
+      <td>{{ bowler.maidens }}</td>
+      <td>{{ bowler.runs_conceded }}</td>
+      <td>{{ bowler.wickets }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="5">{{ team_b }} Bowlers</td>
+    </tr>
+    {% for bowler in team_b_bowlers %}
+    <tr>
+      <td>{{ bowler.player_name }}</td>
+      <td>{{ bowler.overs }}</td>
+      <td>{{ bowler.maidens }}</td>
+      <td>{{ bowler.runs_conceded }}</td>
+      <td>{{ bowler.wickets }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h2>Bowling Figures</h2>
+<table>
+  <tr>
+    <th>Bowler</th>
+    <th>Overs</th>
+    <th>Runs</th>
+    <th>Wickets</th>
+  </tr>
+  {% for bowling in team1_bowling %}
+  <tr>
+    <td>{{ bowling.player.name }}</td>
+    <td>{{ bowling.overs }}</td>
+    <td>{{ bowling.runs }}</td>
+    <td>{{ bowling.wickets }}</td>
+  </tr>
+  {% endfor %} {% for bowling in team2_bowling %}
+  <tr>
+    <td>{{ bowling.player.name }}</td>
+    <td>{{ bowling.overs }}</td>
+    <td>{{ bowling.runs }}</td>
+    <td>{{ bowling.wickets }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>Scoring Buttons</h2>
+<div>
+  <button onclick="addRun('team1')">+1 Run</button>
+  <button onclick="addFour('team1')">+4 Runs</button>
+  <button onclick="addSix('team1')">+6 Runs</button>
+  <button onclick="addOut('team1')">Out</button>
+</div>
+<div>
+  <button onclick="addRun('team2')">+1 Run</button>
+  <button onclick="addFour('team2')">+4 Runs</button>
+  <button onclick="addSix('team2')">+6 Runs</button>
+  <button onclick="addOut('team2')">Out</button>
+</div>
+
+<script>
+  // function run() {
+
+  //   var run = document.getElementById("run");
+  //   run.innerHTML += runs + 1;
+  // }
+
+  function addRun(team) {
+    var runs = document.getElementById(team + "-runs");
+    var overs = document.getElementById(team + "-overs");
+    var balls = (parseFloat(overs.innerHTML) * 6) % 10;
+    if (balls == 0) {
+      overs.innerHTML = parseInt(overs.innerHTML) + 1;
+    } else {
+      overs.innerHTML = parseInt(overs.innerHTML) + 0.1;
+    }
+    runs.innerHTML = parseInt(runs.innerHTML) + 1;
+  }
+
+  function addFour(team) {
+    var runs = document.getElementById(team + "-runs");
+    var overs = document.getElementById(team + "-overs");
+    var balls = (parseFloat(overs.innerHTML) * 6) % 10;
+    if (balls == 0) {
+      overs.innerHTML = parseInt(overs.innerHTML) + 1 + ".0";
+    } else {
+      overs.innerHTML = parseInt(overs.innerHTML) + "." + balls;
+    }
+    runs.innerHTML = parseInt(runs.innerHTML) + 4;
+  }
+
+  function addSix(team) {
+    var runs = document.getElementById(team + "-runs");
+    var overs = document.getElementById(team + "-overs");
+    var balls = (parseFloat(overs.innerHTML) * 6) % 10;
+    if (balls == 0) {
+      overs.innerHTML = parseInt(overs.innerHTML) + 1 + ".0";
+    } else {
+      overs.innerHTML = parseInt(overs.innerHTML) + "." + balls;
+    }
+    runs.innerHTML = parseInt(runs.innerHTML) + 6;
+  }
+
+  function addOut(team) {
+    var wickets = document.getElementById(team + "-wickets");
+    wickets.innerHTML = parseInt(wickets.innerHTML) + 1;
+  }
+</script>
+{% endblock %}

@@ -5,7 +5,7 @@ urlpatterns = [
     # path('',views.home,name="home"),
 
     path('', views.login_view, name="login"),
-    path('scoring/', views.scoring, name="scoring"),
+    path('scoring/<int:match_id>/', views.scoring, name="scoring"),
     path('signup/', views.signup, name="signup"),
     path('score/', views.score, name="score"),
     path('logout/', views.logout_view, name="logout"),
@@ -24,5 +24,8 @@ urlpatterns = [
     path('list_teams/', views.team_list, name="team_list"),
 
     path('team_page/', views.team_page, name="team_page"),
+    path('add_player/', views.add_player, name="add_player"),
+
+    # path('score_board/', views.score_board, name="score_board"),
 
 ]

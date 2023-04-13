@@ -7,6 +7,13 @@
 {% endblock %}
 
 {% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <div class="center">
   <div class="container">
     <div class="container-box">
@@ -15,7 +22,7 @@
     {% csrf_token %}
     {{ form.as_p }}
    
-   
+<!--    
 <div class="conintainer">
   <h4> Existing Tournaments :</h4>
 
@@ -24,11 +31,14 @@
             {% endfor %}
     </h1>
     </h1>
-  </ul>
+  </ul> -->
+  <button type="submit" value="save">Save</button>
+</div>
+<div>
+  
 </div>
    
-<button type="submit" value="save">Save</button>
-   
+
     
   </form>
     </div>
@@ -36,5 +46,4 @@
 </div>
 
 
- 
 {% endblock %}

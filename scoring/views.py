@@ -1,15 +1,17 @@
+from .forms import PlayerForm
+from .models import Team
+from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-# from .models import Tournament, Team, Makematch
 from .forms import TournamentForms, TeamForm
 from .models import *
 from django.contrib.auth.decorators import login_required
 
 
-# from django.views.decorators.csrf import csrf_protect
-# from .models import Tournament,Team,Match
 
 # Create your views here.
 def signup(request):
@@ -27,6 +29,7 @@ def signup(request):
             my_user = User.objects.create_user(
                 username=uname, email=uemail, password=upassword)
             my_user.save()
+            messages.success(request, 'Signup successful! Please login.')
             # return HttpResponse("User has been Created succesfully!")
             return redirect('login')
             # print(uname,uemail,upassword,confirm_password)
@@ -45,7 +48,8 @@ def login_view(request):
             return redirect('score')
         else:
             # return render(request, 'login.html', {'error_message': 'Invalid username or password'})
-            return HttpResponse("Invalid password or username")
+            messages.error(request, "Invalid password or username")
+            return redirect('login')
     return render(request, 'scoring/login.html')
 
 
@@ -75,16 +79,6 @@ def list_match(request):
     tournaments = Tournament.objects.all()
     teams = Team.objects.all()
 
-    # if request.method == 'POST':
-    #     tournament_id = request.POST.get('tournament')
-    #     team1_id = request.POST.get('team1')
-    #     team2_id = request.POST.get('team2')
-    #     pin = request.POST.get('pin')
-    #     team1 = Team.objects.get(id=team1_id)
-    #     team2 = Team.objects.get(id=team2_id)
-    #     match = make_match(team1=team1, team2=team2, pin=pin)
-    #     match.save()
-    # redirect to a success page or show a success message
 
     context = {
         'tournaments': tournaments,
@@ -108,6 +102,7 @@ def tournament_create(request):
             # selected_teams = request.POST.getlist('teams')
             tournament.save()
             form.save_m2m()
+            messages.success(request, 'Tournament created SuccessFully!!')
             return redirect('tournament_create')
     else:
         form = TournamentForms()
@@ -166,16 +161,45 @@ def match_detail(request, match_id):
 
 def scoring(request, match_id):
     match = Makematch.objects.get(id=match_id)
+
+    team_a = match.team_1
+    team_b = match.team_2
+
+    team_a_batters = Batter.objects.filter(match=match, player__team=team_a)
+    team_b_batters = Batter.objects.filter(match=match, player__team=team_b)
+    team_a_bowlers = Batter.objects.filter(match=match, player__team=team_a)
+    team_a_bowlers = Batter.objects.filter(match=match, player__team=team_b)
+
     tournaments = Tournament.objects.all()
     teams = Team.objects.all()
-    context = {'tournaments': tournaments, 'teams': teams, 'match': match}
+
+    context = {'tournaments': tournaments,
+               'team_a': team_a,
+               'team_b': team_b,
+               'match': match,
+               'team_a_batters': team_a_batters,
+               'team_b_batters': team_b_batters,
+               'team_a_bowlers': team_a_bowlers,
+               'team_a_bowlers': team_a_bowlers
+
+               }
+
     return render(request, 'scoring/Scoring.html', context)
 
 
-# try to use this tommo
-    # def scoring(request,match_id,slug):
-    #     # match = Makematch.objects.get(id=match_id)
-    # # context = {'match': match}
-    # return render(request,'scoring/Scoring.html')
 def team_page(request):
-    return render(request,'scoring/team_page.html')
+    return render(request, 'scoring/team_page.html')
+
+
+def add_player(request,):
+   
+    if request.method == 'POST':
+        form = PlayerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_player')
+    else:
+        form = PlayerForm()
+
+    context = {'form': form}
+    return render(request, 'scoring/add_player.html', context)

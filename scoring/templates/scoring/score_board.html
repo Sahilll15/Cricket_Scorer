@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scoreboard</title>
+  </head>
+  <body>
+    <h1>Scoreboard</h1>
+    <h2>Innings 1</h2>
+    <p>Runs: <span id="innings1_runs">0</span></p>
+    <p>Wickets: <span id="innings1_wickets">0</span></p>
+    <button onclick="addRun('innings1_runs')">Add Run</button>
+    <button onclick="addWicket('innings1_wickets')">Add Wicket</button>
+    <hr />
+    <h2>Innings 2</h2>
+    <p>Runs: <span id="innings2_runs">0</span></p>
+    <p>Wickets: <span id="innings2_wickets">0</span></p>
+    <button onclick="addRun('innings2_runs')">Add Run</button>
+    <button onclick="addWicket('innings2_wickets')">Add Wicket</button>
+    <script>
+      var innings1_runs = 0;
+      var innings1_wickets = 0;
+      var innings2_runs = 0;
+      var innings2_wickets = 0;
+
+      function addRun(innings) {
+        if (innings == "innings1_runs") {
+          innings1_runs++;
+          document.getElementById(innings).innerHTML = innings1_runs;
+        } else {
+          innings2_runs++;
+          document.getElementById(innings).innerHTML = innings2_runs;
+        }
+      }
+
+      function addWicket(innings) {
+        if (innings == "innings1_wickets") {
+          innings1_wickets++;
+          document.getElementById(innings).innerHTML = innings1_wickets;
+          if (innings1_wickets == 10) {
+            alert("Innings 1 completed. Innings 2 started.");
+          }
+        } else {
+          innings2_wickets++;
+          document.getElementById(innings).innerHTML = innings2_wickets;
+        }
+      }
+    </script>
+  </body>
+</html>

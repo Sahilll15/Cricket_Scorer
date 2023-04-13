@@ -70,6 +70,14 @@
         background-color: #4CAF50;
         color: white;
       }
+      .messages{
+        background-color: #dff0d8;
+        color: #3c763d;
+        border-color: #d6e9c6;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+      }
     </style>
   </head>
   <body>
@@ -83,6 +91,13 @@
       <a href="#">Players</a>
 	  <!-- <a href="http://127.0.0.1:8000">Sign-Up</a> -->
     </nav>
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
     <!-- Login form -->
     <div class="container">
       <h1>Login</h1>

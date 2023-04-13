@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cricket Scoring Application</title>
+    <!-- <script>
+      let teamA = {
+  name: "{{ match.team_1 }}",
+  score: 0,
+  balls: 0,
+  wickets: 0,
+  overs: 0.0
+};
+
+let teamB = {
+  name: "{{ match.team_2 }}",
+  score: 0,
+  balls: 0,
+  wickets: 0,
+  overs: 0.0
+};
+
+const MAX_OVERS_PER_INNINGS = 1
+MAX_BALLS_PER_OVER=6
+let currentTeam = teamA;
+let nextTeam=teamB;
+let currentBatsman = {
+  name: "",
+  runs: 0,
+  balls: 0,
+  out: false
+};
+
+function score(run) {
+  currentBatsman.runs += run;
+  currentTeam.score += run;
+  currentTeam.balls++;
+  updateScore();
+  updateOvers();
+  checkForWicket();
+  checkForEndOfInnings();
+  getWinningTeam();
+}
+
+function Wide() {
+  currentTeam.score += 1;
+  // currentTeam.balls++;
+  updateScore();
+  
+}
+
+function NOBALL() {
+  currentTeam.score += 1;
+  // currentTeam.balls++;
+  updateScore();
+  
+}
+
+function LEGBYES() {
+  currentTeam.score += 1;
+  currentTeam.balls++;
+  updateScore();
+  updateOvers();
+}
+
+function BYES() {
+  currentTeam.score += 1;
+  currentTeam.balls++;
+  updateScore();
+  updateOvers();
+}
+
+function out() {
+  currentBatsman.out = true;
+  currentTeam.wickets++;
+  updateScore();
+  updateOvers();
+  checkForEndOfInnings();
+}
+
+function updateScore() {
+  document.getElementById("team-a-runs").innerHTML = teamA.score;
+  document.getElementById("team-b-runs").innerHTML = teamB.score;
+}
+
+// function updateOvers() {
+//   currentTeam.overs = parseFloat(currentTeam.balls / 6).toFixed(1);
+//   document.querySelector("#overs li").textContent = `From ${currentTeam.overs}/${currentTeam.balls} Overs`;
+// }
+// function updateOvers() {
+//   const balls = currentTeam.balls % MAX_BALLS_PER_OVER;
+//   const overs = (currentTeam.balls / MAX_BALLS_PER_OVER).toFixed(1);
+//   const oversText = `${overs}/${MAX_OVERS_PER_INNINGS}`;
+//   const oversBallsText = `${balls}/${MAX_BALLS_PER_OVER}`;
+//   const oversDisplayText = `${oversText} (${oversBallsText})`;
+//   document.querySelector("#overs li").textContent = `From ${oversDisplayText} Overs`;
+// }
+
+function updateOvers() {
+  loop=0
+  const ballsInOver = currentTeam.balls % MAX_BALLS_PER_OVER;
+  const completedOvers = Math.floor(currentTeam.balls / MAX_BALLS_PER_OVER);
+  const oversText = `${completedOvers}.${ballsInOver}/${MAX_OVERS_PER_INNINGS}`;
+
+  
+    document.querySelector("#overs li").textContent = `From ${oversText} Overs`;
+  if (completedOvers >= MAX_OVERS_PER_INNINGS) {
+    checkForEndOfInnings();
+  }
+  }
+  
+
+
+function checkForWicket() {
+  if (currentBatsman.runs === 0 || currentBatsman.balls === 6 || currentBatsman.out) {
+    currentTeam.wickets++;
+    currentBatsman = {
+      name: "",
+      runs: 0,
+      balls: 0,
+      out: false
+    };
+    if (currentTeam.wickets === 10) {
+      checkForEndOfInnings();
+    }
+  }
+}
+
+function checkForEndOfInnings() {
+  const completedOvers = Math.floor(currentTeam.balls / MAX_BALLS_PER_OVER);
+  if (teamB.score >= teamA.score || completedOvers === MAX_OVERS_PER_INNINGS || currentTeam.balls === MAX_OVERS_PER_INNINGS * MAX_BALLS_PER_OVER) {
+    // End of innings
+    currentTeam = currentTeam === teamA ? teamB : teamA;
+    if (currentTeam === teamB && currentBatsman.out && currentTeam.score < teamA.score) {
+      endMatch();
+    }
+    currentBatsman = {
+      name: "",
+      runs: 0,
+      balls: 0,
+      out: false
+    };
+    updateScore();
+    updateOvers();
+    alert(`End of innings for ${currentTeam.name}`);
+
+    if (currentTeam === teamB && teamB.score > teamA.score) {
+      alert(`Team B won by ${teamB.score - teamA.score} runs`);
+
+    } else if (currentTeam === teamA && teamB.score !=0 && teamA.score > teamB.score) {
+      alert(`Team A won by ${teamA.score - teamB.score} runs`);
+    } else if (currentTeam === teamB && teamB.score >= teamA.score) {
+      alert(`Team B is the winner!`);
+      endMatch();
+    }
+  }
+}
+
+// function checkForEndOfInnings() {
+//   const completedOvers = Math.floor(currentTeam.balls / MAX_BALLS_PER_OVER);
+//   if (completedOvers === MAX_OVERS_PER_INNINGS || currentTeam.balls === MAX_OVERS_PER_INNINGS * MAX_BALLS_PER_OVER) {
+//     // End of innings
+    
+//     currentTeam = currentTeam === teamA ? teamB : teamA;
+//     currentBatsman = {
+//       name: "",
+//       runs: 0,
+//       balls: 0,
+//       out: false
+//     };
+//     updateScore();
+//     updateOvers();
+//     getWinningTeam();
+//     alert(`End of innings for ${currentTeam.name}`);
+//   } else if (currentTeam.balls % MAX_BALLS_PER_OVER === 0) {
+//     // End of over
+//     updateOvers();
+//   } else {
+//     const ballsInOver = currentTeam.balls % MAX_BALLS_PER_OVER;
+//     const oversText = `${completedOvers}.${ballsInOver}/${MAX_OVERS_PER_INNINGS}`;
+//     document.querySelector("#overs li").textContent = `From ${oversText} Overs`;
+//   }
+// }
+
+function getWinningTeam() {
+  if (teamA.score > teamB.score) {
+    endMatch()
+    return teamA;
+    
+  } else if (teamB.score > teamA.score) {
+    endMatch()
+    return teamB;
+  } else {
+    return null;
+  }
+}
+function endMatch() {
+  // End of match
+  const winningTeam = getWinningTeam();
+  if (winningTeam) {
+    alert(`${winningTeam.name} won by ${winningTeam.score - (winningTeam === teamA ? teamB.score : teamA.score)} runs`);
+  } else {
+    alert("Match tied");
+  }
+}
+
+
+
+    </script> -->
+    
+<script>
+  // initial state
+  let teamA = {runs: 0, wickets: 0, overs: 0, balls: 0};
+  let teamB = {runs: 0, wickets: 0, overs: 0, balls: 0};
+  let innings = 1;
+  let maxOvers = 1;
+
+  // helper functions
+  function updateScore() {
+    // update team A score
+    document.getElementById("team-a-runs").innerText = teamA.runs + "/" + teamA.wickets;
+
+    // update team B score
+    document.getElementById("team-b-runs").innerText = teamB.runs + "/" + teamB.wickets;
+
+    // update overs
+    const oversStr = `${teamA.overs}.${teamA.balls}`;
+    document.querySelector("#overs li").innerText = `From ${oversStr} Overs`;
+
+    // check if innings is complete
+    if (teamA.overs === maxOvers) {
+      endInnings();
+    }
+  }
+
+  function score(run) {
+    // update score based on run
+    if (innings === 1) {
+      teamA.runs += run;
+      teamA.balls += 1;
+      if (teamA.balls === 6) {
+        teamA.overs += 1;
+        teamA.balls = 0;
+      }
+     
+    } else if (innings === 2) {
+      teamB.runs += run;
+      teamB.balls += 1;
+      if (teamB.balls === 6) {
+        teamB.overs += 1;
+        teamB.balls = 0;
+      }
+      if(team.overs>=maxOvers){
+        EndInnings();
+      }
+    }
+    if (teamA.overs === maxOvers) {
+      endInnings();
+    }
+    updateScore();
+  }
+
+  function Wide() {
+    // add one extra run to team's score and one extra ball
+    if (innings === 1) {
+      teamA.runs += 1;
+      teamA.balls += 1;
+    } else if (innings === 2) {
+      teamB.runs += 1;
+      teamB.balls += 1;
+    }
+
+    updateScore();
+  }
+
+  function NOBALL() {
+    // add one extra run to team's score and one extra ball
+    if (innings === 1) {
+      teamA.runs += 1;
+      teamA.balls += 1;
+    } else if (innings === 2) {
+      teamB.runs += 1;
+      teamB.balls += 1;
+    }
+
+    updateScore();
+  }
+
+  function LEGBYES() {
+    // add one extra run to team's score
+    if (innings === 1) {
+      teamA.runs += 1;
+    } else if (innings === 2) {
+      teamB.runs += 1;
+    }
+
+    updateScore();
+  }
+
+  function out() {
+    // add one wicket to team's score
+    if (innings === 1) {
+      teamA.wickets += 1;
+    } else if (innings === 2) {
+      teamB.wickets += 1;
+    }
+
+    updateScore();
+  }
+
+  function Strikerchange() {
+    // code to change striker
+  }
+
+  function ChangeBowler() {
+    // code to change bowler
+  }
+
+  function VerifyScore() {
+    // code to verify score
+  }
+
+  function Undo() {
+    // code to undo last score
+  }
+
+  function EndInnings() {
+    if (innings === 1) {
+    innings = 2;
+    currentBowlerIndex = 0;
+    strikerIndex = 0;
+    nonStrikerIndex = 1;
+    runs = 0;
+    wickets = 0;
+    overs = 0;
+    balls = 0;
+    teamAScore = runs;
+    updateTeamScore();
+    updateCommentary(`End of innings ${innings - 1}`);
+    updateOvers();
+    updateStriker();
+    updateBowler();
+  } else if (innings === 2) {
+    // game is over, determine winner and display message
+    let winner = "";
+    if (teamA.runs > teamB.runs) {
+      winner = "Team A wins!";
+    } else if (teamB.runs > teamA.runs) {
+      winner = "Team B wins!";
+    } else {
+      winner = "Match tied!";
+    }
+    document.getElementById("target").innerText = winner;
+  }
+}
+
+
+      </script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      /* Navbar styles */
+      .navbar {
+        background-color: black;
+        overflow: hidden;
+      }
+      .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+      .navbar a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+      .active {
+        background-color: #4caf50;
+        color: white;
+      }
+      h1 {
+        text-align: center;
+      }
+
+      #teams {
+        margin: 20px;
+        text-align: center;
+      }
+
+      #teams ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: inline-block;
+      }
+
+      #teams li {
+        display: inline-block;
+        margin-right: 20px;
+      }
+      #overs {
+        margin: 20px;
+        text-align: center;
+      }
+
+      #overs ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: inline-block;
+      }
+      #overs li {
+        display: inline-block;
+        margin-right: 20px;
+      }
+
+      #scoreboard {
+        margin: 20px;
+      }
+
+      #scoreboard table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      #scoreboard th,
+      #scoreboard td {
+        padding: 10px;
+        text-align: center;
+      }
+
+      #scoreboard th {
+        background-color: #f2f2f2;
+      }
+
+      #scoreboard td {
+        border: 1px solid #ddd;
+      }
+
+      #team-a-runs,
+      #team-b-runs {
+        font-weight: bold;
+      }
+
+      #team-a-wickets,
+      #team-b-wickets {
+        color: red;
+      }
+
+      #team-a-overs,
+      #team-b-overs {
+        font-style: italic;
+      }
+
+      #batters-container {
+        width: 50%;
+        padding: 20px;
+        box-sizing: border-box; /* add this line to fix the width issue */
+        float: left;
+      }
+
+      #batters-container table {
+        border-collapse: collapse;
+        margin-left: 60px;
+      }
+
+      #batters-container th,
+      #batters-container td {
+        border: 1px solid black;
+        padding: 10px;
+      }
+
+      #batters-container th {
+        background-color: #f2f2f2; /* Light gray background for table header */
+      }
+
+      #batters-container td.runs {
+        font-weight: bold;
+      }
+      #batters-container td.runs,
+      #batters-container td.balls-faced,
+      #batters-container td.fours,
+      #batters-container td.sixes,
+      #batters-container td.strike-rate {
+        font-weight: bold;
+      }
+
+      #batters-container td.runs,
+      #batters-container td.balls-faced,
+      #batters-container td.fours,
+      #batters-container td.sixes {
+        text-align: center;
+      }
+      #batters-container td.strike-rate {
+        text-align: right;
+      }
+
+      #batters-container td.fours,
+      #batters-container td.sixes {
+        color: green;
+      }
+
+      #batters-container h2 {
+        margin-left: 60px;
+      }
+
+      #bowlers-container table {
+        border-collapse: collapse;
+        margin-left: 40px;
+      }
+
+      #bowlers-container h2 {
+        margin-left: 40px;
+      }
+      #bowlers-container {
+        width: 50%;
+        padding: 20px;
+        box-sizing: border-box;
+        float: left;
+      }
+      #bowlers-container th,
+      #bowlers-container td {
+        border: 1px solid black;
+        padding: 10px;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      /* overs timeline */
+      h1 {
+        text-align: center;
+        padding: 10px;
+        background-color: black;
+        color: #fff;
+        margin: 30px;
+      }
+      .over-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .over-runs {
+        font-size: 64px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+      }
+      .label {
+        font-size: 24px;
+        color: #ccc;
+        margin-bottom: 20px;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px 10px;
+        background-color: #333;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+      .button:hover {
+        background-color: #666;
+      }
+      .ball {
+        display: inline-block;
+        font-size: 16px;
+        margin: 0 5px;
+        color: #ccc;
+      }
+      .runs-container {
+        margin-top: 20px;
+      }
+      /* score buttons */
+      #score-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+        /* margin-left: 20px; */
+      }
+
+      #score-buttons button {
+        padding: 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        background-color: #4caf50;
+        color: black;
+        cursor: pointer;
+        margin-left: 20px;
+      }
+
+      #score-buttons button:hover {
+        background-color: black;
+        color: white;
+      }
+
+      /* Edting buttons */
+      #editing-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 60px;
+      }
+
+      #editing-buttons button {
+        padding: 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        background-color: black;
+        color: white;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+
+      #editing-buttons button:hover {
+        background-color: #3e8e41;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+
+    <nav class="navbar">
+      <a class="active" href="#">CricScorer</a>
+      <a href="#">Live Score</a>
+      <a href="#">Matches</a>
+      <a href="#">Teams</a>
+      <a href="#">Players</a>
+      <!-- <a href="http://127.0.0.1:8000">Sign-Up</a> -->
+    </nav>
+
+    <div id="teams">
+      <h2>Teams Playing:</h2>
+      <div id="Matchid">Match ID:- {{match.id}}</div>
+      <ul>
+        <li>{{ match.team_1 }}</li>
+        <li>VS</li>
+        <li>{{ match.team_2 }}</li>
+      </ul>
+    </div>
+    <div id="teams">
+      <ul>
+        <li>{{ match.team_1 }}- <span id="team-a-runs">0</span> runs</li>
+        <li>{{ match.team_2 }}- <span id="team-b-runs">0</span> runs</li>
+      </ul>
+    </div>
+    <div id="overs">
+      <ul>
+        <li >From 0/0 Overs</li>
+      </ul>
+    </div>
+
+    <div class="container">
+      <div id="batters-container">
+        <h2>Batters Stats:</h2>
+        <table>
+          <tr>
+            <td colspan="5">{{ team_a }} Batters</td>
+          </tr>
+          <tr>
+            <th>Player Name</th>
+            <th>Runs</th>
+            <th>Balls Faced</th>
+            <th>Fours</th>
+            <th>Sixes</th>
+          </tr>
+       <tbody>
+        
+        {% for batter in team_a_batters %}
+        <tr>
+          <td>{{ batter.Player}}</td>
+          <td>{{ batter.runs }}</td>
+          <td>{{ batter.balls_faced }}</td>
+          <td>{{ batter.fours }}</td>
+          <td>{{ batter.sixes }}</td>
+        </tr>
+        {% endfor %}
+       
+      </tbody>
+      <table>
+        <tr>
+          <td colspan="5">{{team_b}} Batters</td>
+        </tr>
+        <tr>
+          <th>Player Name</th>
+          <th>Runs</th>
+          <th>Balls Faced</th>
+          <th>Fours</th>
+          <th>Sixes</th>
+        </tr>
+     <tbody>{% for batter in team_b_batters %}
+      <tr>
+        <td>{{ batter.player_name }}</td>
+        <td>{{ batter.runs }}</td>
+        <td>{{ batter.balls_faced }}</td>
+        <td>{{ batter.fours }}</td>
+        <td>{{ batter.sixes }}</td>
+      </tr>
+      {% endfor %} 
+     </tbody>
+      </table>
+  
+        </table>
+      </div>
+      
+      <div id="bowlers-container">
+        <h2>Bowlers Stats:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Player Name</th>
+              <th>Overs</th>
+              <th>Maidens</th>
+              <th>Runs</th>
+              <th>Wickets</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td colspan="5">{{ team_a }} Bowlers</td>
+            </tr>
+            {% for bowler in team_a_bowlers %}
+            <tr>
+              <td>{{ bowler.player_name }}</td>
+              <td>{{ bowler.overs }}</td>
+              <td>{{ bowler.maidens }}</td>
+              <td>{{ bowler.runs_conceded }}</td>
+              <td>{{ bowler.wickets }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+              <td colspan="5">{{ team_b }} Bowlers</td>
+            </tr>
+            {% for bowler in team_b_bowlers %}
+            <tr>
+              <td>{{ bowler.player_name }}</td>
+              <td>{{ bowler.overs }}</td>
+              <td>{{ bowler.maidens }}</td>
+              <td>{{ bowler.runs_conceded }}</td>
+              <td>{{ bowler.wickets }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+         
+     
+        </table>
+      </div>
+    </div>
+    <div>
+      <h1>Press Buttons below to score:</h1>
+      <div id="score-buttons">
+        <button onclick="score(0)">0</button>
+        <button onclick="score(1)">1</button>
+        <button onclick="score(2)">2</button>
+        <button onclick="score(3)">3</button>
+        <button onclick="score(4)">4</button>
+        <button onclick="score(5)">5</button>
+        <button onclick="score(6)">6</button>
+        <button onclick="Wide()">Wide</button>
+        <button onclick="NOBALL()">NO BALL</button>
+        <button onclick="LEGBYES()">LEG BYES</button>
+        <button onclick="score(4)">BYES</button>
+        <button onclick="out()">Out</button>
+      </div>
+    </div>
+
+    <div id="editing-buttons">
+      <button onclick="Strikerchange()">Strikerchange</button>
+      <button onclick="ChangeBowler()">ChangeBowler</button>
+      <button onclick="VerifyScore()">VerifyScore</button>
+      <button onclick="Undo()">Undo</button>
+      <button onclick="EndInnings()">EndInnings</button>
+      <button onclick="Pause()">Pause</button>
+    </div>
+
+   
+  </body>
+  
+  
+</html>
+
+
+ <!-- <div> -->
+    <!-- <h1>Runs Scored Ball by Ball</h1>
+				<div class="over-container">
+					<div class="over-runs">0</div>
+					<div class="label">Runs in Current Over</div>
+					<a href="#" class="button" id="addRuns">Add Runs</a>
+					<div class="runs-container">
+						<span class="ball">0</span>
+					</div>
+				</div>
+				<script>
+					var runs = 0;
+					var runsElem = document.querySelector('.runs');
+					var runsContainer = document.querySelector('.runs-container');
+			
+					document.querySelector('#addRuns').addEventListener('click', function(e) {
+						e.preventDefault();
+						runs++;
+						runsElem.innerText = runs;
+			
+						// add the run to the ball by ball display
+						var ballElem = document.createElement('span');
+						ballElem.classList.add('ball');
+						ballElem.innerText = runs;
+						runsContainer.appendChild(ballElem);
+					});
+				</script></div> -->

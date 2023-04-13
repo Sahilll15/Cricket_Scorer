@@ -1,5 +1,5 @@
 from django import forms
-from . models import Tournament, Team
+from . models import Tournament, Team,Player
 
 
 class TournamentForms(forms.ModelForm):
@@ -14,13 +14,15 @@ class TeamForm(forms.ModelForm):
 
     class Meta:
         model = Team
-        fields = ['name', 'captian_name', 'captian_email', 'captian_phone']
+        fields = ['name', 'captian_name' ]
+
+    
 
 class PlayerForm(forms.ModelForm):
-
     class Meta:
-        model = Team
-        fields = ['name']
+        model = Player
+        fields = ['name' , 'team']
+
 # from django import forms
 
 # class BattingScorecardForm(forms.ModelForm):

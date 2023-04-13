@@ -1,295 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <title>Cricket Scoring Application</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      /* Navbar styles */
-      .navbar {
-        background-color: black;
-        overflow: hidden;
-      }
-      .navbar a {
-        float: left;
-        display: block;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 17px;
-      }
-      .navbar a:hover {
-        background-color: #ddd;
-        color: black;
-      }
-      .active {
-        background-color: #4caf50;
-        color: white;
-      }
-      h1 {
-        text-align: center;
-      }
+    <link rel="stylesheet" type="text/css" href="{% static 'scoring/scoring.css' %}">
+   
 
-      #teams {
-        margin: 20px;
-        text-align: center;
-      }
-
-      #teams ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: inline-block;
-      }
-
-      #teams li {
-        display: inline-block;
-        margin-right: 20px;
-      }
-      #overs {
-        margin: 20px;
-        text-align: center;
-      }
-
-      #overs ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: inline-block;
-      }
-      #overs li {
-        display: inline-block;
-        margin-right: 20px;
-      }
-
-      #scoreboard {
-        margin: 20px;
-      }
-
-      #scoreboard table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-
-      #scoreboard th,
-      #scoreboard td {
-        padding: 10px;
-        text-align: center;
-      }
-
-      #scoreboard th {
-        background-color: #f2f2f2;
-      }
-
-      #scoreboard td {
-        border: 1px solid #ddd;
-      }
-
-      #team-a-runs,
-      #team-b-runs {
-        font-weight: bold;
-      }
-
-      #team-a-wickets,
-      #team-b-wickets {
-        color: red;
-      }
-
-      #team-a-overs,
-      #team-b-overs {
-        font-style: italic;
-      }
-
-      #batters-container {
-        width: 50%;
-        padding: 20px;
-        box-sizing: border-box; /* add this line to fix the width issue */
-        float: left;
-      }
-
-      #batters-container table {
-        border-collapse: collapse;
-        margin-left: 60px;
-      }
-
-      #batters-container th,
-      #batters-container td {
-        border: 1px solid black;
-        padding: 10px;
-      }
-
-      #batters-container th {
-        background-color: #f2f2f2; /* Light gray background for table header */
-      }
-
-      #batters-container td.runs {
-        font-weight: bold;
-      }
-      #batters-container td.runs,
-      #batters-container td.balls-faced,
-      #batters-container td.fours,
-      #batters-container td.sixes,
-      #batters-container td.strike-rate {
-        font-weight: bold;
-      }
-
-      #batters-container td.runs,
-      #batters-container td.balls-faced,
-      #batters-container td.fours,
-      #batters-container td.sixes {
-        text-align: center;
-      }
-      #batters-container td.strike-rate {
-        text-align: right;
-      }
-
-      #batters-container td.fours,
-      #batters-container td.sixes {
-        color: green;
-      }
-
-      #batters-container h2 {
-        margin-left: 60px;
-      }
-
-      #bowlers-container table {
-        border-collapse: collapse;
-        margin-left: 40px;
-      }
-
-      #bowlers-container h2 {
-        margin-left: 40px;
-      }
-      #bowlers-container {
-        width: 50%;
-        padding: 20px;
-        box-sizing: border-box;
-        float: left;
-      }
-      #bowlers-container th,
-      #bowlers-container td {
-        border: 1px solid black;
-        padding: 10px;
-      }
-
-      .container {
-        display: flex;
-        flex-wrap: wrap;
-      }
-      /* overs timeline */
-      h1 {
-        text-align: center;
-        padding: 10px;
-        background-color: black;
-        color: #fff;
-        margin: 30px;
-      }
-      .over-container {
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-      }
-      .over-runs {
-        font-size: 64px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 10px;
-      }
-      .label {
-        font-size: 24px;
-        color: #ccc;
-        margin-bottom: 20px;
-      }
-      .button {
-        display: inline-block;
-        padding: 10px 10px;
-        background-color: #333;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-        font-size: 18px;
-        margin-bottom: 20px;
-      }
-      .button:hover {
-        background-color: #666;
-      }
-      .ball {
-        display: inline-block;
-        font-size: 16px;
-        margin: 0 5px;
-        color: #ccc;
-      }
-      .runs-container {
-        margin-top: 20px;
-      }
-      /* score buttons */
-      #score-buttons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-top: 20px;
-        /* margin-left: 20px; */
-      }
-
-      #score-buttons button {
-        padding: 20px;
-        border: none;
-        border-radius: 5px;
-        font-size: 18px;
-        font-weight: bold;
-        background-color: #4caf50;
-        color: black;
-        cursor: pointer;
-        margin-left: 20px;
-      }
-
-      #score-buttons button:hover {
-        background-color: black;
-        color: white;
-      }
-
-      /* Edting buttons */
-      #editing-buttons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-top: 60px;
-      }
-
-      #editing-buttons button {
-        padding: 20px;
-        border: none;
-        border-radius: 5px;
-        font-size: 18px;
-        font-weight: bold;
-        background-color: black;
-        color: white;
-        cursor: pointer;
-        margin-left: 10px;
-      }
-
-      #editing-buttons button:hover {
-        background-color: #3e8e41;
-      }
-    </style>
+   
   </head>
   <body>
     <!-- Navbar -->
 
     <nav class="navbar">
-      <a class="active" href="#">CricScorer</a>
+      <a class="active" href="{% url 'score'%}">CricScorer</a>
       <a href="#">Live Score</a>
       <a href="#">Matches</a>
       <a href="#">Teams</a>
@@ -297,12 +20,9 @@
       <!-- <a href="http://127.0.0.1:8000">Sign-Up</a> -->
     </nav>
 
-    
     <div id="teams">
       <h2>Teams Playing:</h2>
-      <div id="Matchid">
-        Match ID:- {{match.id}}
-      </div>
+      <div id="Matchid">Match ID:- {{match.id}}</div>
       <ul>
         <li>{{ match.team_1 }}</li>
         <li>VS</li>
@@ -317,7 +37,7 @@
     </div>
     <div id="overs">
       <ul>
-        <li>From 0.0/0.0 Overs</li>
+        <li >From 0/0 Overs</li>
       </ul>
     </div>
 
@@ -326,56 +46,95 @@
         <h2>Batters Stats:</h2>
         <table>
           <tr>
-            <th>Batsman</th>
-            <th>Runs Scored</th>
+            <td colspan="5">{{ team_a }} Batters</td>
+          </tr>
+          <tr>
+            <th>Player Name</th>
+            <th>Runs</th>
             <th>Balls Faced</th>
-            <th>4s</th>
-            <th>6s</th>
-            <th>Strike Rate</th>
+            <th>Fours</th>
+            <th>Sixes</th>
           </tr>
-          <tr>
-            <td>Batter A</td>
-            <td class="runs">0</td>
-            <td class="balls-faced">0</td>
-            <td class="fours">0</td>
-            <td class="sixes">0</td>
-            <td class="strike-rate">0.00</td>
-          </tr>
-          <tr>
-            <td>Batter B</td>
-            <td class="runs">0</td>
-            <td class="balls-faced">0</td>
-            <td class="fours">0</td>
-            <td class="sixes">0</td>
-            <td class="strike-rate">0.00</td>
-          </tr>
+       <tbody>
+        
+        {% for batter in team_a_batters %}
+        <tr>
+          <td>{{ batter.Player}}</td>
+          <td>{{ batter.runs }}</td>
+          <td>{{ batter.balls_faced }}</td>
+          <td>{{ batter.fours }}</td>
+          <td>{{ batter.sixes }}</td>
+        </tr>
+        {% endfor %}
+       
+      </tbody>
+      <table>
+        <tr>
+          <td colspan="5">{{team_b}} Batters</td>
+        </tr>
+        <tr>
+          <th>Player Name</th>
+          <th>Runs</th>
+          <th>Balls Faced</th>
+          <th>Fours</th>
+          <th>Sixes</th>
+        </tr>
+     <tbody>{% for batter in team_b_batters %}
+      <tr>
+        <td>{{ batter.player_name }}</td>
+        <td>{{ batter.runs }}</td>
+        <td>{{ batter.balls_faced }}</td>
+        <td>{{ batter.fours }}</td>
+        <td>{{ batter.sixes }}</td>
+      </tr>
+      {% endfor %} 
+     </tbody>
+      </table>
+  
         </table>
       </div>
+      
       <div id="bowlers-container">
         <h2>Bowlers Stats:</h2>
         <table>
-          <tr>
-            <th>Bowler</th>
-            <th>Overs</th>
-            <th>Runs Conceded</th>
-            <th>Wickets</th>
-            <th>Economy Rate</th>
-          </tr>
-          <tr>
-            <td>Bowler A</td>
-            <td class="overs">0.0</td>
-            <td class="runs-conceded">0</td>
-            <td class="wickets">0</td>
-            <td class="economy-rate">0.00</td>
-          </tr>
-          <!-- <tr>
-            <td>Bowler B</td>
-            <td class="overs">0.0</td>
-            <td class="maidens">0</td>
-            <td class="runs-conceded">0</td>
-            <td class="wickets">0</td>
-            <td class="economy-rate">0.00</td>
-          </tr> -->
+          <thead>
+            <tr>
+              <th>Player Name</th>
+              <th>Overs</th>
+              <th>Maidens</th>
+              <th>Runs</th>
+              <th>Wickets</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td colspan="5">{{ team_a }} Bowlers</td>
+            </tr>
+            {% for bowler in team_a_bowlers %}
+            <tr>
+              <td>{{ bowler.player_name }}</td>
+              <td>{{ bowler.overs }}</td>
+              <td>{{ bowler.maidens }}</td>
+              <td>{{ bowler.runs_conceded }}</td>
+              <td>{{ bowler.wickets }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+              <td colspan="5">{{ team_b }} Bowlers</td>
+            </tr>
+            {% for bowler in team_b_bowlers %}
+            <tr>
+              <td>{{ bowler.player_name }}</td>
+              <td>{{ bowler.overs }}</td>
+              <td>{{ bowler.maidens }}</td>
+              <td>{{ bowler.runs_conceded }}</td>
+              <td>{{ bowler.wickets }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+         
+     
         </table>
       </div>
     </div>
@@ -406,32 +165,9 @@
       <button onclick="Pause()">Pause</button>
     </div>
 
-    <!-- <div> -->
-    <!-- <h1>Runs Scored Ball by Ball</h1>
-				<div class="over-container">
-					<div class="over-runs">0</div>
-					<div class="label">Runs in Current Over</div>
-					<a href="#" class="button" id="addRuns">Add Runs</a>
-					<div class="runs-container">
-						<span class="ball">0</span>
-					</div>
-				</div>
-				<script>
-					var runs = 0;
-					var runsElem = document.querySelector('.runs');
-					var runsContainer = document.querySelector('.runs-container');
-			
-					document.querySelector('#addRuns').addEventListener('click', function(e) {
-						e.preventDefault();
-						runs++;
-						runsElem.innerText = runs;
-			
-						// add the run to the ball by ball display
-						var ballElem = document.createElement('span');
-						ballElem.classList.add('ball');
-						ballElem.innerText = runs;
-						runsContainer.appendChild(ballElem);
-					});
-				</script></div> -->
+   
   </body>
+  
+  
 </html>
+
