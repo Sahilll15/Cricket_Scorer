@@ -34,16 +34,21 @@
     </div>
     <div id="teams">
       <ul>
-        <li>{{ match.team_1 }}- <span id="team-a-runs">0</span><span> /</span> <span id="team-a-wickets">0</span> runs</li>
+        <li ><span id="team-a-name">{{ match.team_1 }}</span> - <span id="team-a-runs">0</span><span> /</span> <span id="team-a-wickets">0</span> runs</li>
         
-        <li>{{ match.team_2 }}- <span id="team-b-runs">0</span> <span> /</span> <span id="team-a-wickets">0</span> runs</li>
+        <li ><span id="team-b-name">{{ match.team_2 }}</span> - <span id="team-b-runs">0</span> <span> /</span> <span id="team-b-wickets">0</span> runs</li>
       </ul>
+      
     </div>
+   <span style="padding-left: 700px;" >Target: <span id="Target" >0</span></span>
     <div id="overs">
       <ul>
         <li > From 0.0/0.0 Overs</li>
+        
       </ul>
     </div>
+
+  
 
     <div class="container">
       <div id="batters-container">
@@ -163,10 +168,11 @@
     <div id="editing-buttons">
       <button onclick="Strikerchange()">Strikerchange</button>
       <button onclick="ChangeBowler()">ChangeBowler</button>
-      <button onclick="VerifyScore()">VerifyScore</button>
-      <button onclick="Undo()">Undo</button>
-      <button onclick="EndInnings()">EndInnings</button>
-      <button onclick="Pause()">Pause</button>
+      <!-- <button onclick="VerifyScore()">VerifyScore</button> -->
+      <!-- <button onclick="Undo()">Undo</button> -->
+      <button onclick="displayWinner()">EndInnings</button>
+      <form action=""><button name="AddData">AddData</button></form>
+      
     </div>
     <div id="myModal" class="modal">
 

@@ -1,4 +1,8 @@
 
+.Target{
+  padding-right: 200px;
+}
+
 
 body {
   font-family: Arial, sans-serif;
@@ -62,6 +66,7 @@ h1 {
   display: inline-block;
   margin-right: 20px;
 }
+
 
 #scoreboard {
   margin: 20px;
