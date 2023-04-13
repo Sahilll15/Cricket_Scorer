@@ -5,6 +5,7 @@
     <title>Cricket Scoring Application</title>
     <link rel="stylesheet" type="text/css" href="{% static 'scoring/scoring.css' %}">
    
+   
 
    
   </head>
@@ -12,7 +13,7 @@
     <!-- Navbar -->
 
     <nav class="navbar">
-      <a href=""></a>
+     
       <a class="active" href="{% url 'score'%}">CricScorer</a>
       <a href="#">Live Score</a>
       <a href="#">Matches</a>
@@ -22,8 +23,9 @@
     </nav>
 
     <div id="teams">
-      <h2>Teams Playing:</h2>
+     
       <div id="Matchid">Match ID:- {{match.id}}</div>
+      <h2>Teams Playing:</h2>
       <ul>
         <li>{{ match.team_1 }}</li>
         <li>VS</li>
@@ -32,13 +34,14 @@
     </div>
     <div id="teams">
       <ul>
-        <li>{{ match.team_1 }}- <span id="team-a-runs">0</span> runs</li>
-        <li>{{ match.team_2 }}- <span id="team-b-runs">0</span> runs</li>
+        <li>{{ match.team_1 }}- <span id="team-a-runs">0</span><span> /</span> <span id="team-a-wickets">0</span> runs</li>
+        
+        <li>{{ match.team_2 }}- <span id="team-b-runs">0</span> <span> /</span> <span id="team-a-wickets">0</span> runs</li>
       </ul>
     </div>
     <div id="overs">
       <ul>
-        <li >From 0/0 Overs</li>
+        <li > From 0.0/0.0 Overs</li>
       </ul>
     </div>
 
@@ -149,11 +152,11 @@
         <button onclick="score(4)">4</button>
         <button onclick="score(5)">5</button>
         <button onclick="score(6)">6</button>
-        <button onclick="Wide()">Wide</button>
-        <button onclick="NOBALL()">NO BALL</button>
+        <button onclick="widenNoball()">Wide</button>
+        <button onclick="widenNoball()">NO BALL</button>
         <button onclick="LEGBYES()">LEG BYES</button>
         <button onclick="score(4)">BYES</button>
-        <button onclick="out()">Out</button>
+        <button onclick="wicket()">Out</button>
       </div>
     </div>
 
@@ -165,10 +168,20 @@
       <button onclick="EndInnings()">EndInnings</button>
       <button onclick="Pause()">Pause</button>
     </div>
+    <div id="myModal" class="modal">
 
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="modal-message"></p>
+      </div>
+    
+    </div>
    
   </body>
   
   
 </html>
 
+
+<script src="{% static 'js/scoring.js' %}"></script>
