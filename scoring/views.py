@@ -1,3 +1,10 @@
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Makematch
+\
+import random
+from .models import Makematch, Tournament, Team
+from django.http import JsonResponse
 from .forms import PlayerForm
 from .models import Team
 from django.shortcuts import render, redirect
@@ -10,7 +17,6 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import TournamentForms, TeamForm
 from .models import *
 from django.contrib.auth.decorators import login_required
-
 
 
 # Create your views here.
@@ -78,7 +84,6 @@ def entermatch(request):
 def list_match(request):
     tournaments = Tournament.objects.all()
     teams = Team.objects.all()
-
 
     context = {
         'tournaments': tournaments,
@@ -160,7 +165,8 @@ def match_detail(request, match_id):
 
 
 def scoring(request, match_id):
-    match = Makematch.objects.get(id=match_id)
+    match = get_object_or_404(Makematch, id=match_id)
+    tournaments = Tournament.objects.all()
 
     team_a = match.team_1
     team_b = match.team_2
@@ -180,7 +186,8 @@ def scoring(request, match_id):
                'team_a_batters': team_a_batters,
                'team_b_batters': team_b_batters,
                'team_a_bowlers': team_a_bowlers,
-               'team_a_bowlers': team_a_bowlers
+               'team_a_bowlers': team_a_bowlers,
+               'tournaments': tournaments,
 
                }
 
@@ -192,7 +199,7 @@ def team_page(request):
 
 
 def add_player(request,):
-   
+
     if request.method == 'POST':
         form = PlayerForm(request.POST)
         if form.is_valid():
@@ -203,3 +210,35 @@ def add_player(request,):
 
     context = {'form': form}
     return render(request, 'scoring/add_player.html', context)
+
+
+# In views.py
+
+
+def add_score(request, match_id):
+    if request.method == 'POST':
+        team_a_runs = request.POST.get('team_a_runs')
+        team_b_runs = request.POST.get('team_b_runs')
+
+        match = get_object_or_404(Makematch, id=match_id)
+
+        # update the scores for the match
+        match.team_a_score += int(team_a_runs)
+        match.team_b_score += int(team_b_runs)
+
+        # determine the winner if both teams have batted once
+        if match.team_a_score > 0 and match.team_b_score > 0:
+            if match.team_a_score > match.team_b_score:
+                match.winner = match.team_1
+            elif match.team_b_score > match.team_a_score:
+                match.winner = match.team_2
+            else:
+                match.winner = None
+
+        match.save()
+
+        return JsonResponse({'success': True})
+
+    # if the request is not a POST, redirect to home page
+    match = get_object_or_404(Makematch, id=match_id)
+    return render(request, 'scoring/scoring.html', {'match': match})

@@ -15,13 +15,12 @@ class Tournament(models.Model):
 
 
 class Team(models.Model):
-    name = models.CharField(max_length=200,unique=True)
+    name = models.CharField(max_length=200, unique=True)
     captian_name = models.CharField(max_length=200, null=True)
-
 
     def __str__(self):
         return self.name
-    
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.captian_name:
@@ -38,37 +37,40 @@ class Makematch(models.Model):
             if not Makematch.objects.filter(match_pin=unique_ref):
                 not_unique = False
         return str(unique_ref)
-    tournament_name = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    tournament_name = models.ForeignKey(
+        Tournament, on_delete=models.CASCADE, blank=True, default=0)
     team_1 = models.ForeignKey(
         Team, related_name="team_1", on_delete=models.CASCADE)
-    team_2= models.ForeignKey(
+    team_2 = models.ForeignKey(
         Team, related_name="team_2", on_delete=models.CASCADE)
     team_a_score = models.IntegerField(default=0)
     team_b_score = models.IntegerField(default=0)
-    # match_pin = models.CharField(
-    #     max_length=10, default=create_new_ref_number, null=True, blank=True)
+
     winner = models.ForeignKey(
         Team, related_name='winner', on_delete=models.CASCADE, null=True, blank=True)
-    
-      
 
     def __str__(self):
-        return f"{self.team_1} vs {self.team_2} ({self.tournament_name})"
+        return f"{self.team_1} vs {self.team_2} ({self.tournament_name}){{self.match_id}}"
 
     def getUrl(self):
         return f'/makematch/{self.id}/scoring/'
+
+    def generate_match_id(sender, instance, *args, **kwargs):
+        if not instance.match_id:
+            # get the total number of matches created in the system
+            total_matches = Makematch.objects.count()
+        # generate a unique match ID based on the total number of matches
+            instance.match_id = f"M{total_matches+1:04d}"
 
 
 class Player(models.Model):
     name = models.CharField(max_length=100)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     captain = models.BooleanField(default=False)
-    
 
     class Meta:
         # Add unique constraint that spans across the name and team fields
         unique_together = ('name', 'team',)
-
 
     def __str__(self):
         return f'{self.name}'

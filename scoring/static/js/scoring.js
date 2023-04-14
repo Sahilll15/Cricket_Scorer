@@ -11,11 +11,11 @@ var Target = 0;
 function score(runs) {
     if (currentInning == 1) {
         if (currentOvers >= maxOvers || EndInnings()) {
-            targetScore=currentScoreA+1;
+            targetScore = currentScoreA + 1;
             var targetElement = document.getElementById("Target");
-            targetElement.textContent =  targetScore;
+            targetElement.textContent = targetScore;
             alert("Maximum overs reached. Cannot score any more runs.");
-            
+
             currentInning = 2;
             currentOvers = 0;
             currentBalls = 0;
@@ -42,6 +42,7 @@ function score(runs) {
 
     }
     updateOver();
+    saveState();
 }
 
 function wideNoball() {
@@ -55,6 +56,7 @@ function wideNoball() {
         scoreElement.textContent = newscore;
     }
     updateOver();
+    saveState();
 }
 
 function widenNoball() {
@@ -67,6 +69,7 @@ function widenNoball() {
         var newscore = parseInt(scoreElement.textContent) + 1;
         scoreElement.textContent = newscore;
     }
+    saveState();
 
 }
 
@@ -88,6 +91,7 @@ function wicket() {
     }
 
     EndInnings();
+    saveState();
 }
 
 function EndInnings() {
@@ -110,7 +114,9 @@ function EndInnings() {
         } else {
             displayWinner();
         }
+
     }
+    saveState();
 }
 
 function updateOver() {
@@ -134,6 +140,7 @@ function updateOver() {
             displayWinner();
         }
     }
+    saveState();
 }
 
 function displayWinner() {
@@ -151,6 +158,7 @@ function displayWinner() {
     } else {
         alert("The match ended in a tie!");
     }
+    saveState();
 }
 
 function displayBWinner() {
@@ -158,4 +166,40 @@ function displayBWinner() {
     if (teamBScore > teamAScore) {
         alert("Team" + teamBname + "wins!");
     }
+    saveState();
 }
+
+function saveState() {
+    localStorage.setItem('currentScoreA', currentScoreA);
+    localStorage.setItem('currentScoreB', currentScoreB);
+    localStorage.setItem('currentWicketsA', currentWicketsA);
+    localStorage.setItem('currentWicketsB', currentWicketsB);
+    localStorage.setItem('currentOvers', currentOvers);
+    localStorage.setItem('currentBalls', currentBalls);
+    localStorage.setItem('maxOvers', maxOvers);
+    localStorage.setItem('currentInning', currentInning);
+    localStorage.setItem('Target', Target);
+}
+
+function loadState() {
+    currentScoreA = parseInt(localStorage.getItem('currentScoreA')) || 0;
+    currentScoreB = parseInt(localStorage.getItem('currentScoreB')) || 0;
+    currentWicketsA = parseInt(localStorage.getItem('currentWicketsA')) || 0;
+    currentWicketsB = parseInt(localStorage.getItem('currentWicketsB')) || 0;
+    currentOvers = parseFloat(localStorage.getItem('currentOvers')) || 0;
+    currentBalls = parseInt(localStorage.getItem('currentBalls')) || 0;
+    maxOvers = parseInt(localStorage.getItem('maxOvers')) || 2;
+    currentInning = parseInt(localStorage.getItem('currentInning')) || 1;
+    Target = parseInt(localStorage.getItem('Target')) || 0;
+
+    // Update UI with loaded state
+    document.getElementById('team-a-runs').textContent = currentScoreA;
+    document.getElementById('team-b-runs').textContent = currentScoreB;
+    document.getElementById('team-a-wickets').textContent = currentWicketsA;
+    document.getElementById('team-b-wickets').textContent = currentWicketsB;
+    document.getElementById('overs').textContent = 'From ' + currentBalls / 6 + '/' + currentOvers + ' Overs';
+    document.getElementById('Target').textContent = Target;
+}
+
+// Call loadState function when page loads
+window.onload = loadState;

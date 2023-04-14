@@ -26,6 +26,9 @@ urlpatterns = [
     path('team_page/', views.team_page, name="team_page"),
     path('add_player/', views.add_player, name="add_player"),
 
+    path('makematch/<int:match_id>/scoring/add_score/',
+         views.add_score, name='add_score'),
+
     # path('score_board/', views.score_board, name="score_board"),
 
 ]
