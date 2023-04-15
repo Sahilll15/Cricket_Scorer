@@ -1,3 +1,6 @@
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Makematch
@@ -150,10 +153,12 @@ def make_match(request):
         match = Makematch.objects.create(
             tournament_name=tournament, team_1=team1, team_2=team2)
         # print(tournament,team1,team2)
+        request.session['clear_storage'] = True
         return redirect('match_detail', match_id=match.id)
     else:
         tournaments = Tournament.objects.all()
         teams = Team.objects.all()
+        request.session['clear_storage'] = True
         context = {'tournaments': tournaments, 'teams': teams}
         return render(request, 'scoring/make_match.html', context)
 
@@ -161,10 +166,12 @@ def make_match(request):
 def match_detail(request, match_id):
     match = Makematch.objects.get(id=match_id)
     context = {'match': match}
+    request.session['clear_storage'] = True
     return render(request, 'scoring/matchtoss.html', context)
 
 
 def scoring(request, match_id):
+    request.session['clear_storage'] = True
     match = get_object_or_404(Makematch, id=match_id)
     tournaments = Tournament.objects.all()
 
@@ -212,9 +219,6 @@ def add_player(request,):
     return render(request, 'scoring/add_player.html', context)
 
 
-# In views.py
-
-
 def add_score(request, match_id):
     if request.method == 'POST':
         team_a_runs = request.POST.get('team_a_runs')
@@ -233,12 +237,16 @@ def add_score(request, match_id):
             elif match.team_b_score > match.team_a_score:
                 match.winner = match.team_2
             else:
-                match.winner = None
+                match.winner = "Tie"
 
         match.save()
 
-        return JsonResponse({'success': True})
+        # add success message to session
+        messages.success(request, 'Score successfully')
+        print(request.session['messages'])  # add this line to check messages
+
+        return redirect('scoring:match_detail', match_id=match.id)
 
     # if the request is not a POST, redirect to home page
     match = get_object_or_404(Makematch, id=match_id)
-    return render(request, 'scoring/scoring.html', {'match': match})
+    return render(request, 'scoring/scoring.html', {'match': match, 'messages': messages.get_messages(request)})

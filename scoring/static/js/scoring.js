@@ -151,15 +151,18 @@ function displayWinner() {
 
     if (teamAScore > teamBScore) {
         alert(`Team ` + teamAname + ` wins!`);
-        return;
+        document.getElementById("winner_id").textContent = teamAname;
     } else if (teamBScore > teamAScore) {
         alert(`Team ` + teamBname + ` wins!`);
-        return;
+        document.getElementById("winner_id").textContent = teamBname;
     } else {
         alert("The match ended in a tie!");
+        document.getElementById("winner_id").textContent = "Tie";
     }
     saveState();
 }
+
+
 
 function displayBWinner() {
     var teamBname = document.getElementById("team-b-name").textContent;
@@ -169,37 +172,56 @@ function displayBWinner() {
     saveState();
 }
 
-function saveState() {
-    localStorage.setItem('currentScoreA', currentScoreA);
-    localStorage.setItem('currentScoreB', currentScoreB);
-    localStorage.setItem('currentWicketsA', currentWicketsA);
-    localStorage.setItem('currentWicketsB', currentWicketsB);
-    localStorage.setItem('currentOvers', currentOvers);
-    localStorage.setItem('currentBalls', currentBalls);
-    localStorage.setItem('maxOvers', maxOvers);
-    localStorage.setItem('currentInning', currentInning);
-    localStorage.setItem('Target', Target);
-}
+// function saveState() {
+//     localStorage.setItem('currentScoreA', currentScoreA);
+//     localStorage.setItem('currentScoreB', currentScoreB);
+//     localStorage.setItem('currentWicketsA', currentWicketsA);
+//     localStorage.setItem('currentWicketsB', currentWicketsB);
+//     localStorage.setItem('currentOvers', currentOvers);
+//     localStorage.setItem('currentBalls', currentBalls);
+//     localStorage.setItem('maxOvers', maxOvers);
+//     localStorage.setItem('currentInning', currentInning);
+//     localStorage.setItem('Target', Target);
+// }
 
-function loadState() {
-    currentScoreA = parseInt(localStorage.getItem('currentScoreA')) || 0;
-    currentScoreB = parseInt(localStorage.getItem('currentScoreB')) || 0;
-    currentWicketsA = parseInt(localStorage.getItem('currentWicketsA')) || 0;
-    currentWicketsB = parseInt(localStorage.getItem('currentWicketsB')) || 0;
-    currentOvers = parseFloat(localStorage.getItem('currentOvers')) || 0;
-    currentBalls = parseInt(localStorage.getItem('currentBalls')) || 0;
-    maxOvers = parseInt(localStorage.getItem('maxOvers')) || 2;
-    currentInning = parseInt(localStorage.getItem('currentInning')) || 1;
-    Target = parseInt(localStorage.getItem('Target')) || 0;
+// function loadState(matchId) {
+//     var storedMatchId = localStorage.getItem('matchId');
+//     if (storedMatchId && storedMatchId !== matchId.toString()) {
+//         localStorage.clear();
+//     }
+//     localStorage.setItem('matchId', matchId);
 
-    // Update UI with loaded state
-    document.getElementById('team-a-runs').textContent = currentScoreA;
-    document.getElementById('team-b-runs').textContent = currentScoreB;
-    document.getElementById('team-a-wickets').textContent = currentWicketsA;
-    document.getElementById('team-b-wickets').textContent = currentWicketsB;
-    document.getElementById('overs').textContent = 'From ' + currentBalls / 6 + '/' + currentOvers + ' Overs';
-    document.getElementById('Target').textContent = Target;
-}
+//     currentScoreA = parseInt(localStorage.getItem('currentScoreA')) || 0;
+//     currentScoreB = parseInt(localStorage.getItem('currentScoreB')) || 0;
+//     currentWicketsA = parseInt(localStorage.getItem('currentWicketsA')) || 0;
+//     currentWicketsB = parseInt(localStorage.getItem('currentWicketsB')) || 0;
+//     currentOvers = parseFloat(localStorage.getItem('currentOvers')) || 0;
+//     currentBalls = parseInt(localStorage.getItem('currentBalls')) || 0;
+//     maxOvers = parseInt(localStorage.getItem('maxOvers')) || 2;
+//     currentInning = parseInt(localStorage.getItem('currentInning')) || 1;
+//     Target = parseInt(localStorage.getItem('Target')) || 0;
+
+//     // Update UI with loaded state
+//     document.getElementById('team-a-runs').textContent = currentScoreA;
+//     document.getElementById('team-b-runs').textContent = currentScoreB;
+//     document.getElementById('team-a-wickets').textContent = currentWicketsA;
+//     document.getElementById('team-b-wickets').textContent = currentWicketsB;
+//     document.getElementById('overs').textContent = 'From ' + currentBalls / 6 + '/' + currentOvers + ' Overs';
+//     document.getElementById('Target').textContent = Target;
+// }
+
+
+// var matchId = document.getElementById('Matchid').getAttribute('data-match-id');
+// loadState(matchId);
 
 // Call loadState function when page loads
-window.onload = loadState;
+// window.onload = loadState;
+
+
+// Call loadState function when page loads
+// window.onload = loadState;
+
+
+function saveState() {
+
+};

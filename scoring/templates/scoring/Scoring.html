@@ -26,7 +26,7 @@
     </nav>
 
     <div id="teams">
-      <div id="Matchid">
+      <div id="Matchid" data-match-id="{{ match.id }}">
         Match ID:- {{match.id}} {% for tournament in tournaments %}
         <br />
         <span name="tournament_name" id="tournament_name"
@@ -59,14 +59,21 @@
       </ul>
     </div>
     <span style="padding-left: 630px">Target: <span id="Target">0</span></span>
-    <span style="padding-left: 40px"
-      >winner: <span name="winner_id" id="winner_id">Team</span>
-    </span>
+    <span style="padding-left: 40px">winner: <span id="winner_id">None</span></span>
+
     <div id="overs">
       <ul>
         <li>From 0.0/0.0 Overs</li>
       </ul>
     </div>
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 
     <div class="container">
       <div id="batters-container">
@@ -161,6 +168,8 @@
         </table>
       </div>
     </div>
+    <div id="message"></div>
+
     <div>
       <h1>Press Buttons below to score:</h1>
       <div id="score-buttons">
@@ -186,7 +195,7 @@
       <!-- <button onclick="Undo()">Undo</button> -->
       <button onclick="displayWinner()">EndInnings</button>
 
-      <form method="POST" action="{% url 'add_score' match_id=match.id %}">
+      <!-- <form method="POST" action="{% url 'add_score' match_id=match.id %}">
         {% csrf_token %}
         <label for="team_a_runs">Team A Runs:</label>
         <input type="number" name="team_a_runs" id="team_a_runs" />
@@ -195,7 +204,8 @@
         <input type="number" name="team_b_runs" id="team_b_runs" />
 
         <button type="submit">Add Score</button>
-      </form>
+      </form> -->
+      <button id="add-score-button">Add Score</button>
     </div>
     <div id="myModal" class="modal">
       <!-- Modal content -->
@@ -206,31 +216,41 @@
     </div>
   </body>
 </html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Add an event listener to the "Add Score" button -->
+
 <script>
   $(document).ready(function () {
-    $("#AddData").click(function (e) {
-      e.preventDefault();
-      var teamARuns = $("#team-a-runs").val();
-      var teamBRuns = $("#team-b-runs").val();
-      var matchId = $("#match-id").val();
+    $("#add-score-button").click(function () {
+      // Get the values of the "team-a-runs" and "team-b-runs" span elements
+      var teamARuns = $("#team-a-runs").text();
+      var teamBRuns = $("#team-b-runs").text();
+
+      // Send the values to the server using an AJAX request
       $.ajax({
-        url: "/add_score/",
-        type: "POST",
+        url: "{% url 'add_score' match_id=match.id %}",
+        method: "POST",
         data: {
           team_a_runs: teamARuns,
           team_b_runs: teamBRuns,
-          match_id: matchId,
-          csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+          csrfmiddlewaretoken: "{{ csrf_token }}",
         },
         success: function (response) {
-          alert("Score added successfully!");
+          // Handle the server response here
         },
         error: function (xhr, status, error) {
-          alert("Error adding score!");
+          // Handle errors here
         },
       });
     });
   });
+
+ 
 </script>
 
+
 <script src="{% static 'js/scoring.js' %}"></script>
+
+
+
