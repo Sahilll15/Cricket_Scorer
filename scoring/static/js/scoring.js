@@ -9,12 +9,15 @@ var currentInning = 1;
 var Target = 0;
 
 function score(runs) {
+    var batsmanSelect = document.getElementById("batsman-select");
+    var selectedBatsman = batsmanSelect.value;
+    var selectedBatsmanRow = document.querySelector(`.batter-row[data-batter-name="${selectedBatsman}"]`);
+
     if (currentInning == 1) {
         if (currentOvers >= maxOvers || EndInnings()) {
             targetScore = currentScoreA + 1;
             var targetElement = document.getElementById("Target");
             targetElement.textContent = targetScore;
-            var batter_runs = document.getElementById
             alert("Maximum overs reached. Cannot score any more runs.");
 
             currentInning = 2;
@@ -23,29 +26,60 @@ function score(runs) {
 
             return;
         }
+
         currentScoreA += runs;
 
         var scoreElement = document.getElementById("team-a-runs");
         scoreElement.textContent = currentScoreA;
-    } else if (currentInning == 2) {
 
+        // Update selected batsman stats
+        selectedBatsmanRow.querySelector(".batter-runs").textContent = parseInt(selectedBatsmanRow.querySelector(".batter-runs").textContent) + runs;
+        selectedBatsmanRow.querySelector(".balls-faced").textContent = parseInt(selectedBatsmanRow.querySelector(".balls-faced").textContent) + 1;
 
+        if (runs == 4) {
+            selectedBatsmanRow.querySelector(".fours").textContent = parseInt(selectedBatsmanRow.querySelector(".fours").textContent) + 1;
+        } else if (runs == 6) {
+            selectedBatsmanRow.querySelector(".sixes").textContent = parseInt(selectedBatsmanRow.querySelector(".sixes").textContent) + 1;
+        }
+
+        var ballsFaced = parseInt(selectedBatsmanRow.querySelector(".balls-faced").textContent);
+        var batterRuns = parseInt(selectedBatsmanRow.querySelector(".batter-runs").textContent);
+        var strikeRate = (batterRuns / ballsFaced) * 100;
+        selectedBatsmanRow.querySelector(".strike-rate").textContent = strikeRate.toFixed(2);
+    } if (currentInning == 2) {
         if (currentOvers >= maxOvers || EndInnings()) {
             displayWinner();
             return;
         }
+
         currentScoreB += runs;
         var scoreElement = document.getElementById("team-b-runs");
         scoreElement.textContent = currentScoreB;
+        var teamBname = document.getElementById("team-b-name").textContent;
+
         if (currentScoreB > currentScoreA) {
-            alert('team b won')
+            alert("Team " + teamBname + " wins!");
         }
 
+        // Update selected batsman stats for team B
+        var selectedBatsmanRowB = document.querySelector(`.batter-row[data-batter-name="${selectedBatsman}"][data-team="B"]`);
+        selectedBatsmanRowB.querySelector(".batter-runs").textContent = parseInt(selectedBatsmanRowB.querySelector(".batter-runs").textContent) + runs;
+        selectedBatsmanRowB.querySelector(".balls-faced").textContent = parseInt(selectedBatsmanRowB.querySelector(".balls-faced").textContent) + 1;
+
+        if (runs == 4) {
+            selectedBatsmanRowB.querySelector(".fours").textContent = parseInt(selectedBatsmanRowB.querySelector(".fours").textContent) + 1;
+        } else if (runs == 6) {
+            selectedBatsmanRowB.querySelector(".sixes").textContent = parseInt(selectedBatsmanRowB.querySelector(".sixes").textContent) + 1;
+        }
+        var ballsFaced = parseInt(selectedBatsmanRowB.querySelector(".balls-faced").textContent);
+        var batterRuns = parseInt(selectedBatsmanRowB.querySelector(".batter-runs").textContent);
+        var strikeRate = (batterRuns / ballsFaced) * 100;
+        selectedBatsmanRowB.querySelector(".strike-rate").textContent = strikeRate.toFixed(2);
     }
+
     updateOver();
     saveState();
 }
-
 function wideNoball() {
     if (currentInning == 1) {
         var scoreElement = document.getElementById("team-a-runs");

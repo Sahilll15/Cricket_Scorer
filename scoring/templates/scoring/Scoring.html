@@ -74,13 +74,56 @@
 </ul>
 {% endif %}
 
+<div class="container">
+  <div id="batters-container">
+    <h2>{{team_a}} Stats:</h2>
+    <table>
+      <tr>
+        <td colspan="6">
+          <label for="batsman-select">Select Batsman:</label>
+          <select name="batsman-select" id="batsman-select">
+            {% for batter in team_a_batters %}
+            <option value="{{ batter.name }}">{{ batter.name }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Player Name</th>
+        <th>Runs</th>
+        <th>Balls Faced</th>
+        <th>Fours</th>
+        <th>Sixes</th>
+        <th>Strike Rate</th>
+      </tr>
+      <tbody>
+        {% for batter in team_a_batters %}
+        <tr class="batter-row" data-batter-name="{{ batter.name }}">
+          <td>{{ batter.name }}</td>
+          <td class="batter-runs">0</td>
+          <td class="balls-faced">0</td>
+          <td class="fours">0</td>
+          <td class="sixes">0</td>
+          <td class="strike-rate">0.00</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
-    <div class="container">
-      <div id="batters-container">
-        <h2>Batters Stats:</h2>
+
+      <div id="bowlers-container">
+        <h2>{{team_b}} Stats:</h2>
         <table>
           <tr>
-            <td colspan="5">{{ team_a }} Batters</td>
+            <td colspan="6">
+              <label for="batsman-select">Select Batsman:</label>
+              <select name="batsman-select" id="batsman-select">
+                {% for batter in team_b_batters %}
+                <option value="{{ batter.name }}">{{ batter.name }}</option>
+                {% endfor %}
+              </select>
+            </td>
           </tr>
           <tr>
             <th>Player Name</th>
@@ -88,55 +131,21 @@
             <th>Balls Faced</th>
             <th>Fours</th>
             <th>Sixes</th>
+            <th>Strike Rate</th>
           </tr>
           <tbody>
-            {% for batter in team_a_batters %}
-            <tr>
-              <td>{{ batter.name}}</td>
-             
-              <td id="batter-runs">0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-            {% endfor %}
-            
-            
-          </tbody>
-        
-        </table>
-      </div>
-
-      <div id="bowlers-container">
-        <h2>{{team_b}} Stats:</h2>
-        <table>
-          
-          <thead>
-            <tr>
-              <th>Player Name</th>
-              <th>Overs</th>
-              <th>Maidens</th>
-              <th>Runs</th>
-              <th>Wickets</th>
-            </tr>
-          </thead>
-
-          <tbody>
-           
             {% for batter in team_b_batters %}
-            <tr>
+            <tr class="batter-row" data-batter-name="{{ batter.name }}">
               <td>{{ batter.name }}</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
+              <td class="batter-runs">0</td>
+              <td class="balls-faced">0</td>
+              <td class="fours">0</td>
+              <td class="sixes">0</td>
+              <td class="strike-rate">0.00</td>
             </tr>
             {% endfor %}
-           
-            
           </tbody>
         </table>
-      </div>
     </div>
     <div id="message"></div>
 
