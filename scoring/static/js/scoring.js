@@ -14,6 +14,7 @@ function score(runs) {
             targetScore = currentScoreA + 1;
             var targetElement = document.getElementById("Target");
             targetElement.textContent = targetScore;
+            var batter_runs = document.getElementById
             alert("Maximum overs reached. Cannot score any more runs.");
 
             currentInning = 2;

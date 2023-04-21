@@ -20,16 +20,17 @@
             </select>
 
             <label><h3>Select Teams:</h3></label>
-            <select id="team1" name="team1">
-              {% for team in teams%}
-              <option value="{{team.id}}">{{team.name}}</option>
+            <select id="team1" name="team1" onchange="updateTeam2Options()">
+              {% for team in teams %}
+                  <option value="{{ team.id }}">{{ team.name }}</option>
               {% endfor %}
-            </select>
-            <select id="team2" name="team2">
-              {% for team in teams%}
-              <option value="{{team.id}}">{{team.name}}</option>
+          </select>
+          
+          <select id="team2" name="team2">
+              {% for team in teams %}
+                  <option value="{{ team.id }}">{{ team.name }}</option>
               {% endfor %}
-            </select>
+          </select>
 
             <!-- <div class="form-group">
               <label for=""><h3>Match Pin:</h3></label>
@@ -51,33 +52,26 @@
 </html>
 
 <script>
-  const firstDropdown = document.getElementById("team1");
-  const secondDropdown = document.getElementById("second-dropdown");
-
-  firstDropdown.addEventListener("change", () => {
-    const selectedValue = firstDropdown.value;
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "/second_dropdown/?selected_value=" + selectedValue);
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        const responseData = JSON.parse(xhr.responseText);
-        secondDropdown.innerHTML = '<option value="">Select an option</option>';
-        responseData.forEach((item) => {
-          const option = document.createElement("option");
-          option.value = item.value;
-          option.textContent = item.label;
-          secondDropdown.appendChild(option);
-        });
+  function updateTeam2Options() {
+      var team1Select = document.getElementById("team1");
+      var team2Select = document.getElementById("team2");
+      
+      // Remove the selected team from the options in the second dropdown
+      for (var i = 0; i < team2Select.options.length; i++) {
+          if (team2Select.options[i].value == team1Select.value) {
+              team2Select.options[i].disabled = true;
+              if (team2Select.selectedIndex == i) {
+                  // If the currently selected option is disabled, select the first enabled option
+                  for (var j = 0; j < team2Select.options.length; j++) {
+                      if (!team2Select.options[j].disabled) {
+                          team2Select.selectedIndex = j;
+                          break;
+                      }
+                  }
+              }
+          } else {
+              team2Select.options[i].disabled = false;
+          }
       }
-    };
-    xhr.send();
-  });
+  }
 </script>
-<!-- make an cricket scoring application with an 
-container placed in the centre of the web page
-the conintainer conintaining an h1 text select tournament and a brop box placed besides it
-below that have an text saying team1 vs team2 and below the team1 vs team 2 have an option with an dropbox for 
-selecting the two teams -->
-
-<!-- onclick="location.href={% url 'matchtoss' %} -->

@@ -58,7 +58,7 @@
         </li>
       </ul>
     </div>
-    <span style="padding-left: 630px">Target: <span id="Target">0</span></span>
+    <span style="padding-left: 800px">Target: <span id="Target">0</span></span>
     <span style="padding-left: 40px">winner: <span id="winner_id">None</span></span>
 
     <div id="overs">
@@ -92,43 +92,25 @@
           <tbody>
             {% for batter in team_a_batters %}
             <tr>
-              <td>{{ batter.Player}}</td>
-              <td>{{ batter.runs }}</td>
-              <td>{{ batter.balls_faced }}</td>
-              <td>{{ batter.fours }}</td>
-              <td>{{ batter.sixes }}</td>
+              <td>{{ batter.name}}</td>
+             
+              <td id="batter-runs">0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
             </tr>
             {% endfor %}
+            
+            
           </tbody>
-          <table>
-            <tr>
-              <td colspan="5">{{team_b}} Batters</td>
-            </tr>
-            <tr>
-              <th>Player Name</th>
-              <th>Runs</th>
-              <th>Balls Faced</th>
-              <th>Fours</th>
-              <th>Sixes</th>
-            </tr>
-            <tbody>
-              {% for batter in team_b_batters %}
-              <tr>
-                <td>{{ batter.player_name }}</td>
-                <td>{{ batter.runs }}</td>
-                <td>{{ batter.balls_faced }}</td>
-                <td>{{ batter.fours }}</td>
-                <td>{{ batter.sixes }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+        
         </table>
       </div>
 
       <div id="bowlers-container">
-        <h2>Bowlers Stats:</h2>
+        <h2>{{team_b}} Stats:</h2>
         <table>
+          
           <thead>
             <tr>
               <th>Player Name</th>
@@ -140,30 +122,18 @@
           </thead>
 
           <tbody>
+           
+            {% for batter in team_b_batters %}
             <tr>
-              <td colspan="5">{{ team_a }} Bowlers</td>
-            </tr>
-            {% for bowler in team_a_bowlers %}
-            <tr>
-              <td>{{ bowler.player_name }}</td>
-              <td>{{ bowler.overs }}</td>
-              <td>{{ bowler.maidens }}</td>
-              <td>{{ bowler.runs_conceded }}</td>
-              <td>{{ bowler.wickets }}</td>
+              <td>{{ batter.name }}</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
             </tr>
             {% endfor %}
-            <tr>
-              <td colspan="5">{{ team_b }} Bowlers</td>
-            </tr>
-            {% for bowler in team_b_bowlers %}
-            <tr>
-              <td>{{ bowler.player_name }}</td>
-              <td>{{ bowler.overs }}</td>
-              <td>{{ bowler.maidens }}</td>
-              <td>{{ bowler.runs_conceded }}</td>
-              <td>{{ bowler.wickets }}</td>
-            </tr>
-            {% endfor %}
+           
+            
           </tbody>
         </table>
       </div>
@@ -251,6 +221,4 @@
 
 
 <script src="{% static 'js/scoring.js' %}"></script>
-
-
 

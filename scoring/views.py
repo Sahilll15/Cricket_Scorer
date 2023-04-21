@@ -178,8 +178,9 @@ def scoring(request, match_id):
     team_a = match.team_1
     team_b = match.team_2
 
-    team_a_batters = Batter.objects.filter(match=match, player__team=team_a)
-    team_b_batters = Batter.objects.filter(match=match, player__team=team_b)
+    # team_a_batters = Batter.objects.filter(match=match, player__team=team_a)
+    team_a_batters = Player.objects.filter(team=team_a)
+    team_b_batters = Player.objects.filter(team=team_b)
     team_a_bowlers = Batter.objects.filter(match=match, player__team=team_a)
     team_a_bowlers = Batter.objects.filter(match=match, player__team=team_b)
 
