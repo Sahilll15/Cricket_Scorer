@@ -97,7 +97,8 @@ def list_match(request):
 
 def tournament_list(request):
     tournaments = Tournament.objects.all()
-    return render(request, ['scoring/team_list.html', 'scoring/make_match.html', 'scoring/tournaments_list.html'], {'tournaments': tournaments})
+
+    return render(request, 'scoring/tournaments_list.html', {'tournaments': tournaments})
 
 # ['scoring/team_list.html',,'scoring/tournament_form.html','scoring/tournament_list.html']
 

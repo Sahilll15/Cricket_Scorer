@@ -1,8 +1,7 @@
   <!-- Navbar -->
   {% load static %}
   <link rel="stylesheet" href="{% static 'scoring/navbar.css' %}">
-  <!-- <link rel="stylesheet" href="{% static 'scoring/login.css' %}">
-  <link rel="stylesheet" href="{% static 'scoring/signup.css' %}"> -->
+  
   <link rel="stylesheet" href="{% static 'scoring/score.css' %}">
   <link rel="stylesheet" href="{% static 'scoring/makematch.css' %}">
   <link rel="stylesheet" href="{% static 'scoring/makematch.css' %}">
@@ -13,7 +12,7 @@
     <a href="#">Live Score</a>
     <a href="#">Matches</a>
     <a href="{%url 'team_list' %}">Teams</a>
-    <a href="#">Tournaments</a>
+    <a href="{% url 'tournament_list'%}">Tournaments</a>
     <!-- <a href="http://127.0.0.1:8000">Sign-Up</a> -->
   </nav>
 

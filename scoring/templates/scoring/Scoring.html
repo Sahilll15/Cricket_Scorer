@@ -81,7 +81,7 @@
       <tr>
         <td colspan="6">
           <label for="batsman-select">Select Batsman:</label>
-          <select name="batsman-select" id="batsman-select">
+          <select name="batsman-select-a" id="batsman-select-a">
             {% for batter in team_a_batters %}
             <option value="{{ batter.name }}">{{ batter.name }}</option>
             {% endfor %}
@@ -112,13 +112,13 @@
   </div>
 
 
-      <div id="bowlers-container">
+      <div id="batters-container">
         <h2>{{team_b}} Stats:</h2>
         <table>
           <tr>
             <td colspan="6">
               <label for="batsman-select">Select Batsman:</label>
-              <select name="batsman-select" id="batsman-select">
+              <select name="batsman-select-b" id="batsman-select-b">
                 {% for batter in team_b_batters %}
                 <option value="{{ batter.name }}">{{ batter.name }}</option>
                 {% endfor %}
@@ -135,8 +135,8 @@
           </tr>
           <tbody>
             {% for batter in team_b_batters %}
-            <tr class="batter-row" data-batter-name="{{ batter.name }}">
-              <td>{{ batter.name }}</td>
+            <tr class="batter-row-b" data-batter-name="{{ batter.name }}" data-team="B">
+              <td class="batsmen-name">{{ batter.name }}</td>
               <td class="batter-runs">0</td>
               <td class="balls-faced">0</td>
               <td class="fours">0</td>
@@ -150,6 +150,7 @@
     <div id="message"></div>
 
     <div>
+      <div class="container"></div>
       <h1>Press Buttons below to score:</h1>
       <div id="score-buttons">
         <button onclick="score(0)">0</button>
@@ -161,9 +162,9 @@
         <button onclick="score(6)">6</button>
         <button onclick="widenNoball()">Wide</button>
         <button onclick="widenNoball()">NO BALL</button>
-        <button onclick="LEGBYES()">LEG BYES</button>
-        <button onclick="score(4)">BYES</button>
-        <button onclick="wicket()">Out</button>
+        <button onclick="score(1)">LEG BYES</button>
+        <button onclick="score(1)">BYES</button>
+        <button onclick="wicket()">wicket</button>
       </div>
     </div>
 

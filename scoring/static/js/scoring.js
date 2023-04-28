@@ -9,16 +9,18 @@ var currentInning = 1;
 var Target = 0;
 
 function score(runs) {
-    var batsmanSelect = document.getElementById("batsman-select");
-    var selectedBatsman = batsmanSelect.value;
-    var selectedBatsmanRow = document.querySelector(`.batter-row[data-batter-name="${selectedBatsman}"]`);
+
 
     if (currentInning == 1) {
+        var batsmanSelect = document.getElementById("batsman-select-a");
+        var selectedBatsman = batsmanSelect.value;
+        var selectedBatsmanRow = document.querySelector(`.batter-row[data-batter-name="${selectedBatsman}"]`);
         if (currentOvers >= maxOvers || EndInnings()) {
             targetScore = currentScoreA + 1;
             var targetElement = document.getElementById("Target");
             targetElement.textContent = targetScore;
-            alert("Maximum overs reached. Cannot score any more runs.");
+            var teamAname = document.getElementById("team-a-name").textContent;
+            alert(`The ` + teamAname + `Innings has Ended!`);
 
             currentInning = 2;
             currentOvers = 0;
@@ -53,16 +55,18 @@ function score(runs) {
         }
 
         currentScoreB += runs;
-        var scoreElement = document.getElementById("team-b-runs");
+        var scoreElement = document.getElementById("team-b-runs")
         scoreElement.textContent = currentScoreB;
         var teamBname = document.getElementById("team-b-name").textContent;
 
         if (currentScoreB > currentScoreA) {
             alert("Team " + teamBname + " wins!");
         }
+        var batsmanSelect = document.getElementById("batsman-select-b");
+        var selectedBatsman = batsmanSelect.value;
 
         // Update selected batsman stats for team B
-        var selectedBatsmanRowB = document.querySelector(`.batter-row[data-batter-name="${selectedBatsman}"][data-team="B"]`);
+        var selectedBatsmanRowB = document.querySelector(`.batter-row-b[data-batter-name="${selectedBatsman}"][data-team="B"]`);
         selectedBatsmanRowB.querySelector(".batter-runs").textContent = parseInt(selectedBatsmanRowB.querySelector(".batter-runs").textContent) + runs;
         selectedBatsmanRowB.querySelector(".balls-faced").textContent = parseInt(selectedBatsmanRowB.querySelector(".balls-faced").textContent) + 1;
 
@@ -85,6 +89,7 @@ function wideNoball() {
         var scoreElement = document.getElementById("team-a-runs");
         var newscore = parseInt(scoreElement.textContent) + 1;
         scoreElement.textContent = newscore;
+
     } else if (currentInning == 2) {
         var scoreElement = document.getElementById("team-b-runs");
         var newscore = parseInt(scoreElement.textContent) + 1;
@@ -99,6 +104,7 @@ function widenNoball() {
         var scoreElement = document.getElementById("team-b-runs");
         var newscore = parseInt(scoreElement.textContent) + 1;
         scoreElement.textContent = newscore;
+
     } else {
         var scoreElement = document.getElementById("team-a-runs");
         var newscore = parseInt(scoreElement.textContent) + 1;
@@ -114,9 +120,11 @@ function wicket() {
     }
 
     if (currentInning == 1) {
+
         currentWicketsA += 1;
         var wicketElement = document.getElementById("team-a-wickets");
         wicketElement.textContent = currentWicketsA;
+
         updateOver();
     } else if (currentInning == 2) {
         currentWicketsB += 1;
