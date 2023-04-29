@@ -1,0 +1,55 @@
+<!-- {% extends 'scoring/base.html' %} -->
+
+<!-- {% block content %}
+ <div class="center"> -->
+    <style>
+        table {
+    display: table;
+    border-collapse:collapse;
+    box-sizing: border-box;
+    text-indent: initial;
+    white-space: normal;
+    line-height: normal;
+    font-weight: normal;
+    font-size: medium;
+    font-style: normal;
+    color: -internal-quirk-inherit;
+    text-align: center;
+    max-width: 700px;
+    min-width: 600px;
+    /* border-spacing: 0.9px; */
+    border-color: gray;
+    font-variant: normal;
+}
+
+    </style>
+  <div class="container" style="width: fit-content;">
+    <div class="container-box">
+        <h1>Team List</h1>
+        <table>
+            <thead>
+          <tr>
+            <th>TEAM NAME</th>
+            <th>Captain</th>
+            <th>Number of Players</th>
+          </tr>
+        </thead>
+        {% for team in teams %}
+        <tbody> 
+            
+          <tr>
+            <td style="border: 1px solid black;">{{ team.name }}</td>
+            <td style="border: 1px solid black;">{{ team.captian_name }}</td>
+            <td style="border: 1px solid black;">{{ team.captian_name }} </td>
+            <td><button style="margin-right:5px;" type="button" onclick=location.href="{% url 'edit_player' %}">Edit</button></td>
+          </tr>
+          {% endfor %}
+          </tbody>
+         
+        </table>
+  
+  <button  type='submit' onclick=location.href="{% url 'team_create' %}">Create team</button>
+    </div>
+  </div>
+</div>
+<!-- {% endblock %} -->

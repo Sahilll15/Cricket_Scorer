@@ -142,6 +142,7 @@ def team_list(request):
     return render(request, ['scoring/team_list.html', 'scoring/make_match.html'], {'teams': teams})
 
 
+
 def make_match(request):
     if request.method == 'POST':
         tournament_id = request.POST['tournament']
@@ -170,6 +171,9 @@ def match_detail(request, match_id):
     request.session['clear_storage'] = True
     return render(request, 'scoring/matchtoss.html', context)
 
+def edit_player(request):
+    teams = Team.objects.all()
+    return render(request, 'scoring/edit_player.html', {'teams': teams})
 
 def scoring(request, match_id):
     request.session['clear_storage'] = True
@@ -205,6 +209,11 @@ def scoring(request, match_id):
 
 def team_page(request):
     return render(request, 'scoring/team_page.html')
+
+def edit_team(request):
+    teams = Team.objects.all()
+    return render(request, 'scoring/edit_team.html', {'teams': teams})
+
 
 
 def add_player(request,):

@@ -5,13 +5,24 @@
   <link rel="stylesheet" href="{% static 'scoring/score.css' %}">
   <link rel="stylesheet" href="{% static 'scoring/makematch.css' %}">
   <link rel="stylesheet" href="{% static 'scoring/makematch.css' %}">
-  
+  <style>
+    body {
+      background-image:url("{% static 'images/download.jpg' %}");
+      background-size: cover;
+      padding-top: 0%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: "Open Sans", sans-serif;
+      color: #333333;
+    }
+  </style>
 	
   <nav class="navbar">
     <a class="active" href="{% url 'score' %}">CricScorer</a>
     <a href="#">Live Score</a>
     <a href="#">Matches</a>
-    <a href="{%url 'team_list' %}">Teams</a>
+    <a href="{%url 'team_page' %}">Teams</a>
     <a href="{% url 'tournament_list'%}">Tournaments</a>
     <!-- <a href="http://127.0.0.1:8000">Sign-Up</a> -->
   </nav>
