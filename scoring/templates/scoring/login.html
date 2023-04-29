@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -86,16 +87,17 @@
         color: blue
       }
       .container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #FFFFFF;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  text-align: center; /* Center the content horizontally */
-  margin-top: 400px;
-  height: 400px; /* Add some top margin for spacing */
-}
+        max-width: 500px;
+        margin: 0 auto;
+        /* margin-top: 100%; */
+        padding: 20px;
+        background-color: #FFFFFF;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        text-align: center; /* Center the content horizontally */
+        margin-top: 10%;
+        height: 400px; /* Add some top margin for spacing */
+      } 
 
     </style>
   </head>
@@ -112,7 +114,7 @@
     </nav>
     
     <!-- Login form -->
-  
+  <!-- <div class="center"> -->
     <div class="container">
       <h1 class="text-center">Login</h1>
       <form action="" method="post" class="mx-auto">
@@ -131,6 +133,6 @@
         <button type="submit" class="btn btn-primary d-block mx-auto mt-4">Login</button>
       </form>
     </div>
-    
+  </div>
   </body>
 </html>

@@ -88,26 +88,26 @@ $(document).ready(function() {
       </ul>
     </div>
     <div id="teams">
-      <ul>
-        <li>
+      <ul style="display: flex; ">
+        <li style="margin-right: 55%; margin-left: 5%; font-weight: bold; font-size: x-large ;">
           <span name="team-a-name" id="team-a-name">{{ match.team_1 }}</span> -
           <span name="team-a-runs" id="team-a-runs">0</span><span> /</span>
           <span id="team-a-wickets">0</span> runs
         </li>
 
-        <li>
+        <li style="font-weight: bold; font-size: x-large ;">
           <span name="team-b-name" id="team-b-name">{{ match.team_2 }}</span> -
           <span name="team-b-runs" id="team-b-runs">0</span> <span> /</span>
           <span id="team-b-wickets">0</span> runs
         </li>
       </ul>
     </div>
-    <span style="padding-left: 800px">Target: <span id="Target">0</span></span>
-    <span style="padding-left: 40px">winner: <span id="winner_id">None</span></span>
+    <span style="padding-left: 42%; font-weight: bold; font-size: x-large;">Target: <span id="Target">0</span></span>
+    <span style="padding-left: 40px; font-weight: bold; font-size: x-large;">winner: <span id="winner_id">None</span></span>
 
     <div id="overs">
       <ul>
-        <li>From 0.0/0.0 Overs</li>
+        <li style="font-size: larger;">From 0.0/0.0 Overs</li>
       </ul>
     </div>
     {% if messages %}
@@ -250,12 +250,12 @@ $(document).ready(function() {
       </tbody>
     </table>
 </div>
-    <div id="message"></div>
-
-    <div>
-      <div class="container"></div>
-      <h1>Press Buttons below to score:</h1>
-      <div id="score-buttons">
+    <!-- <div id="message"></div> -->
+  </div>
+      <div class="container" style="display: flex;">  
+      <h1 style=" text-align: center;">Press Buttons below to score:</h1>
+      </div>
+      <div id="score-buttons" style="justify-content: center;">
         <button onclick="score(0)">0</button>
         <button onclick="score(1)">1</button>
         <button onclick="score(2)">2</button>
@@ -268,7 +268,7 @@ $(document).ready(function() {
         <button onclick="score(1)">LEG BYES</button>
         <button onclick="score(1)">BYES</button>
         <button onclick="wicket()">wicket</button>
-      </div>
+     
     </div>
 
     <div id="editing-buttons">
@@ -293,7 +293,7 @@ $(document).ready(function() {
     <div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <!-- <span class="close">&times;</span> -->
         <p id="modal-message"></p>
       </div>
     </div>

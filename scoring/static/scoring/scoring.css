@@ -186,11 +186,13 @@ h1 {
 /* overs timeline */
 h1 {
   text-align: center;
+  width: 100%;
   padding: 10px;
   background-color: black;
   color: #fff;
   margin: 30px;
 }
+
 .over-container {
   max-width: 400px;
   margin: 0 auto;
