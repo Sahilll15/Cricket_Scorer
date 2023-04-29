@@ -3,6 +3,47 @@
 <html>
   <head>
     <title>Cricket Scoring Application</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+    $('#batsman-select-a').change(function () {
+        var selectedBatter = $(this).val();
+        var batterRow = '<tr class="batter-row" data-batter-name="' + selectedBatter + '">' +
+            '<td>' + selectedBatter + '</td>' +
+            '<td class="batter-runs">0</td>' +
+            '<td class="balls-faced">0</td>' +
+            '<td class="fours">0</td>' +
+            '<td class="sixes">0</td>' +
+            '<td class="strike-rate">0.00</td>' +
+            '</tr>';
+        $('#batters-container-a tbody').append(batterRow);
+    });
+});
+
+
+
+//score for team b
+$(document).ready(function() {
+  $('#batsman-select-b').change(function() {
+    var selectedBatter = $(this).val();
+    var batterRow = $('#batters-container-b tbody').find('tr[data-batter-name="' + selectedBatter + '"]');
+
+    if (batterRow.length == 0) {
+      batterRow = '<tr class="batter-row-b" data-batter-name="' + selectedBatter + '" data-team="B">' +
+                      '<td >' + selectedBatter + '</td>' +
+                      '<td class="batter-runs">0</td>' +
+                      '<td class="balls-faced">0</td>' +
+                      '<td class="fours">0</td>' +
+                      '<td class="sixes">0</td>' +
+                      '<td class="strike-rate">0.00</td>' +
+                  '</tr>';
+      $('#batters-container-b tbody').append(batterRow);
+    }
+  });
+});
+
+    </script>
+
     <link
       rel="stylesheet"
       type="text/css"
@@ -27,13 +68,13 @@
 
     <div id="teams">
       <div id="Matchid" data-match-id="{{ match.id }}">
-        Match ID:- {{match.id}} {% for tournament in tournaments %}
+        Match ID:- {{match.id}} 
         <br />
         <span name="tournament_name" id="tournament_name"
-          >tournament :{{tournament.name}}</span
+          >tournament :{{tournaments}}</span
         >
 
-        {% endfor %}
+       
       </div>
 
       <h2>Teams Playing:</h2>
@@ -74,8 +115,15 @@
 </ul>
 {% endif %}
 
+
+<div style="display: flex;">
+  <h1 style="margin-right: 50vh; margin-left: 5vh;">1st Innings</h1>
+  <h1>2nd Innings</h1>
+</div>
+
+ <!-- Team-A Batters -->
 <div class="container">
-  <div id="batters-container">
+  <div id="batters-container-a" class="batters-container" >
     <h2>{{team_a}} Stats:</h2>
     <table>
       <tr>
@@ -96,23 +144,14 @@
         <th>Sixes</th>
         <th>Strike Rate</th>
       </tr>
-      <tbody>
-        {% for batter in team_a_batters %}
-        <tr class="batter-row" data-batter-name="{{ batter.name }}">
-          <td>{{ batter.name }}</td>
-          <td class="batter-runs">0</td>
-          <td class="balls-faced">0</td>
-          <td class="fours">0</td>
-          <td class="sixes">0</td>
-          <td class="strike-rate">0.00</td>
-        </tr>
-        {% endfor %}
-      </tbody>
+    
     </table>
   </div>
 
 
-      <div id="batters-container">
+
+ <!-- Team-B Batters -->
+      <div id="batters-container-b"  class="batters-container">
         <h2>{{team_b}} Stats:</h2>
         <table>
           <tr>
@@ -133,20 +172,81 @@
             <th>Sixes</th>
             <th>Strike Rate</th>
           </tr>
-          <tbody>
-            {% for batter in team_b_batters %}
-            <tr class="batter-row-b" data-batter-name="{{ batter.name }}" data-team="B">
-              <td class="batsmen-name">{{ batter.name }}</td>
-              <td class="batter-runs">0</td>
-              <td class="balls-faced">0</td>
-              <td class="fours">0</td>
-              <td class="sixes">0</td>
-              <td class="strike-rate">0.00</td>
-            </tr>
-            {% endfor %}
-          </tbody>
+        
         </table>
     </div>
+
+     <!-- Team-A Bowlers -->
+    <div id="bowlers-container-b"  class="batters-container">
+      <h2>{{team_b}} Bowlers Stats:</h2>
+      <table>
+        <tr>
+          <td colspan="6">
+            <label for="bowler-select">Select Bowler:</label>
+            <select name="bowler-select-a" id="bowler-select-a">
+              {% for bowler in team_b_bowlers %}
+              <option value="{{ bowler.name }}">{{ bowler.name }}</option>
+              {% endfor %}
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Player Name</th>
+          <th>Overs</th>
+          <th>Runs</th>
+          <th>Wickets</th>
+          <th>Economy</th>
+        </tr>
+        <tbody>
+          
+          {% for bowler in team_b_bowlers %}
+          <tr class="bowler-row" data-bowler-name="{{ bowler.name }}">
+            <td>{{ bowler.name }}</td>
+            <td class="bowler-overs">0.0</td>
+            <td class="bowler-runs">0</td>
+            <td class="bowler-wickets">0</td>
+            <td class="bowler-economy">0.00</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+    
+   <!-- Team-B Bowlers -->
+  <div id="batters-container-b'"  class="batters-container">
+    <h2>{{team_a}} Bowlers Stats:</h2>
+    <table>
+      <tr>
+        <td colspan="6">
+          <label for="bowler-select">Select Bowler:</label>
+          <select name="bowler-select-b" id="bowler-select-b">
+            {% for bowler in team_a_bowlers %}
+            <option value="{{ bowler.name }}">{{ bowler.name }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Player Name</th>
+        <th>Overs</th>
+        <th>Runs</th>
+        <th>Wickets</th>
+        <th>Economy</th>
+      </tr>
+      <tbody>
+        
+        {% for bowler in team_a_bowlers %}
+        <tr class="bowler-row-b" data-bowler-name="{{ bowler.name }}">
+          <td>{{ bowler.name }}</td>
+          <td class="bowler-overs">0.0</td>
+          <td class="bowler-runs">0</td>
+          <td class="bowler-wickets">0</td>
+          <td class="bowler-economy">0.00</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
     <div id="message"></div>
 
     <div>

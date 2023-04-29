@@ -1,28 +1,78 @@
 {% extends 'scoring/base.html' %}
 
 {% block content %}
+<style>
+  .container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  height: 600px; /* Add this line to set the height */
+}
+
+form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+ul.messages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.messages li {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+ul.messages li.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+ul.messages li.info {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+ul.messages li.warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+ul.messages li.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+</style>
 
 
 <div class="center">
   <div class="container">
     <div class="container-box">
-  <h1>Add Player</h1>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Player</button>
-  </form>
-  <!-- <h2>Players:</h2>
-  <ul>
-    {% for player in team.player_set.all %}
-      <li>{{ player.name }}</li>
-    {% empty %}
-      <li>No players added yet.</li>
+      <h1>Add Player</h1>
+      <form method="POST">
+        {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
-  </div>
-    </div>
-  </div> -->
 
+</ul>
+{% endif %}
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Add Player</button>
+      </form>
 
 </ul>
 {% endblock %}

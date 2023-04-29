@@ -8,13 +8,21 @@ var maxOvers = 2;
 var currentInning = 1;
 var Target = 0;
 
+
+
+
 function score(runs) {
 
 
     if (currentInning == 1) {
+
+
         var batsmanSelect = document.getElementById("batsman-select-a");
         var selectedBatsman = batsmanSelect.value;
         var selectedBatsmanRow = document.querySelector(`.batter-row[data-batter-name="${selectedBatsman}"]`);
+        var bolwerSelect = document.getElementById("bowler-select-a");
+        var selectedBowler = bolwerSelect.value;
+        var selectedBowlerRow = document.querySelector(`.bowler-row[data-bowler-name="${selectedBowler}"]`);
         if (currentOvers >= maxOvers || EndInnings()) {
             targetScore = currentScoreA + 1;
             var targetElement = document.getElementById("Target");
@@ -33,6 +41,9 @@ function score(runs) {
 
         var scoreElement = document.getElementById("team-a-runs");
         scoreElement.textContent = currentScoreA;
+        //update bowler stats
+        selectedBowlerRow.querySelector(".bowler-runs").textContent = parseInt(selectedBowlerRow.querySelector(".bowler-runs").textContent) + runs;
+        selectedBowlerRow.querySelector(".bowler-overs").textContent = getOversBowled(currentBalls);
 
         // Update selected batsman stats
         selectedBatsmanRow.querySelector(".batter-runs").textContent = parseInt(selectedBatsmanRow.querySelector(".batter-runs").textContent) + runs;
@@ -49,9 +60,15 @@ function score(runs) {
         var strikeRate = (batterRuns / ballsFaced) * 100;
         selectedBatsmanRow.querySelector(".strike-rate").textContent = strikeRate.toFixed(2);
     } if (currentInning == 2) {
+        var bowlerselect = document.getElementById("bowler-select-b");
+        var selectedBowlerB = bowlerselect.value;
+        var selectedBowlerRowB = document.querySelector(`.bowler-row-b[data-bowler-name="${selectedBowlerB}"]`);
+        selectedBowlerRowB.querySelector(".bowler-runs").textContent = parseInt(selectedBowlerRowB.querySelector(".bowler-runs").textContent) + runs;
+        selectedBowlerRowB.querySelector(".bowler-overs").textContent = getOversBowled(currentBalls);
+
         if (currentOvers >= maxOvers || EndInnings()) {
             displayWinner();
-            return;
+
         }
 
         currentScoreB += runs;
@@ -64,6 +81,8 @@ function score(runs) {
         }
         var batsmanSelect = document.getElementById("batsman-select-b");
         var selectedBatsman = batsmanSelect.value;
+        //update bowler statss
+
 
         // Update selected batsman stats for team B
         var selectedBatsmanRowB = document.querySelector(`.batter-row-b[data-batter-name="${selectedBatsman}"][data-team="B"]`);
@@ -84,6 +103,42 @@ function score(runs) {
     updateOver();
     saveState();
 }
+var isOverComplete = false; // variable to keep track of whether the current over is complete or not
+
+function getOversBowled(balls) {
+    var overs = Math.floor(balls / 7);
+    var ballsInOver = balls % 6 + 1;
+    if (ballsInOver >= 6) {
+        overs += 1;
+        ballsInOver = 0; // set isOverComplete to true if the current over is complete
+        alert("Change the bowler");
+    }
+    return overs + "." + ballsInOver;
+}
+
+const selectElement = document.getElementById('bowler-select-a');
+let selectedBowlerName = null; // variable to store the selected bowler name
+
+selectElement.addEventListener('change', handleSelectChange);
+
+function handleSelectChange(event) {
+    if (isOverComplete) {
+        selectElement.style.display = 'block'; // show the select element if the over is complete
+        selectedBowlerName = event.target.value; // store the selected bowler name
+        isOverComplete = false; // reset isOverComplete to false when a new bowler is selected
+    } else {
+        alert("YOU CANNOT SELECT ANOTHER BOWLER IN BETWWEEN THE MATCH")// set the selected bowler back to the previous selection
+    }
+}
+
+function completeOver() {
+    // ...code to complete the over
+    selectElement.style.display = 'none'; // hide the select element until the over is completed
+    isOverComplete = true; // set isOverComplete to true when the over is completed
+}
+
+
+
 function wideNoball() {
     if (currentInning == 1) {
         var scoreElement = document.getElementById("team-a-runs");
@@ -120,16 +175,27 @@ function wicket() {
     }
 
     if (currentInning == 1) {
+        var bolwerSelect = document.getElementById("bowler-select-a");
+        var selectedBowler = bolwerSelect.value;
+        var selectedBowlerRow = document.querySelector(`.bowler-row[data-bowler-name="${selectedBowler}"]`);
 
         currentWicketsA += 1;
         var wicketElement = document.getElementById("team-a-wickets");
         wicketElement.textContent = currentWicketsA;
-
+        selectedBowlerRow.querySelector(".bowler-wickets").textContent = parseInt(selectedBowlerRow.querySelector(".bowler-wickets").textContent) + 1;
+        selectedBowlerRow.querySelector(".bowler-overs").textContent = getOversBowled(currentBalls);
         updateOver();
     } else if (currentInning == 2) {
+        var bolwerSelect = document.getElementById("bowler-select-a");
+        var selectedBowlerB = bolwerSelect.value;
+        var selectedBowlerRowB = document.querySelector(`.bowler-row-b[data-bowler-name="${selectedBowlerB}"]`);
+        selectedBowlerRowB.querySelector(".bowler-wickets").textContent = parseInt(selectedBowlerRowB.querySelector(".bowler-wickets").textContent) + 1;
+        selectedBowlerRowB.querySelector(".bowler-overs").textContent = getOversBowled(currentBalls);
+
         currentWicketsB += 1;
         var wicketElement = document.getElementById("team-b-wickets");
         wicketElement.textContent = currentWicketsB;
+
         updateOver();
     }
 

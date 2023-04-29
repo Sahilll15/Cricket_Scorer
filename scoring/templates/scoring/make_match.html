@@ -1,11 +1,28 @@
 {% extends 'scoring/base.html' %}
 <!DOCTYPE html>
+{% block content %}
 <html>
   <head>
     <title>Cricket Scoring</title>
+    <head>
+      <style>
+      .error{
+        color: red;
+      }
+    
+    .button,
+    select {
+     
+      color: black;
+ 
+    }
+    a{
+      text-decoration: none;
+    }
+  </style>
   </head>
   <body>
-    {% block content %}
+    
     <form method="post">
       {% csrf_token %}
 
@@ -13,6 +30,9 @@
         <div class="container">
           <div class="container-box">
             <label for="tournament"><h1>Select tournament:</h1></label>
+            {% if error_msg %}
+    <p class="error" style="color: red;">{{ error_msg }}</p>
+{% endif %}
             <select id="tournament" name="tournament">
               {% for tournament in tournaments%}
               <option value="{{tournament.id}}">{{tournament.name}}</option>
@@ -38,10 +58,9 @@
             </div> -->
 
             <div class="button-container">
-              <button class="button" onclick="location.href='{% url 'score' %}'">
-                Back
-              </button>
-              <button id="save-btn" type="submit">Save</button>
+              <a href="{% url 'score' %}" style="font-weight: bold;" class="button">Back</a>
+              <button id="save-btn" style="width: 80px;"  class="btn btn-primary btn-sm" type="submit">Save</button>
+
             </div>
           </div>
         </div>

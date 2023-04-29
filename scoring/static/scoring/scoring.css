@@ -107,55 +107,55 @@ h1 {
   font-style: italic;
 }
 
-#batters-container {
+.batters-container {
   width: 50%;
   padding: 20px;
   box-sizing: border-box; /* add this line to fix the width issue */
   float: left;
 }
 
-#batters-container table {
+.batters-container table {
   border-collapse: collapse;
   margin-left: 60px;
 }
 
-#batters-container th,
-#batters-container td {
+.batters-container th,
+.batters-container td {
   border: 1px solid black;
   padding: 10px;
 }
 
-#batters-container th {
+.batters-container th {
   background-color: #f2f2f2; /* Light gray background for table header */
 }
 
-#batters-container td.runs {
+.batters-container td.runs {
   font-weight: bold;
 }
-#batters-container td.runs,
-#batters-container td.balls-faced,
-#batters-container td.fours,
-#batters-container td.sixes,
-#batters-container td.strike-rate {
+.batters-container td.runs,
+.batters-container td.balls-faced,
+.batters-container td.fours,
+.batters-container td.sixes,
+.batters-container td.strike-rate {
   font-weight: bold;
 }
 
-#batters-container td.runs,
-#batters-container td.balls-faced,
-#batters-container td.fours,
-#batters-container td.sixes {
+.batters-container td.runs,
+.batters-container td.balls-faced,
+.batters-container td.fours,
+.batters-container td.sixes {
   text-align: center;
 }
-#batters-container td.strike-rate {
+.batters-container td.strike-rate {
   text-align: right;
 }
 
-#batters-container td.fours,
-#batters-container td.sixes {
+.batters-container td.fours,
+.batters-container td.sixes {
   color: green;
 }
 
-#batters-container h2 {
+.batters-container h2 {
   margin-left: 60px;
 }
 
@@ -285,5 +285,9 @@ h1 {
 
 #editing-buttons button:hover {
   background-color: #3e8e41;
+}
+
+.hidden {
+  display: none;
 }
 

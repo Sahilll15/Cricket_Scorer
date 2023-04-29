@@ -111,6 +111,7 @@ def tournament_create(request):
             # selected_teams = request.POST.getlist('teams')
             tournament.save()
             form.save_m2m()
+            
             messages.success(request, 'Tournament created SuccessFully!!')
             return redirect('tournament_create')
     else:
@@ -152,11 +153,19 @@ def make_match(request):
         team1 = Team.objects.get(id=team1_id)
         team2 = Team.objects.get(id=team2_id)
         # match_pin = request.POST['matchpin']
-        match = Makematch.objects.create(
-            tournament_name=tournament, team_1=team1, team_2=team2)
-        # print(tournament,team1,team2)
-        request.session['clear_storage'] = True
-        return redirect('match_detail', match_id=match.id)
+        if team1_id != team2_id:
+            match = Makematch.objects.create(
+                tournament_name=tournament, team_1=team1, team_2=team2)
+            request.session['clear_storage'] = True
+            return redirect('match_detail', match_id=match.id)
+        else:
+            # Handle the case where team1 and team2 are the same
+            error_msg = "Error: Please select two different teams"
+            tournaments = Tournament.objects.all()
+            teams = Team.objects.all()
+            context = {'tournaments': tournaments,
+                       'teams': teams, 'error_msg': error_msg}
+            return render(request, 'scoring/make_match.html', context)
     else:
         tournaments = Tournament.objects.all()
         teams = Team.objects.all()
@@ -167,13 +176,11 @@ def make_match(request):
 
 def match_detail(request, match_id):
     match = Makematch.objects.get(id=match_id)
+
     context = {'match': match}
-    request.session['clear_storage'] = True
+
     return render(request, 'scoring/matchtoss.html', context)
 
-def edit_player(request):
-    teams = Team.objects.all()
-    return render(request, 'scoring/edit_player.html', {'teams': teams})
 
 def scoring(request, match_id):
     request.session['clear_storage'] = True
@@ -186,10 +193,10 @@ def scoring(request, match_id):
     # team_a_batters = Batter.objects.filter(match=match, player__team=team_a)
     team_a_batters = Player.objects.filter(team=team_a)
     team_b_batters = Player.objects.filter(team=team_b)
-    team_a_bowlers = Batter.objects.filter(match=match, player__team=team_a)
-    team_a_bowlers = Batter.objects.filter(match=match, player__team=team_b)
+    team_a_bowlers = Player.objects.filter(team=team_a)
+    team_b_bowlers = Player.objects.filter(team=team_b)
 
-    tournaments = Tournament.objects.all()
+    tournaments = match.tournament_name
     teams = Team.objects.all()
 
     context = {'tournaments': tournaments,
@@ -199,7 +206,7 @@ def scoring(request, match_id):
                'team_a_batters': team_a_batters,
                'team_b_batters': team_b_batters,
                'team_a_bowlers': team_a_bowlers,
-               'team_a_bowlers': team_a_bowlers,
+               'team_b_bowlers': team_b_bowlers,
                'tournaments': tournaments,
 
                }
@@ -210,11 +217,6 @@ def scoring(request, match_id):
 def team_page(request):
     return render(request, 'scoring/team_page.html')
 
-def edit_team(request):
-    teams = Team.objects.all()
-    return render(request, 'scoring/edit_team.html', {'teams': teams})
-
-
 
 def add_player(request,):
 
@@ -222,6 +224,7 @@ def add_player(request,):
         form = PlayerForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Player Added SuccessFully!!')
             return redirect('add_player')
     else:
         form = PlayerForm()
@@ -237,27 +240,89 @@ def add_score(request, match_id):
 
         match = get_object_or_404(Makematch, id=match_id)
 
-        # update the scores for the match
-        match.team_a_score += int(team_a_runs)
-        match.team_b_score += int(team_b_runs)
+        if match.team_a_score == 0 and match.team_b_score == 0:
+            # update the scores for the match
+            match.team_a_score += int(team_a_runs)
+            match.team_b_score += int(team_b_runs)
 
-        # determine the winner if both teams have batted once
-        if match.team_a_score > 0 and match.team_b_score > 0:
-            if match.team_a_score > match.team_b_score:
-                match.winner = match.team_1
-            elif match.team_b_score > match.team_a_score:
-                match.winner = match.team_2
-            else:
-                match.winner = "Tie"
+            # determine the winner if both teams have batted once
+            if match.team_a_score > 0 and match.team_b_score > 0:
+                if match.team_a_score > match.team_b_score:
+                    match.winner = match.team_1
+                elif match.team_b_score > match.team_a_score:
+                    match.winner = match.team_2
+                else:
+                    match.winner = "Tie"
 
-        match.save()
+            match.save()
 
-        # add success message to session
-        messages.success(request, 'Score successfully')
-        print(request.session['messages'])  # add this line to check messages
+            # add success message to session
+            messages.success(request, 'Score successfully')
+            print(request.session['messages'])  # add this line to check messages
 
         return redirect('scoring:match_detail', match_id=match.id)
 
     # if the request is not a POST, redirect to home page
     match = get_object_or_404(Makematch, id=match_id)
     return render(request, 'scoring/scoring.html', {'match': match, 'messages': messages.get_messages(request)})
+
+
+
+def test(request, match_id):
+    request.session['clear_storage'] = True
+    match = get_object_or_404(Makematch, id=match_id)
+    tournaments = Tournament.objects.all()
+
+    team_a = match.team_1
+    team_b = match.team_2
+
+    # team_a_batters = Batter.objects.filter(match=match, player__team=team_a)
+    team_a_batters = Player.objects.filter(team=team_a)
+    team_b_batters = Player.objects.filter(team=team_b)
+    team_a_bowlers = Player.objects.filter(team=team_a)
+    team_b_bowlers = Player.objects.filter(team=team_b)
+
+    tournaments = match.tournament_name
+    teams = Team.objects.all()
+
+    context = {'tournaments': tournaments,
+               'team_a': team_a,
+               'team_b': team_b,
+               'match': match,
+               'team_a_batters': team_a_batters,
+               'team_b_batters': team_b_batters,
+               'team_a_bowlers': team_a_bowlers,
+               'team_b_bowlers': team_b_bowlers,
+               'tournaments': tournaments,
+
+               }
+
+    return render(request, 'scoring/test.html', context)
+
+
+def edit_team(request):
+    teams = Team.objects.all()
+    return render(request, 'scoring/edit_team.html', {'teams': teams})
+
+
+
+
+def edit_player(request,team_id):
+    team = get_object_or_404(Team, pk=team_id)
+    players=Player.objects.filter(team_id=team_id)
+    return render(request, 'scoring/edit_player.html', {'players': players,'team':team})
+
+
+
+
+def edit_player_names(request, team_id):
+    team = get_object_or_404(Team, pk=team_id)
+    players = Player.objects.filter(team=team)
+    if request.method == 'POST':
+        for player in players:
+            new_name = request.POST.get('player_name_{}'.format(player.id))
+            player.name = new_name
+            player.save()
+        return redirect('edit_player', team_id=team_id)
+    else:
+        return render(request, 'scoring/edit_player.html', {'players': players, 'team': team})

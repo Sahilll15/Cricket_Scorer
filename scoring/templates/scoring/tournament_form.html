@@ -2,37 +2,117 @@
 {% load static %}
 
 
-{% block head %}
-  <link rel="stylesheet" type="text/css" href="{% static 'scoring/tournament.css' %}">
-{% endblock %}
+
 
 {% block content %}
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+<style>.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  height: 600px; /* Add this line to set the height */
+}
+
+
+.container-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form input[type="text"], form input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+
+ul.messages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.messages li {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+ul.messages li.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+ul.messages li.info {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+ul.messages li.warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+ul.messages li.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+form input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+</style>
+
 <div class="center">
   <div class="container">
     <div class="container-box">
   <h1>{{ title }}</h1>
   <form method="post">
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+
+</ul>
+{% endif %}
     {% csrf_token %}
     {{ form.as_p }}
-   
-<!--    
-<div class="conintainer">
-  <h4> Existing Tournaments :</h4>
 
-  <ul>{% for tournament in tournaments%}
-      <h2>{{tournament.name}}--{{tournament.location}}</h2>
-            {% endfor %}
-    </h1>
-    </h1>
-  </ul> -->
-  <button type="submit" value="save">Save</button>
+  
+ 
+
+  <button type="submit" class="btn btn-primary" value="save">Save</button>
 </div>
 <div>
   

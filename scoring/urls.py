@@ -22,14 +22,16 @@ urlpatterns = [
          views.tournament_detail, name="tournament_detail"),
     path('create_teams/', views.team_create, name="team_create"),
     path('list_teams/', views.team_list, name="team_list"),
+    path('edit_team/<int:team_id>/', views.edit_player, name='edit_player'),
     path('edit_team/', views.edit_team, name="edit_team"),
-    path('edit_player/', views.edit_player, name="edit_player"),
+    path('edit_player/<int:team_id>', views.edit_player, name='edit_player'),
 
     path('team_page/', views.team_page, name="team_page"),
     path('add_player/', views.add_player, name="add_player"),
 
     path('makematch/<int:match_id>/scoring/add_score/',
          views.add_score, name='add_score'),
+    path('edit_player_names/<int:team_id>/', views.edit_player_names, name='edit_player_names'),
 
     # path('score_board/', views.score_board, name="score_board"),
 

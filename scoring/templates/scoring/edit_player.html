@@ -21,35 +21,32 @@
     border-color: gray;
     font-variant: normal;
 }
+.container{
+  height: 600px;
+}
+.container-box {
+  max-height: 700px;
+  max-width: 700px; /* set the height as per your requirement */
+  overflow-y: auto; /* add a scrollbar if the content overflows */
+}
 
-    </style>
-  <div class="container" style="width: fit-content;">
-    <div class="container-box">
-        <h1>TEAM - {{ team.name }} </h1>
-        <table>
-            <thead>
-          <tr>
-            <th>TEAM NAME</th>
-            <th>Captain</th>
-            <th> of Players</th>
-          </tr>
-        </thead>
-        {% for team in teams %}
-        <tbody> 
-            
-          <tr>
-            <td style="border: 1px solid black;">{{ team.name }}</td>
-            <td style="border: 1px solid black;">{{ team.captian_name }}</td>
-            <td style="border: 1px solid black;">{{ team.captian_name }} </td>
-            <td><button style="margin-right:5px;" type="button" onclick=location.href="{% url 'team_create' %}">Edit</button></td>
-          </tr>
-          {% endfor %}
-          </tbody>
-         
-        </table>
-  
-  <button  type='submit' onclick=location.href="{% url 'team_create' %}">Create team</button>
-    </div>
+</style>
+<div class="container" style="width: fit-content;">
+  <div class="container-box">
+    <h1>TEAM - {{ team.name }} </h1>
+    <form method="post" action="{% url 'edit_player_names' team.id %}">
+      {% csrf_token %}
+      {% for player in players %}
+        <div class="form-group">
+          <label for="player_name_{{ player.id }}">Name: </label>
+          <input type="text" class="form-control" id="player_name_{{ player.id }}" name="player_name_{{ player.id }}" value="{{ player.name }}">
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">Save changes</button>
+    </form>
+    
+    <button type='submit'  class="btn btn-primary" onclick=location.href="{% url 'add_player' %}">Add Player</button>
   </div>
 </div>
+
 <!-- {% endblock %} -->

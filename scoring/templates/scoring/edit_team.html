@@ -21,35 +21,35 @@
     border-color: gray;
     font-variant: normal;
 }
+a{
+  text-decoration: none;
+}
 
     </style>
-  <div class="container" style="width: fit-content;">
-    <div class="container-box">
-        <h1>Team List</h1>
-        <table>
-            <thead>
-          <tr>
-            <th>TEAM NAME</th>
-            <th>Captain</th>
-            <th>Number of Players</th>
-          </tr>
-        </thead>
+ <div class="container" style="width: fit-content;">
+  <div class="container-box">
+    <h1>Team List</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th><strong>TEAM NAME</strong></th>
+          <th><strong>Captain</strong></th>
+          <th><strong>Number of Players</strong></th>
+        </tr>
+      </thead>
+      <tbody>
         {% for team in teams %}
-        <tbody> 
-            
-          <tr>
-            <td style="border: 1px solid black;">{{ team.name }}</td>
-            <td style="border: 1px solid black;">{{ team.captian_name }}</td>
-            <td style="border: 1px solid black;">{{ team.captian_name }} </td>
-            <td><button style="margin-right:5px;" type="button" onclick=location.href="{% url 'edit_player' %}">Edit</button></td>
-          </tr>
-          {% endfor %}
-          </tbody>
-         
-        </table>
-  
-  <button  type='submit' onclick=location.href="{% url 'team_create' %}">Create team</button>
-    </div>
+        <tr>
+          <td style="border: 1px solid black;"><strong>{{ team.name }}</strong></td>
+          <td style="border: 1px solid black;"><strong>{{ team.captian_name }}</strong></td>
+          <td style="border: 1px solid black;"><strong>{{ team.player_set.all.count }}</strong></td>
+          <td><a href="{% url 'edit_player' team.id %}"><button class="btn btn-primary" >Edit</button></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+   <a href="{% url 'team_create' %}" ><button class="btn btn-primary">Create team</button></a>
   </div>
 </div>
+
 <!-- {% endblock %} -->

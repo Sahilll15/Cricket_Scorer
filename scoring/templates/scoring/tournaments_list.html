@@ -3,31 +3,34 @@
 
 {% block content %}
 
-  <div class="center">
-  <div class="container" style="width: 600px; height: min-content;">
+<div class="center">
+  <div class="container" style="max-width: 600px;">
     
-<div class="text-center">
-  <h1>Tournaments:</h1>
-  <ol class="list-group list-group-numbered" >
-    {% for tournament in tournaments %}
-    <li class="list-group-item d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold"><button><a onclick="toggleMatches({{tournament.id}})">{{tournament.name}}    ({{tournament.makematch_set.all|length}} Matches)</a></button></div>
-        <ul class="list-group" id="matches-{{tournament.id}}" style="display: none;">
-          {% for match in tournament.makematch_set.all %}
-          {% if match.team_a_score != 0 %}
-          <li class="list-group-item d-flex justify-content-between align-items-start">{{match.team_1.name}} vs {{match.team_2.name}} (score:{{match.team_a_score}} vs {{match.team_b_score}})  </li>
-          {% endif %}
-          {% endfor %}
-        </ul>
-      </div>
-      
-    </li>
-    {% endfor %}
-  </ol>
+    <div class="text-center">
+      <h1 class="mb-5">Tournaments:</h1>
+      <ol class="list-group list-group-numbered">
+        {% for tournament in tournaments %}
+        <li class="list-group-item d-flex justify-content-between align-items-start mb-4">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold mb-3"><button class="btn btn-outline-secondary btn-sm" onclick="toggleMatches({{tournament.id}})">{{tournament.name}} <span class="badge bg-secondary">{{tournament.makematch_set.all|length}} Matches</span></button></div>
+            <ul class="list-group mb-3" id="matches-{{tournament.id}}" style="display: none;">
+              {% for match in tournament.makematch_set.all %}
+              {% if match.team_a_score != 0 %}
+              <li class="list-group-item d-flex justify-content-between align-items-start"><span class="me-4">{{match.team_1.name}} ({{match.team_a_score}})  vs {{match.team_2.name}} ({{match.team_b_score}})</span><span class="badge bg-info"></span><span style="font-weight: bold;" class="ms-auto"> | Winner: {{match.winner}}</span></li>
+             <hr>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+    
+  </div>
 </div>
-</div>
-</div>
+
+
 <script>
   function toggleMatches(tournamentId) {
     var matches = document.getElementById('matches-' + tournamentId);

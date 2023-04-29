@@ -3,11 +3,13 @@ from . models import Tournament, Team,Player
 
 
 class TournamentForms(forms.ModelForm):
-    # teams=forms.ModelMultipleChoiceField(queryset=Team.objects.all(),required=False,widget=forms.CheckboxSelectMultiple)
-
     class Meta:
         model = Tournament
-        fields = ['name',  'start_date', 'end_date', 'location']
+        fields = ['name', 'start_date', 'end_date', 'location']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'})
+        }
 
 
 class TeamForm(forms.ModelForm):
