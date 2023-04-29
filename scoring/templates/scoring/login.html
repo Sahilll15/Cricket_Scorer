@@ -1,23 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cricket Scoring - Login</title>
+    <title>Cricket Scorer</title>
     <style>
       /* Basic styles for the login form */
       body {
         font-family: Arial, sans-serif;
         background-color: #F5F5F5;
+        background-image:url("{% static 'images/download.jpg' %}");
+      background-size: cover;
+      padding-top: 0%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: "Open Sans", sans-serif;
+      color: #333333;
       }
-      .container {
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #FFFFFF;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-      }
+      
       .form-control {
         display: block;
         width: 100%;
@@ -78,6 +80,23 @@
         margin-bottom: 20px;
         border-radius: 4px;
       }
+
+      a{
+        text-decoration: none;
+        color: blue
+      }
+      .container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: center; /* Center the content horizontally */
+  margin-top: 400px;
+  height: 400px; /* Add some top margin for spacing */
+}
+
     </style>
   </head>
   <body>
@@ -93,10 +112,11 @@
     </nav>
     
     <!-- Login form -->
+  
     <div class="container">
-      <h1>Login</h1>
-      <form action="" method="post">
-		{% csrf_token %}
+      <h1 class="text-center">Login</h1>
+      <form action="" method="post" class="mx-auto">
+        {% csrf_token %}
         <div class="form-group">
           <label for="username">Username:</label>
           <input type="text" id="username" placeholder="Enter Username" name="username" class="form-control" required>
@@ -105,11 +125,12 @@
           <label for="password">Password:</label>
           <input type="password" id="password" placeholder="Password" name="password" class="form-control" required>
         </div>
-		<div>
-			<a href="{% url 'signup'%}">Create an account</a>
-		</div>
-        <button type="submit" class="btn">Login</button>
+        <div>
+          <a href="{% url 'signup'%}">Create an account</a>
+        </div>
+        <button type="submit" class="btn btn-primary d-block mx-auto mt-4">Login</button>
       </form>
     </div>
+    
   </body>
 </html>

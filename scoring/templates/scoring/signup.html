@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,6 +10,14 @@
       body {
         font-family: Arial, sans-serif;
         background-color: #F5F5F5;
+        background-image:url("{% static 'images/download.jpg' %}");
+      background-size: cover;
+      padding-top: 0%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: "Open Sans", sans-serif;
+      color: #333333;
       }
       .container {
         max-width: 500px;
@@ -17,6 +26,7 @@
         background-color: #FFFFFF;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         border-radius: 5px;
+        margin-top: 370px;
       }
       .form-control {
         display: block;
@@ -69,6 +79,10 @@
       .active {
         background-color: #4CAF50;
         color: white;
+      }
+      a{
+        text-decoration: none;
+        color: blue;
       }
     </style>
   </head>

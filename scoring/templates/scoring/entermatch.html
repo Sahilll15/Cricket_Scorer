@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,7 +30,18 @@
         border-radius: 5px;
         padding: 20px;
       } */
-
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #F5F5F5;
+        background-image:url("{% static 'images/download.jpg' %}");
+      background-size: cover;
+      padding-top: 0%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: "Open Sans", sans-serif;
+      color: #333333;
+      }
       h1, p {
         text-align: center;
       }
