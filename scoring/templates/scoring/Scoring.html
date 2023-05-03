@@ -6,20 +6,48 @@
     <title>Cricket Scoring Application</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+  
+  
+  $(document).ready(function () {
+    $('#score-btn').click(function () {
+        var selectedBatter = $('#batsman-select-a').val();
+        if (selectedBatter === "") {
+            alert("Please select a batsman to score.");
+            return;
+        }
+        var selectedBatsmanRow = $('.batter-row[data-batter-name="' + selectedBatter + '"]');
+        if (selectedBatsmanRow.hasClass("out")) {
+            alert(selectedBatter + " is already out.");
+            return; // Don't update the score if the batsman is already out
+        }
+        var currentScore = parseInt(selectedBatsmanRow.find(".batter-score").text());
+        selectedBatsmanRow.find(".batter-score").text(currentScore + 1);
+    });
+});
+
+
+
+
       $(document).ready(function () {
     $('#batsman-select-a').change(function () {
         var selectedBatter = $(this).val();
-        var batterRow = '<tr class="batter-row" data-batter-name="' + selectedBatter + '">' +
-            '<td>' + selectedBatter + '</td>' +
-            '<td class="batter-runs">0</td>' +
-            '<td class="balls-faced">0</td>' +
-            '<td class="fours">0</td>' +
-            '<td class="sixes">0</td>' +
-            '<td class="strike-rate">0.00</td>' +
-            '</tr>';
-        $('#batters-container-a tbody').append(batterRow);
+        var batterRow = $('#batters-container-a tbody').find('tr[data-batter-name="' + selectedBatter + '"]');
+
+        if (batterRow.length == 0) {
+            batterRow = '<tr class="batter-row" data-batter-name="' + selectedBatter + '">' +
+                '<td class="batter-name">' + selectedBatter + '</td>' +
+                '<td class="batter-runs">0</td>' +
+                '<td class="balls-faced">0</td>' +
+                '<td class="fours">0</td>' +
+                '<td class="sixes">0</td>' +
+                '<td class="strike-rate">0.00</td>' +
+                '</tr>';
+            $('#batters-container-a tbody').append(batterRow);
+        } 
     });
 });
+
+
 
 
 
@@ -43,6 +71,62 @@ $(document).ready(function() {
   });
 });
 
+
+$(document).ready(function () {
+            $('#wicket-btn1').click(function () {
+                var selectedBatter = $('#batsman-select-a').val();
+                var selectedBatsmanRow = $('.batter-row[data-batter-name="' + selectedBatter + '"]');
+                if (selectedBatter === "") {
+                    alert("Please select a batsman to dismiss.");
+                    return;
+                }
+                selectedBatsmanRow.addClass("out");
+                selectedBatsmanRow.css("background-color", "#FF4433");
+                selectedBatsmanRow.find(".batter-name").text(selectedBatter + "-OUT");
+
+                $('#batsman-select-a').val('');
+            });
+        });
+
+ $(document).ready(function () {
+            $('#wicket-btn2').click(function () {
+                var selectedBatter = $('#batsman-select-b').val();
+                var selectedBatsmanRowB = $(`.batter-row-b[data-batter-name="${selectedBatter}"][data-team="B"]`);
+                if (selectedBatter === "") {
+                    alert("Please select a batsman to dismiss.");
+                    return;
+                }
+                selectedBatsmanRowB.addClass("out");
+                selectedBatsmanRowB.css("background-color", "#FF4433");
+                selectedBatsmanRowB.find(".batter-name").text(selectedBatter + "-OUT");
+
+                $('#batsman-select-b').val('');
+            });
+        });
+
+
+
+     
+
+
+  $(document).ready(function() {
+    $('#strike-change-btn').click(function() {
+      
+      $('#batsman-select-a').focus().select();
+      alert("select the batsmen on strike")
+    });
+  });
+
+  $(document).ready(function() {
+    $('#bowler-change-btn').click(function() {
+      
+      $('#bowler-select-a').focus().select();
+      alert("select the bowler")
+    });
+  });
+
+
+
     </script>
 
     <link
@@ -63,7 +147,7 @@ $(document).ready(function() {
 
     <nav class="navbar">
       <a class="active" href="{% url 'score'%}">CricScorer</a>
-      <a href="#">Live Score</a>
+      
       <a href="#">Matches</a>
       <a href="#">Teams</a>
       <a href="#">Players</a>
@@ -108,8 +192,13 @@ $(document).ready(function() {
     <div id="overs">
       <ul>
         <li style="font-size: larger;">From 0.0/0.0 Overs</li>
+       
       </ul>
+
     </div>
+    <ul>
+      <h2 style="margin-left: 950px;"><span>Total Overs:</span><span id="Overs">{{match.overs}}</span></h2>
+    </ul>
     {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -255,39 +344,33 @@ $(document).ready(function() {
       <div class="container" style="display: flex;">  
       <h1 style=" text-align: center;">Press Buttons below to score:</h1>
       </div>
-      <div id="score-buttons" style="justify-content: center;">
-        <button onclick="score(0)">0</button>
-        <button onclick="score(1)">1</button>
-        <button onclick="score(2)">2</button>
-        <button onclick="score(3)">3</button>
-        <button onclick="score(4)">4</button>
-        <button onclick="score(5)">5</button>
-        <button onclick="score(6)">6</button>
-        <button onclick="widenNoball()">Wide</button>
+      <div id="score-buttons"  style="justify-content: center;">
+        <button id="score-btn" onclick="score(0)">0</button>
+        <button  id="score-btn" onclick="score(1)">1</button>
+        <button  id="score-btn" onclick="score(2)">2</button>
+        <button id="score-btn" onclick="score(3)">3</button>
+        <button id="score-btn" onclick="score(4)">4</button>
+        <button id="score-btn" onclick="score(5)">5</button>
+        <button id="score-btn" onclick="score(6)">6</button>
+        <button  onclick="widenNoball()">Wide</button>
         <button onclick="widenNoball()">NO BALL</button>
-        <button onclick="score(1)">LEG BYES</button>
-        <button onclick="score(1)">BYES</button>
-        <button onclick="wicket()">wicket</button>
+        <button id="score-btn" onclick="legbyes()">LEG BYES</button>
+        <button id="score-btn" onclick="legbyes()">BYES</button>
+        <!-- <button id="wicket-btn" onclick="wicket()">wicket</button> -->
+
+        <button id="wicket-btn1" onclick="wicket(1)">Wicket </button>
+        <button id="wicket-btn2" onclick="wicket(2)" >Wicket (2nd innings)</button>
+
      
     </div>
 
     <div id="editing-buttons">
-      <button onclick="Strikerchange()">Strikerchange</button>
-      <button onclick="ChangeBowler()">ChangeBowler</button>
-      <!-- <button onclick="VerifyScore()">VerifyScore</button> -->
-      <!-- <button onclick="Undo()">Undo</button> -->
+      <button id="strike-change-btn" >StrikeChange</button>
+      <button id="bowler-change-btn" >ChangeBowler</button>
+    
       <button onclick="displayWinner()">EndInnings</button>
 
-      <!-- <form method="POST" action="{% url 'add_score' match_id=match.id %}">
-        {% csrf_token %}
-        <label for="team_a_runs">Team A Runs:</label>
-        <input type="number" name="team_a_runs" id="team_a_runs" />
-
-        <label for="team_b_runs">Team B Runs:</label>
-        <input type="number" name="team_b_runs" id="team_b_runs" />
-
-        <button type="submit">Add Score</button>
-      </form> -->
+      
       <button id="add-score-button">Add Score</button>
     </div>
     <div id="myModal" class="modal">

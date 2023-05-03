@@ -43,6 +43,7 @@ class Makematch(models.Model):
         Team, related_name="team_1", on_delete=models.CASCADE)
     team_2 = models.ForeignKey(
         Team, related_name="team_2", on_delete=models.CASCADE)
+    overs=models.IntegerField(default=5)
     team_a_score = models.IntegerField(default=0)
     team_b_score = models.IntegerField(default=0)
 
@@ -64,9 +65,18 @@ class Makematch(models.Model):
 
 
 class Player(models.Model):
+    BATSMAN = 'Batsman'
+    BOWLER = 'Bowler'
+    ROLE_CHOICES = [
+        (BATSMAN, 'Batsman'),
+        (BOWLER, 'Bowler'),
+    ]
+
     name = models.CharField(max_length=100)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     captain = models.BooleanField(default=False)
+    role = models.CharField(max_length=7, choices=ROLE_CHOICES, default=BATSMAN)
+
 
     class Meta:
         # Add unique constraint that spans across the name and team fields

@@ -23,7 +23,7 @@ class TeamForm(forms.ModelForm):
 class PlayerForm(forms.ModelForm):
     class Meta:
         model = Player
-        fields = ['name' , 'team']
+        fields = ['name' , 'team','role']
 
 # from django import forms
 

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from django.contrib.auth.views import LogoutView
 urlpatterns = [
     # path('',views.home,name="home"),
 
@@ -32,6 +32,7 @@ urlpatterns = [
     path('makematch/<int:match_id>/scoring/add_score/',
          views.add_score, name='add_score'),
     path('edit_player_names/<int:team_id>/', views.edit_player_names, name='edit_player_names'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 
     # path('score_board/', views.score_board, name="score_board"),
 

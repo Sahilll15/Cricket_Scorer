@@ -4,22 +4,25 @@ var currentWicketsA = 0;
 var currentWicketsB = 0;
 var currentOvers = 0;
 var currentBalls = 0;
-var maxOvers = 2;
+var maxOvers = document.getElementById("Overs").textContent;
 var currentInning = 1;
 var Target = 0;
 
 
-
-
 function score(runs) {
 
-
     if (currentInning == 1) {
-
-
         var batsmanSelect = document.getElementById("batsman-select-a");
         var selectedBatsman = batsmanSelect.value;
+        if (selectedBatsman === "") {
+            alert("select a Batsmen");
+            return;
+        }
         var selectedBatsmanRow = document.querySelector(`.batter-row[data-batter-name="${selectedBatsman}"]`);
+        if (selectedBatsmanRow === "") {
+            alert("select a batsmen");
+            return;
+        }
         var bolwerSelect = document.getElementById("bowler-select-a");
         var selectedBowler = bolwerSelect.value;
         var selectedBowlerRow = document.querySelector(`.bowler-row[data-bowler-name="${selectedBowler}"]`);
@@ -60,8 +63,10 @@ function score(runs) {
         var strikeRate = (batterRuns / ballsFaced) * 100;
         selectedBatsmanRow.querySelector(".strike-rate").textContent = strikeRate.toFixed(2);
     } if (currentInning == 2) {
+
         var bowlerselect = document.getElementById("bowler-select-b");
         var selectedBowlerB = bowlerselect.value;
+
         var selectedBowlerRowB = document.querySelector(`.bowler-row-b[data-bowler-name="${selectedBowlerB}"]`);
         selectedBowlerRowB.querySelector(".bowler-runs").textContent = parseInt(selectedBowlerRowB.querySelector(".bowler-runs").textContent) + runs;
         selectedBowlerRowB.querySelector(".bowler-overs").textContent = getOversBowled(currentBalls);
@@ -80,9 +85,17 @@ function score(runs) {
             alert("Team " + teamBname + " wins!");
         }
         var batsmanSelect = document.getElementById("batsman-select-b");
-        var selectedBatsman = batsmanSelect.value;
-        //update bowler statss
 
+        var selectedBatsman = batsmanSelect.value;
+        if (selectedBatsman === "") {
+            alert("select a Batsmen");
+            return;
+        }
+        //update bowler statss
+        if (selectedBatsmanRow === "") {
+            alert("select a batsmen");
+            return;
+        }
 
         // Update selected batsman stats for team B
         var selectedBatsmanRowB = document.querySelector(`.batter-row-b[data-batter-name="${selectedBatsman}"][data-team="B"]`);
@@ -103,7 +116,7 @@ function score(runs) {
     updateOver();
     saveState();
 }
-var isOverComplete = false; // variable to keep track of whether the current over is complete or not
+var isOverComplete = false;
 
 function getOversBowled(balls) {
     var overs = Math.floor(balls / 7);
@@ -127,7 +140,7 @@ function handleSelectChange(event) {
         selectedBowlerName = event.target.value; // store the selected bowler name
         isOverComplete = false; // reset isOverComplete to false when a new bowler is selected
     } else {
-        alert("YOU CANNOT SELECT ANOTHER BOWLER IN BETWWEEN THE MATCH")// set the selected bowler back to the previous selection
+        alert("YOU CANNOT SELECT ANOTHER BOWLER IN BETWWEEN THE Over")// set the selected bowler back to the previous selection
     }
 }
 
@@ -139,42 +152,74 @@ function completeOver() {
 
 
 
-function wideNoball() {
-    if (currentInning == 1) {
-        var scoreElement = document.getElementById("team-a-runs");
-        var newscore = parseInt(scoreElement.textContent) + 1;
-        scoreElement.textContent = newscore;
 
-    } else if (currentInning == 2) {
-        var scoreElement = document.getElementById("team-b-runs");
-        var newscore = parseInt(scoreElement.textContent) + 1;
-        scoreElement.textContent = newscore;
-    }
-    updateOver();
-    saveState();
-}
 
 function widenNoball() {
     if (currentInning == 2) {
         var scoreElement = document.getElementById("team-b-runs");
-        var newscore = parseInt(scoreElement.textContent) + 1;
+        var newscore = parseInt(scoreElement.textContent) + 2;
+        var bowlerselect = document.getElementById("bowler-select-b");
+        var selectedBowlerB = bowlerselect.value;
+        var selectedBowlerRowB = document.querySelector(`.bowler-row-b[data-bowler-name="${selectedBowlerB}"]`);
         scoreElement.textContent = newscore;
+        selectedBowlerRowB.querySelector(".bowler-runs").textContent = parseInt(selectedBowlerRowB.querySelector(".bowler-runs").textContent) + 1;
+        var runs = prompt("Enter the number of runs scored on the wide ball");
+        if (runs === null) {
+            return
+        }
+        runs = parseInt(runs);
+        if (isNaN(runs) || runs < 0) {
+            alert("Invalid input!");
+            return;
+        }
+
+
+        currentScoreB += runs;
+        var scoreElement = document.getElementById("team-b-runs");
+        scoreElement.textContent = currentScoreB;
+
+
+
 
     } else {
+
+        var runs = prompt("Enter the number of runs scored on the wide ball");
+        if (runs === null) {
+            return
+        }
+        runs = parseInt(runs);
+        if (isNaN(runs) || runs < 0) {
+            alert("Invalid input!");
+            return;
+        }
+
         var scoreElement = document.getElementById("team-a-runs");
         var newscore = parseInt(scoreElement.textContent) + 1;
         scoreElement.textContent = newscore;
+        var bolwerSelect = document.getElementById("bowler-select-a");
+        var selectedBowler = bolwerSelect.value;
+        var selectedBowlerRow = document.querySelector(`.bowler-row[data-bowler-name="${selectedBowler}"]`);
+        selectedBowlerRow.querySelector(".bowler-runs").textContent = parseInt(selectedBowlerRow.querySelector(".bowler-runs").textContent) + 1;
+
+
+        currentScoreA += runs;
+        var scoreElement = document.getElementById("team-a-runs");
+        scoreElement.textContent = currentScoreA + 1;
     }
+
     saveState();
 
 }
 
-function wicket() {
+function wicket(currentInning) {
     if (EndInnings()) {
         return;
     }
 
+
     if (currentInning == 1) {
+
+
         var bolwerSelect = document.getElementById("bowler-select-a");
         var selectedBowler = bolwerSelect.value;
         var selectedBowlerRow = document.querySelector(`.bowler-row[data-bowler-name="${selectedBowler}"]`);
@@ -186,7 +231,10 @@ function wicket() {
         selectedBowlerRow.querySelector(".bowler-overs").textContent = getOversBowled(currentBalls);
         updateOver();
     } else if (currentInning == 2) {
-        var bolwerSelect = document.getElementById("bowler-select-a");
+
+
+
+        var bolwerSelect = document.getElementById("bowler-select-b");
         var selectedBowlerB = bolwerSelect.value;
         var selectedBowlerRowB = document.querySelector(`.bowler-row-b[data-bowler-name="${selectedBowlerB}"]`);
         selectedBowlerRowB.querySelector(".bowler-wickets").textContent = parseInt(selectedBowlerRowB.querySelector(".bowler-wickets").textContent) + 1;
@@ -210,12 +258,10 @@ function EndInnings() {
         alert(`This innings has ended`)
         if (currentInning == 1) {
             currentInning = 2;
-            //   var teamAName = document.getElementById("team-a-name");
+
             var teamAScore = document.getElementById("team-a-runs");
             var teamAWickets = document.getElementById("team-a-wickets");
-            //   teamAName.textContent = "Team B";
-            //   teamAScore.textContent = "0";
-            //   teamAWickets.textContent = "0";
+
             var teamBName = document.getElementById("team-b-name");
             teamBName.style.fontWeight = "bold";
             var oversElement = document.getElementById("overs");
@@ -270,6 +316,37 @@ function displayWinner() {
     }
     saveState();
 }
+
+function legbyes() {
+    var runs = prompt("Enter the number of runs");
+    if (runs === null) {
+        return
+    }
+    runs = parseInt(runs);
+    if (isNaN(runs) || runs < 0) {
+        alert("Invalid input!");
+        return;
+    }
+
+    if (currentInning == 1) {
+        currentScoreA += runs;
+
+        var scoreElement = document.getElementById("team-a-runs");
+        scoreElement.textContent = currentScoreA;
+    }
+    if (currentInning == 2) {
+        currentScoreB += runs;
+
+        var scoreElement = document.getElementById("team-b-runs");
+        scoreElement.textContent = currentScoreB;
+    }
+
+
+
+}
+
+
+
 
 
 

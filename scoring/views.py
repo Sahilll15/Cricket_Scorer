@@ -20,9 +20,12 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import TournamentForms, TeamForm
 from .models import *
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
+@login_required
 def signup(request):
 
     if request.method == 'POST':
@@ -44,6 +47,7 @@ def signup(request):
             # print(uname,uemail,upassword,confirm_password)
 
     return render(request, 'scoring/signup.html')
+
 
 
 def login_view(request):
@@ -69,13 +73,14 @@ def logout_view(request):
 
 # def match_toss(request):
 #     return render(request,'scoring/matchtoss.html')
-@login_required(login_url="/login/")
+@login_required
 def score(request):
     return render(request, 'scoring/score.html')
     # return HttpResponse("You are at the score page")
 
 
 # start scoring button
+
 def entermatch(request):
     tournaments = Tournament.objects.all()
     teams = Team.objects.all()
@@ -149,13 +154,15 @@ def make_match(request):
         tournament_id = request.POST['tournament']
         team1_id = request.POST['team1']
         team2_id = request.POST['team2']
+        overs=request.POST['Overs']
         tournament = Tournament.objects.get(id=tournament_id)
         team1 = Team.objects.get(id=team1_id)
         team2 = Team.objects.get(id=team2_id)
+        
         # match_pin = request.POST['matchpin']
         if team1_id != team2_id:
             match = Makematch.objects.create(
-                tournament_name=tournament, team_1=team1, team_2=team2)
+                tournament_name=tournament, team_1=team1, team_2=team2,overs=overs)
             request.session['clear_storage'] = True
             return redirect('match_detail', match_id=match.id)
         else:
@@ -189,12 +196,12 @@ def scoring(request, match_id):
 
     team_a = match.team_1
     team_b = match.team_2
-
+    overs=match.overs
     # team_a_batters = Batter.objects.filter(match=match, player__team=team_a)
     team_a_batters = Player.objects.filter(team=team_a)
     team_b_batters = Player.objects.filter(team=team_b)
-    team_a_bowlers = Player.objects.filter(team=team_a)
-    team_b_bowlers = Player.objects.filter(team=team_b)
+    team_a_bowlers = Player.objects.filter(team=team_a, role='Bowler')
+    team_b_bowlers = Player.objects.filter(team=team_b,role='Bowler')
 
     tournaments = match.tournament_name
     teams = Team.objects.all()
@@ -208,7 +215,7 @@ def scoring(request, match_id):
                'team_a_bowlers': team_a_bowlers,
                'team_b_bowlers': team_b_bowlers,
                'tournaments': tournaments,
-
+               'overs':overs
                }
 
     return render(request, 'scoring/Scoring.html', context)
