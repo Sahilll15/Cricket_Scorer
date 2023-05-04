@@ -14,3 +14,4 @@ Django web framework
 Django REST framework for creating RESTful APIs
 PostgreSQL database for data storage
 Bootstrap for front-end design
+
