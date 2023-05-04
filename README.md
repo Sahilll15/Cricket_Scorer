@@ -1,4 +1,4 @@
-                                                            Cricket Scoring Application
+                                                      Cricket Scoring Application
 This is a web application for scoring cricket matches. It allows users to create matches, record scores, and view match statistics.
 
 Features
