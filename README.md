@@ -31,9 +31,9 @@ This is a web application for scoring cricket matches. It allows users to create
 <h2>Installation Process</h2>
 <hr>
 <ol>
-  <li>Clone the repository to your local machine.</li>
+  <li>Clone the repository to your local machine.<code>git clone https://github.com/Sahilll15/Cricket_Scorer.git</code></li>
   <li>Install Python and Django if not already installed.</li>
-  <li>Create a virtual environment and activate it.</li>
+  <li>Create a virtual environment and activate it.<code>Virtualenv venv</code> & <code>source venv/bin/activate</code></li>
   <li>Install the required dependencies using the command: <code>pip install -r requirements.txt</code></li>
   
   
