@@ -2,7 +2,9 @@
 This is a web application for scoring cricket matches. It allows users to create matches, record scores, and view match statistics.
 
 Features
-> Create cricket matches with team information, tournament name, and number of overs
-> Record scores for each ball and display live scorecard
-> View match statistics including runs, wickets, overs, and run rate
-> Set the winner of the match
+Create cricket matches with team information, tournament name, and number of overs
+Record scores of The matches
+View match statistics such as the teams score and the winner 
+Set the winner of the match
+Tournament managment
+Managing player of the tournament
