@@ -42,3 +42,15 @@ This is a web application for scoring cricket matches. It allows users to create
   <li>Start the development server using the command: <code>python manage.py runserver</code></li>
   <li>Access the application in your web browser at <code>http://localhost:8000/</code></li>
 </ol>
+
+
+<h3>Technologies Used</h3>
+<hr>
+<ul>
+  <li>matches_Api</li>
+  <code>http://localhost:8000/matches_api/</code>
+  <li>Teams</li>
+   <code>http://localhost:8000/Teams/</code>
+  
+</ul>
+
