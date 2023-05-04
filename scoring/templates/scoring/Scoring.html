@@ -390,11 +390,11 @@ $(document).ready(function () {
 <script>
   $(document).ready(function () {
     $("#add-score-button").click(function () {
-      // Get the values of the "team-a-runs" and "team-b-runs" span elements
+      
       var teamARuns = $("#team-a-runs").text();
       var teamBRuns = $("#team-b-runs").text();
 
-      // Send the values to the server using an AJAX request
+   
       $.ajax({
         url: "{% url 'add_score' match_id=match.id %}",
         method: "POST",
@@ -404,10 +404,10 @@ $(document).ready(function () {
           csrfmiddlewaretoken: "{{ csrf_token }}",
         },
         success: function (response) {
-          // Handle the server response here
+          
         },
         error: function (xhr, status, error) {
-          // Handle errors here
+        
         },
       });
     });
