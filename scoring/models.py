@@ -43,7 +43,7 @@ class Makematch(models.Model):
         Team, related_name="team_1", on_delete=models.CASCADE)
     team_2 = models.ForeignKey(
         Team, related_name="team_2", on_delete=models.CASCADE)
-    overs=models.IntegerField(default=5)
+    overs=models.IntegerField(default=5,null=True)
     team_a_score = models.IntegerField(default=0)
     team_b_score = models.IntegerField(default=0)
 
@@ -108,3 +108,8 @@ class Bowler(models.Model):
 
     def __str__(self):
         return self.player.name
+
+
+
+class name(models.Model):
+    name=models.CharField(max_length=100)

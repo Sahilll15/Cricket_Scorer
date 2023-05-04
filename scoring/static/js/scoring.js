@@ -129,26 +129,26 @@ function getOversBowled(balls) {
     return overs + "." + ballsInOver;
 }
 
-const selectElement = document.getElementById('bowler-select-a');
-let selectedBowlerName = null; // variable to store the selected bowler name
+// const selectElement = document.getElementById('bowler-select-a');
+// let selectedBowlerName = null; // variable to store the selected bowler name
 
-selectElement.addEventListener('change', handleSelectChange);
+// selectElement.addEventListener('change', handleSelectChange);
 
-function handleSelectChange(event) {
-    if (isOverComplete) {
-        selectElement.style.display = 'block'; // show the select element if the over is complete
-        selectedBowlerName = event.target.value; // store the selected bowler name
-        isOverComplete = false; // reset isOverComplete to false when a new bowler is selected
-    } else {
-        alert("YOU CANNOT SELECT ANOTHER BOWLER IN BETWWEEN THE Over")// set the selected bowler back to the previous selection
-    }
-}
+// function handleSelectChange(event) {
+//     if (isOverComplete) {
+//         selectElement.style.display = 'block'; // show the select element if the over is complete
+//         selectedBowlerName = event.target.value; // store the selected bowler name
+//         isOverComplete = false; // reset isOverComplete to false when a new bowler is selected
+//     } else {
+//         alert("YOU CANNOT SELECT ANOTHER BOWLER IN BETWWEEN THE Over")// set the selected bowler back to the previous selection
+//     }
+// }
 
-function completeOver() {
-    // ...code to complete the over
-    selectElement.style.display = 'none'; // hide the select element until the over is completed
-    isOverComplete = true; // set isOverComplete to true when the over is completed
-}
+// function completeOver() {
+//     // ...code to complete the over
+//     selectElement.style.display = 'none'; // hide the select element until the over is completed
+//     isOverComplete = true; // set isOverComplete to true when the over is completed
+// }
 
 
 
@@ -177,7 +177,6 @@ function widenNoball() {
         currentScoreB += runs;
         var scoreElement = document.getElementById("team-b-runs");
         scoreElement.textContent = currentScoreB;
-
 
 
 

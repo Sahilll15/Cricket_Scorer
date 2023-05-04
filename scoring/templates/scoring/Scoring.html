@@ -173,20 +173,23 @@ $(document).ready(function () {
     </div>
     <div id="teams">
       <ul style="display: flex; ">
-        <li style="margin-right: 55%; margin-left: 5%; font-weight: bold; font-size: x-large ;">
+        <li style="margin-right: 30%; margin-left: 5%; font-weight: bold; font-size: x-large ;">
           <span name="team-a-name" id="team-a-name">{{ match.team_1 }}</span> -
           <span name="team-a-runs" id="team-a-runs">0</span><span> /</span>
           <span id="team-a-wickets">0</span> runs
         </li>
+        <li>
+          <h2 ><span style="margin-left: 100px;">Total Overs:</span><span id="Overs">{{match.overs}}</span></h2>
+        </li>
 
-        <li style="font-weight: bold; font-size: x-large ;">
+        <li style="margin-left: 30%; font-weight: bold; font-size: x-large ;">
           <span name="team-b-name" id="team-b-name">{{ match.team_2 }}</span> -
           <span name="team-b-runs" id="team-b-runs">0</span> <span> /</span>
           <span id="team-b-wickets">0</span> runs
         </li>
       </ul>
     </div>
-    <span style="padding-left: 42%; font-weight: bold; font-size: x-large;">Target: <span id="Target">0</span></span>
+    <span style="padding-left: 42%; font-weight: bold; font-size: x-large; margin-left: 80px;">Target: <span id="Target">0</span></span>
     <span style="padding-left: 40px; font-weight: bold; font-size: x-large;">winner: <span id="winner_id">None</span></span>
 
     <div id="overs">
@@ -196,9 +199,7 @@ $(document).ready(function () {
       </ul>
 
     </div>
-    <ul>
-      <h2 style="margin-left: 950px;"><span>Total Overs:</span><span id="Overs">{{match.overs}}</span></h2>
-    </ul>
+    
     {% if messages %}
 <ul class="messages">
     {% for message in messages %}

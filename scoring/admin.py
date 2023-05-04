@@ -29,3 +29,5 @@ class MakematchAdmin(admin.ModelAdmin):
     ordering=['-winner','-team_a_score']
 
 admin.site.register(Makematch,MakematchAdmin)
+
+

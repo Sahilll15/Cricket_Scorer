@@ -160,7 +160,7 @@ def make_match(request):
         team2 = Team.objects.get(id=team2_id)
         
         # match_pin = request.POST['matchpin']
-        if team1_id != team2_id:
+        if team1_id != team2_id :
             match = Makematch.objects.create(
                 tournament_name=tournament, team_1=team1, team_2=team2,overs=overs)
             request.session['clear_storage'] = True
