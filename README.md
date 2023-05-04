@@ -9,7 +9,7 @@ This is a web application for scoring cricket matches. It allows users to create
 
 <ul >
   <li>Create cricket matches with team information, tournament name, and number of overs</li>
-  <li>Record scores for each team/li>
+  <li>Record scores for each team</li>
   <li>View match statistics for Teams score and the winner after the match Ends.</li>
   <li>Tournament Managment.</li>
   <li>Team Managment</li>
