@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, get_object_or_404, redirect
+import requests
 from .models import Makematch
 \
 import random
@@ -21,11 +22,34 @@ from .forms import TournamentForms, TeamForm
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import login_required
+from rest_framework import generics
+from .models import Makematch,Team
+from .serializers import *
 
 
+#RestAPi
 
+class TeamList(generics.ListAPIView):
+    queryset= Team.objects.all()
+    serializer_class=TeamSerializer
+
+class MakeMatchList(generics.ListAPIView):
+    queryset=Makematch.objects.all().filter()
+    serializer_class=MatchSerializer
+  
+    def get_queryset(self):
+        return Makematch.objects.filter(winner__isnull=False)
+
+
+#USE THE API
+def match_list(request):
+    api_url='http://localhost:8000/matches_api/'
+    response=requests.get(api_url)
+    matches=response.json()
+    return render(request, 'scoring/matches.html', {'matches': matches})
 # Create your views here.
-@login_required
+
+
 def signup(request):
 
     if request.method == 'POST':
@@ -35,7 +59,7 @@ def signup(request):
         confirm_password = request.POST.get('confirm_password')
 
         if upassword != confirm_password:
-            return HttpResponse("The passwords in the two password fields do not match")
+           messages.error(request, 'Check the password and confirm password ')
         else:
 
             my_user = User.objects.create_user(
@@ -57,10 +81,10 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # replace with your desired URL after successful login
+           
             return redirect('score')
         else:
-            # return render(request, 'login.html', {'error_message': 'Invalid username or password'})
+           
             messages.error(request, "Invalid password or username")
             return redirect('login')
     return render(request, 'scoring/login.html')

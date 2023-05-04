@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LogoutView
+from .views import TeamList,MakeMatchList
 urlpatterns = [
     # path('',views.home,name="home"),
 
@@ -34,6 +35,12 @@ urlpatterns = [
     path('edit_player_names/<int:team_id>/', views.edit_player_names, name='edit_player_names'),
     path('logout/', LogoutView.as_view(), name='logout'),
 
-    # path('score_board/', views.score_board, name="score_board"),
+   
+   #API urls
+    path('teams/',TeamList.as_view(),name='team_Api'),
+    path('matches_api/',MakeMatchList.as_view(),name='Match_Api'),
+
+
+    path('matches/',views.match_list, name='match_list'),
 
 ]

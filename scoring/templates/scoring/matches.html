@@ -1,0 +1,52 @@
+<!-- match_list.html -->
+{% extends 'scoring/base.html' %}
+
+{% block content %}
+<style>
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .table th, .table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .table th {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+
+    <h1>Matches List</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Match ID</th>
+                <th>Tournament</th>
+                <th>Team 1</th>
+                <th>Team 2</th>
+                <th>Team A Score</th>
+                <th>Team B Score</th>
+                <th>Winner</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for match in matches %}
+                <tr>
+                    <td>{{ match.id }}</td>
+                    <td>{{ match.Tournament_name }}</td>
+                    <td>{{ match.team_1_name }}</td>
+                    <td>{{ match.team_2_name }}</td>
+                    <td>{{ match.team_a_score }}</td>
+                    <td>{{ match.team_b_score }}</td>
+                    <td>{{ match.winner_name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
