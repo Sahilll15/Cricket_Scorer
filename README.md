@@ -1,77 +1,57 @@
-                                   Cricket Scoring Application 
-                                                            
-                                                            
-This is a web application for scoring cricket matches. It allows users to create matches, record scores, and view match statistics.
+<div align="center">
 
-<h3 style="color:red;">Features</h3>
-<hr>
+# 🏏 Cricket Scorer
 
+A **Django** web application for scoring cricket matches end-to-end — create a match, record scores as play unfolds, and view detailed scorecards.
 
-<ul >
-  <li>Create cricket matches with team information, tournament name, and number of overs</li>
-  <li>Record scores for each team</li>
-  <li>View match statistics for Teams score and the winner after the match Ends.</li>
-  <li>Tournament Managment.</li>
-  <li>Team Managment</li>
-</ul> 
+[![License: MIT](https://img.shields.io/badge/License-MIT-3178c6?style=for-the-badge)](./LICENSE)
 
-<h3>Technologies Used</h3>
-<hr>
-<ul>
-  <li>Django web framework</li>
-  <li>Python</li>
-  <li>Django REST framework for creating RESTful APIs</li>
-  <li>SqlLite database for data storage</li>
-  <li>Html,Css,Bootsrap,js,jQuery for front-end design</li>
-</ul>
+</div>
 
+---
 
+## ✨ Features
 
+- 🆕 **Create matches** with teams and players
+- 📝 **Record scores** as the match progresses
+- 📊 **Scorecards** — view detailed match summaries
+- 🌐 Clean, responsive server-rendered UI
 
-<h2>Installation Process</h2>
-<hr>
-<ol>
-  <li>Clone the repository to your local machine.<code>git clone https://github.com/Sahilll15/Cricket_Scorer.git</code></li>
-  <li>Install Python and Django if not already installed.</li>
-  <li>Create a virtual environment and activate it.<code>Virtualenv venv</code> & <code>source venv/bin/activate</code></li>
-  <li>Install the required dependencies using the command: <code>pip install -r requirements.txt</code></li>
-  
-  
-  <li>Run database migrations using the command: <code>python manage.py migrate</code></li>
-  <li>Create a superuser account using the command: <code>python manage.py createsuperuser</code></li>
-  <li>Start the development server using the command: <code>python manage.py runserver</code></li>
-  <li>Access the application in your web browser at <code>http://localhost:8000/</code></li>
-</ol>
+## 🛠️ Tech Stack
 
+![Django](https://img.shields.io/badge/Django-092e20?logo=django&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776ab?logo=python&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-7952b3?logo=bootstrap&logoColor=white)
 
-<h3>Technologies Used</h3>
-<hr>
-<ul>
-  <li>matches_Api</li>
-  <code>http://localhost:8000/matches_api/</code>
-  <li>Teams</li>
-   <code>http://localhost:8000/Teams/</code>
-  
-</ul>
+**Django · Python · Bootstrap · HTML · CSS · JavaScript**
 
+## 📸 Screenshots
 
-<h3>Images</h3>
-<img width="600" alt="Screenshot 2023-05-04 at 4 21 04 AM" src="https://user-images.githubusercontent.com/109215419/236283532-514c67ea-aaa1-48a7-af04-60000663eca0.png">
+> _Add a screenshot of the match / scorecard view here._
+<!-- ![Cricket Scorer](docs/scorecard.png) -->
 
-<img width="600" alt="Screenshot 2023-05-04 at 4 30 54 AM" src="https://user-images.githubusercontent.com/109215419/236282831-359d6fa4-cba2-4107-81c4-b29255188971.png">
+## 🚀 Getting Started
 
-<img width="600" alt="Screenshot 2023-05-04 at 4 30 43 AM" src="https://user-images.githubusercontent.com/109215419/236282933-fd7f521b-3a36-460c-bdbb-546d2535a144.png">
+**Prerequisites:** Python 3.10+
 
-<img width="600" alt="Screenshot 2023-05-04 at 4 31 16 AM" src="https://user-images.githubusercontent.com/109215419/236283008-ca52d849-2c88-4807-8352-a06c30bb2630.png">
+```bash
+git clone https://github.com/Sahilll15/Cricket_Scorer.git
+cd Cricket_Scorer
 
-<img width="600" alt="Screenshot 2023-05-04 at 4 31 29 AM" src="https://user-images.githubusercontent.com/109215419/236283039-8d72ba54-9039-4c7f-a5c4-14883ce5af2e.png">
-<img width="600" alt="Screenshot 2023-05-04 at 4 25 49 AM" src="https://user-images.githubusercontent.com/109215419/236283702-7ca567e9-1ee8-4eac-bb2f-bdeeca0e056f.png">
+# create & activate a virtual environment
+python -m venv venv
+source venv/bin/activate            # Windows: venv\Scripts\activate
 
+# install dependencies
+pip install -r requirements.txt
 
-<img width="600" alt="Screenshot 2023-05-04 at 4 21 46 AM" src="https://user-images.githubusercontent.com/109215419/236283110-36a636aa-59de-4e07-a442-4e02af8e909c.png">
+# apply migrations and run
+python manage.py migrate
+python manage.py runserver          # http://127.0.0.1:8000
+```
 
-![Screenshot 2023-05-04 at 4 30 00 AM](https://user-images.githubusercontent.com/109215419/236285131-941ba78b-d0e3-4ce7-998c-90f0eb32b4fa.png)
+## 📝 License
 
+Released under the [MIT License](./LICENSE).
 
-
-
+<div align="center"><sub>Built by <a href="https://sahilchalke.com">Sahil Chalke</a></sub></div>
